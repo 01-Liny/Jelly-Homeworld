@@ -23,9 +23,10 @@ public class BasicTower : MonoBehaviour
         RecalcInfo();
     }
     
+    //敌人出现在塔的攻击范围内
     protected void OnTriggerStay(Collider other)
     {
-        if(other.gameObject.tag=="Enemy")
+        if (other.gameObject.tag == "Enemy")
         {
             Fire();
         }
