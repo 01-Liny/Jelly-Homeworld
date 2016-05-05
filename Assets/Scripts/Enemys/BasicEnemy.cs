@@ -6,6 +6,7 @@ public class BasicEnemy : MonoBehaviour
 {
     public bool GoDie = false;
     [SerializeField]protected float health = 100;
+    [SerializeField]protected float armor = 10;
 
     private bool isDied = false;
     private new Collider collider;
