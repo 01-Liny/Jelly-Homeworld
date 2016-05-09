@@ -38,7 +38,7 @@ public class TowerInfo : MonoBehaviour
     public static float[,] sourceBuffFireRate;         //百分比加成
 
     //初始化防御塔数据
-    public static void Ini()
+    public static void Init()
     {
         fireRange = new float[(int)TowerType.MaxCount, (int)TowerLevel.MaxLevel];
         fireDamage = new float[(int)TowerType.MaxCount, (int)TowerLevel.MaxLevel];
