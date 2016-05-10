@@ -54,6 +54,11 @@ public class BasicEnemy : MonoBehaviour
         health -= fireDamage;
         Debug.Log("Health:" + health);
     }
+
+    public float GetHealth()
+    {
+        return health;
+    }
 	
     ////敌人出现在塔的攻击范围内，加入到塔列表中
     //protected void OnTriggerEnter(Collider other)
