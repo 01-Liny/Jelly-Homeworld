@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //当敌人死亡时，调用该函数以发送敌人信息到订阅者
+    //当敌人死亡时，调用该函数以发送敌人死亡信息到订阅者
     public static void OnEnemyDied(EnemyDiedEventsArgs e)
     {
         if (EnemyDied != null)

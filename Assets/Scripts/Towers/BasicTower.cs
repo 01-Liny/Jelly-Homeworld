@@ -110,7 +110,7 @@ public class BasicTower : MonoBehaviour                                         
         RereadTowerInfo();
     }
 
-    //重新读取塔数据                                                                   该函数应加abstract，非正式代码，测试后删除
+    //重新读取塔数据
     protected virtual void RereadTowerInfo()
     {
         fireRange = TowerInfo.fireRange[(int)towerType, (int)towerLevel];
@@ -173,20 +173,10 @@ public class BasicTower : MonoBehaviour                                         
         this.buffFireRate += buffFireRate;
     }
 
-    //用于敌人死亡时调用，将敌人从检测到敌人的塔的敌人列表中移除。防止塔攻击死亡敌人
-    //public void RemoveMyselfFromEnemyList(Collider other)
-    //{
-    //    Debug.Log(enemyTriggerList.Count);
-    //    if (enemyTriggerList.Contains(other))
-    //    {
-    //        enemyTriggerList.Remove(other);
-    //    }
-    //    Debug.Log(enemyTriggerList.Count);
-    //}
-
-    //
+    //作为EnemyDied事件的订阅者，当敌人死亡时将会受到来自GameManager发送的关于敌人死亡的信息
     public void RemoveEnemy(object sender,GameManager.EnemyDiedEventsArgs e)
     {
+        //将死亡的敌人从敌人列表中移除
         if (enemyTriggerList.Contains(e.enemyCollider))
         {
             enemyTriggerList.Remove(e.enemyCollider);
