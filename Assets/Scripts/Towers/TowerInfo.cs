@@ -7,7 +7,7 @@ public enum TowerType
     Stun,           //单体，眩晕
     Mutiple,        //分裂攻击
 
-    SourceBuffSlow,       //减速Buff
+    SourceBuffSlowdown,       //减速Buff
     SourceBuffRate,       //加攻速Buff
     SourceBuffDamage,     //加攻击Buff
 
@@ -21,7 +21,8 @@ public enum TowerLevel
     Three,
     Four,
 
-    MaxLevel
+    MaxLevel,
+    Empty//表示没有这个参数，用于TakeDamage函数
 }
 
 public class TowerInfo : MonoBehaviour
@@ -134,28 +135,28 @@ public class TowerInfo : MonoBehaviour
         //减速Buff塔
         {
             //一级
-            fireRange[(int)TowerType.SourceBuffSlow, (int)TowerLevel.One] = 3f;
-            fireDamage[(int)TowerType.SourceBuffSlow, (int)TowerLevel.One] = 6;
-            fireRate[(int)TowerType.SourceBuffSlow, (int)TowerLevel.One] = 1f;
-            sourceBuffSlow[(int)TowerType.SourceBuffSlow, (int)TowerLevel.One] = 0.15f;
+            fireRange[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.One] = 3f;
+            fireDamage[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.One] = 6;
+            fireRate[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.One] = 1f;
+            sourceBuffSlow[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.One] = 0.15f;
 
             //二级
-            fireRange[(int)TowerType.SourceBuffSlow, (int)TowerLevel.Two] = 3.5f;
-            fireDamage[(int)TowerType.SourceBuffSlow, (int)TowerLevel.Two] = 9;
-            fireRate[(int)TowerType.SourceBuffSlow, (int)TowerLevel.Two] = 1.5f;
-            sourceBuffSlow[(int)TowerType.SourceBuffSlow, (int)TowerLevel.Two] = 0.25f;
+            fireRange[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Two] = 3.5f;
+            fireDamage[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Two] = 9;
+            fireRate[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Two] = 1.5f;
+            sourceBuffSlow[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Two] = 0.25f;
 
             //三级
-            fireRange[(int)TowerType.SourceBuffSlow, (int)TowerLevel.Three] = 4f;
-            fireDamage[(int)TowerType.SourceBuffSlow, (int)TowerLevel.Three] = 12;
-            fireRate[(int)TowerType.SourceBuffSlow, (int)TowerLevel.Three] = 2f;
-            sourceBuffSlow[(int)TowerType.SourceBuffSlow, (int)TowerLevel.Three] = 0.4f;
+            fireRange[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Three] = 4f;
+            fireDamage[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Three] = 12;
+            fireRate[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Three] = 2f;
+            sourceBuffSlow[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Three] = 0.4f;
 
             //四级
-            fireRange[(int)TowerType.SourceBuffSlow, (int)TowerLevel.Four] = 4.5f;
-            fireDamage[(int)TowerType.SourceBuffSlow, (int)TowerLevel.Four] = 15;
-            fireRate[(int)TowerType.SourceBuffSlow, (int)TowerLevel.Four] = 2.5f;
-            sourceBuffSlow[(int)TowerType.SourceBuffSlow, (int)TowerLevel.Four] = 0.55f;
+            fireRange[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Four] = 4.5f;
+            fireDamage[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Four] = 15;
+            fireRate[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Four] = 2.5f;
+            sourceBuffSlow[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Four] = 0.55f;
         }
 
         //加攻速Buff

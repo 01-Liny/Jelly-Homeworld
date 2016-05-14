@@ -19,12 +19,15 @@ public class BasicTower : MonoBehaviour                                         
 
     protected SphereCollider attackRangeCollider;//攻击范围collier
 
+    protected float minEnemyHealth;//存储最小敌人血量，优先攻击最低血量的敌人
+    protected BasicEnemy basicEnemyTemp;//临时存放Enemy类信息
+    protected BasicEnemy basicEnemyMinHealth;//临时存放最小血量的Enemy信息
+    protected Rigidbody rigidbodyEnemy;//临时存放被攻击的敌人的rigidbody信息
+
+
     private float nextFire;//下次攻击的时间
     private List<Collider> enemyTriggerList = new List<Collider>();
-    private float minEnemyHealth;//存储最小敌人血量，优先攻击最低血量的敌人
-    private BasicEnemy basicEnemyTemp;//临时存放Enemy类信息
-    private BasicEnemy basicEnemyMinHealth;//临时存放最小血量的Enemy信息
-    private Rigidbody rigidbodyEnemy;//临时存放被攻击的敌人的rigidbody信息
+
 
     //临时初始化函数                                                                           非正式代码，测试后删除
     public void Start()
@@ -139,10 +142,16 @@ public class BasicTower : MonoBehaviour                                         
             {
                 //攻击
                 Debug.Log("Attack");
-                basicEnemyMinHealth.TakeDamage(realFireDamage);
+                //不同的塔攻击方式也不同，转到Fire函数以方便子类重写
+                Fire();
                 rigidbodyEnemy = basicEnemyMinHealth.GetComponent<Rigidbody>();
             }
         }
+    }
+
+    protected virtual void Fire()
+    {
+        basicEnemyMinHealth.TakeDamage(realFireDamage);
     }
 
     //重新计算总攻击伤害和频率
