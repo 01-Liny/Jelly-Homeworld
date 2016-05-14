@@ -126,6 +126,12 @@ public class BasicEnemy : MonoBehaviour
         Debug.Log("Damage:" + damageTemp + " Health:" + health);
     }
 
+    protected void SetStunTime(TowerLevel towerLevel)
+    {
+
+    }
+
+
     public float GetHealth()
     {
         return health;
