@@ -17,16 +17,16 @@ public class BasicTower : MonoBehaviour                                         
     [SerializeField]protected float realFireRate;//总攻击频率
     [SerializeField]protected float realFireRateSpendSec;//总攻击一次需要多少秒
 
-    protected SphereCollider attackRangeCollider;//攻击范围collier
+    protected SphereCollider m_AttackRangeCollider;//攻击范围collier
 
     protected float minEnemyHealth;//存储最小敌人血量，优先攻击最低血量的敌人
-    protected BasicEnemy basicEnemyTemp;//临时存放Enemy类信息
-    protected BasicEnemy basicEnemyMinHealth;//临时存放最小血量的Enemy信息
-    protected Rigidbody rigidbodyEnemy;//临时存放被攻击的敌人的rigidbody信息
+    protected BasicEnemy m_BasicEnemyTemp;//临时存放Enemy类信息
+    protected BasicEnemy m_BasicEnemyMinHealth;//临时存放最小血量的Enemy信息
+    protected Rigidbody m_RigidbodyEnemy;//临时存放被攻击的敌人的rigidbody信息
 
 
     private float nextFire;//下次攻击的时间
-    private List<Collider> enemyTriggerList = new List<Collider>();
+    private List<Collider> m_EnemyTriggerList = new List<Collider>();
 
 
     //临时初始化函数                                                                           非正式代码，测试后删除
@@ -36,8 +36,8 @@ public class BasicTower : MonoBehaviour                                         
         this.towerType = TowerType.Strike;
         this.towerLevel = TowerLevel.One;
         RereadTowerInfo();
-        attackRangeCollider = GetComponent<SphereCollider>();
-        attackRangeCollider.radius = fireRange;//设置攻击范围
+        m_AttackRangeCollider = GetComponent<SphereCollider>();
+        m_AttackRangeCollider.radius = fireRange;//设置攻击范围
         ResetMinEnemyHealth();
         RecalcInfo();
     }
@@ -45,13 +45,13 @@ public class BasicTower : MonoBehaviour                                         
     protected void ResetMinEnemyHealth()
     {
         minEnemyHealth = 500000;
-        basicEnemyMinHealth = null;
+        m_BasicEnemyMinHealth = null;
     }
 
     protected void Update()
     {
         //当敌人列表不为空时，尝试攻击
-        if (enemyTriggerList.Count > 0)
+        if (m_EnemyTriggerList.Count > 0)
         {
             TryFire();
         }
@@ -60,9 +60,9 @@ public class BasicTower : MonoBehaviour                                         
     protected void FixedUpdate()
     {
         //将塔的正面转向被攻击的敌人的位置
-        if(rigidbodyEnemy!=null)
+        if(m_RigidbodyEnemy!=null)
         {
-            Vector3 relativePos = rigidbodyEnemy.position - transform.position;
+            Vector3 relativePos = m_RigidbodyEnemy.position - transform.position;
             Quaternion rotation = Quaternion.LookRotation(relativePos);
             transform.rotation = Quaternion.Lerp(transform.rotation,rotation,0.25f);
         }
@@ -71,9 +71,9 @@ public class BasicTower : MonoBehaviour                                         
     //敌人出现在塔的攻击范围内，加入到敌人列表中
     protected void OnTriggerEnter(Collider other)
     {
-        if (!enemyTriggerList.Contains(other))
+        if (!m_EnemyTriggerList.Contains(other))
         {
-            enemyTriggerList.Add(other);
+            m_EnemyTriggerList.Add(other);
         }
         Debug.Log("Enter");
     }
@@ -81,14 +81,14 @@ public class BasicTower : MonoBehaviour                                         
     //敌人离开塔的攻击范围，将敌人从敌人列表中移除
     protected void OnTriggerExit(Collider other)
     {
-        if (enemyTriggerList.Contains(other))
+        if (m_EnemyTriggerList.Contains(other))
         {
-            enemyTriggerList.Remove(other);
+            m_EnemyTriggerList.Remove(other);
         }
         //如果该塔攻击的敌人已经离开塔的范围，不再跟随该敌人旋转
-        if(rigidbodyEnemy==other.GetComponent<Rigidbody>())
+        if(m_RigidbodyEnemy==other.GetComponent<Rigidbody>())
         {
-            rigidbodyEnemy = null;
+            m_RigidbodyEnemy = null;
         }
         Debug.Log("Exit");
     }
@@ -100,8 +100,8 @@ public class BasicTower : MonoBehaviour                                         
         GameManager.EnemyDied += RemoveEnemy;//注册为订阅者
         this.towerLevel = towerLevel;
         RereadTowerInfo();
-        attackRangeCollider = GetComponent<SphereCollider>();
-        attackRangeCollider.radius = fireRange;//设置攻击范围
+        m_AttackRangeCollider = GetComponent<SphereCollider>();
+        m_AttackRangeCollider.radius = fireRange;//设置攻击范围
         ResetMinEnemyHealth();
         RecalcInfo();
     }
@@ -129,29 +129,29 @@ public class BasicTower : MonoBehaviour                                         
             nextFire = Time.time + realFireRateSpendSec;//计算下一次攻击时间
             ResetMinEnemyHealth();
             //找到最小血量的敌人
-            for (int i = 0; i < enemyTriggerList.Count; i++)
+            for (int i = 0; i < m_EnemyTriggerList.Count; i++)
             {
-                basicEnemyTemp = enemyTriggerList[i].GetComponent<BasicEnemy>();
-                if(minEnemyHealth>basicEnemyTemp.GetHealth())
+                m_BasicEnemyTemp = m_EnemyTriggerList[i].GetComponent<BasicEnemy>();
+                if(minEnemyHealth>m_BasicEnemyTemp.GetHealth())
                 {
-                    minEnemyHealth = basicEnemyTemp.GetHealth();
-                    basicEnemyMinHealth = basicEnemyTemp;
+                    minEnemyHealth = m_BasicEnemyTemp.GetHealth();
+                    m_BasicEnemyMinHealth = m_BasicEnemyTemp;
                 }
             }
-            if(basicEnemyMinHealth!=null)
+            if(m_BasicEnemyMinHealth!=null)
             {
                 //攻击
                 Debug.Log("Attack");
                 //不同的塔攻击方式也不同，转到Fire函数以方便子类重写
                 Fire();
-                rigidbodyEnemy = basicEnemyMinHealth.GetComponent<Rigidbody>();
+                m_RigidbodyEnemy = m_BasicEnemyMinHealth.GetComponent<Rigidbody>();
             }
         }
     }
 
     protected virtual void Fire()
     {
-        basicEnemyMinHealth.TakeDamage(realFireDamage);
+        m_BasicEnemyMinHealth.TakeDamage(realFireDamage);
     }
 
     //重新计算总攻击伤害和频率
@@ -186,9 +186,9 @@ public class BasicTower : MonoBehaviour                                         
     public void RemoveEnemy(object sender,GameManager.EnemyDiedEventsArgs e)
     {
         //将死亡的敌人从敌人列表中移除
-        if (enemyTriggerList.Contains(e.enemyCollider))
+        if (m_EnemyTriggerList.Contains(e.enemyCollider))
         {
-            enemyTriggerList.Remove(e.enemyCollider);
+            m_EnemyTriggerList.Remove(e.enemyCollider);
             Debug.Log("Enemy Died And Removed");
         }   
     }

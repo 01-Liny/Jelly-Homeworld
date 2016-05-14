@@ -26,12 +26,12 @@ public class BasicEnemy : MonoBehaviour
 
     private bool isDied = false;
     private float damageTemp;
-    private new Collider collider;
+    private new Collider m_Collider;
 
     // Use this for initialization
     void Start()
     {
-        collider = GetComponent<Collider>();
+        m_Collider = GetComponent<Collider>();
         isStrikeArmor = new bool[(int)TowerLevel.MaxLevel];
         isSlowdown = new bool[(int)TowerLevel.MaxLevel];
         for (int i = 0; i < (int)TowerLevel.MaxLevel; i++)
@@ -77,9 +77,9 @@ public class BasicEnemy : MonoBehaviour
     protected void Died()
     {
         //防止在敌人死亡的过程中出现在新的塔的范围内
-        collider.enabled = false;
+        m_Collider.enabled = false;
 
-        GameManager.OnEnemyDied(new GameManager.EnemyDiedEventsArgs(collider));
+        GameManager.OnEnemyDied(new GameManager.EnemyDiedEventsArgs(m_Collider));
         Debug.Log("Died");
         //死亡后自我销毁
         Destroy(this.gameObject);
