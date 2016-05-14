@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class BasicEnemy : MonoBehaviour 
 {
     public bool GoDie = false;
+    [SerializeField]
+    protected float maxHealth = 100;//最初的血量
     [SerializeField]protected float health = 100;//血量
     [SerializeField]protected float armor = 20;//护甲
     [SerializeField]protected float slowdownRate = 0.0f;//减速百分比
@@ -18,7 +21,8 @@ public class BasicEnemy : MonoBehaviour
     private float[] strikeArmorTime;//减甲失效时间
     [SerializeField]
     private float[] slowdownTime;//减速失效时间
-
+    [SerializeField]
+    private Slider slider;
 
     private bool isDied = false;
     private float damageTemp;
@@ -122,7 +126,7 @@ public class BasicEnemy : MonoBehaviour
             damageTemp = fireDamage * (1 + (2 - Mathf.Pow(0.94f, -armor)));
         }
         health -= damageTemp;
-
+        slider.value = health / maxHealth;
         Debug.Log("Damage:" + damageTemp + " Health:" + health);
     }
 
