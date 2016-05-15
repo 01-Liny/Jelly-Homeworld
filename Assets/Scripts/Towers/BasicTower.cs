@@ -25,12 +25,12 @@ public class BasicTower : MonoBehaviour                                         
     protected Rigidbody m_RigidbodyEnemy;//临时存放被攻击的敌人的rigidbody信息
 
 
-    private float nextFire;//下次攻击的时间
-    private List<Collider> m_EnemyTriggerList = new List<Collider>();
+    protected float nextFire;//下次攻击的时间
+    protected List<Collider> m_EnemyTriggerList = new List<Collider>();
 
 
     //临时初始化函数                                                                           非正式代码，测试后删除
-    public void Start()
+    public virtual void Start()
     {
         GameManager.EnemyDied += RemoveEnemy;//注册为订阅者
         this.towerType = TowerType.Strike;
@@ -42,7 +42,7 @@ public class BasicTower : MonoBehaviour                                         
         RecalcInfo();
     }
 
-    protected void ResetMinEnemyHealth()
+    protected virtual void ResetMinEnemyHealth()
     {
         minEnemyHealth = 500000;
         m_BasicEnemyMinHealth = null;

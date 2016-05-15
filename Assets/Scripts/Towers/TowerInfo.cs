@@ -33,7 +33,7 @@ public class TowerInfo : MonoBehaviour
 
     public static float[,] strikeArmor;                //减护甲 简单扣除
     public static float[,] stunTime;                   //眩晕时间 单位秒
-    public static float[,] mutipleTargetCount;         //多重攻击目标个数
+    public static int[,] mutipleTargetCount;         //多重攻击目标个数
     public static float[,] sourceBuffSlow;             //百分比减速
     public static float[,] sourceBuffDamage;           //攻击加成 简单叠加
     public static float[,] sourceBuffFireRate;         //百分比加成
@@ -46,7 +46,7 @@ public class TowerInfo : MonoBehaviour
         fireRate = new float[(int)TowerType.MaxCount, (int)TowerLevel.MaxLevel];
         strikeArmor = new float[(int)TowerType.MaxCount, (int)TowerLevel.MaxLevel];
         stunTime = new float[(int)TowerType.MaxCount, (int)TowerLevel.MaxLevel];
-        mutipleTargetCount = new float[(int)TowerType.MaxCount, (int)TowerLevel.MaxLevel];
+        mutipleTargetCount = new int[(int)TowerType.MaxCount, (int)TowerLevel.MaxLevel];
         sourceBuffSlow = new float[(int)TowerType.MaxCount, (int)TowerLevel.MaxLevel];
         sourceBuffDamage = new float[(int)TowerType.MaxCount, (int)TowerLevel.MaxLevel];
         sourceBuffFireRate = new float[(int)TowerType.MaxCount, (int)TowerLevel.MaxLevel];
