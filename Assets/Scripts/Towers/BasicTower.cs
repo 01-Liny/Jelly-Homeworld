@@ -63,6 +63,7 @@ public class BasicTower : MonoBehaviour                                         
         if(m_RigidbodyEnemy!=null)
         {
             Vector3 relativePos = m_RigidbodyEnemy.position - transform.position;
+            relativePos.y = 0;
             Quaternion rotation = Quaternion.LookRotation(relativePos);
             transform.rotation = Quaternion.Lerp(transform.rotation,rotation,0.25f);
         }
