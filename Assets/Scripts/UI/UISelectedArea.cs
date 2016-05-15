@@ -6,7 +6,8 @@ public class UISelectedArea : MonoBehaviour
 	public GameObject m_Prefabs;
     public Camera m_Camera;
     public RaycastHit m_Hit;
-    
+    public TowerManager m_TowerManager;
+
     private Vector3 m_VecTemp=new Vector3();
 
     public void Update()
@@ -28,5 +29,11 @@ public class UISelectedArea : MonoBehaviour
         m_VecTemp.y = 0.1f;
 
         m_Prefabs.transform.position = m_VecTemp;
+        
+        //如果点击鼠标左键
+        if (Input.GetButtonDown("Fire1"))
+        {
+            m_TowerManager.RandomInstantiate(m_VecTemp);
+        }
     }
 }
