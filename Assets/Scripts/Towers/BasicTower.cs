@@ -124,9 +124,8 @@ public class BasicTower : MonoBehaviour                                         
     //攻击
     protected virtual void TryFire()
     {
-        if (Time.time > nextFire)//当前时间超过下次攻击时间，表示可以开始攻击
+        if (Time.time > nextFire||m_RigidbodyEnemy==null)//当前时间超过下次攻击时间或者没有攻击目标时，开始搜索攻击目标
         {
-            nextFire = Time.time + realFireRateSpendSec;//计算下一次攻击时间
             ResetMinEnemyHealth();
             //找到最小血量的敌人
             for (int i = 0; i < m_EnemyTriggerList.Count; i++)
@@ -140,11 +139,17 @@ public class BasicTower : MonoBehaviour                                         
             }
             if(m_BasicEnemyMinHealth!=null)
             {
-                //攻击
-                Debug.Log("Attack");
-                //不同的塔攻击方式也不同，转到Fire函数以方便子类重写
-                Fire();
+                //转向要攻击的目标
                 m_RigidbodyEnemy = m_BasicEnemyMinHealth.GetComponent<Rigidbody>();
+                
+                if(Time.time > nextFire)
+                {
+                    nextFire = Time.time + realFireRateSpendSec;//计算下一次攻击时间
+                    //攻击
+                    Debug.Log("Attack");
+                    //不同的塔攻击方式也不同，转到Fire函数以方便子类重写
+                    Fire();
+                }
             }
         }
     }

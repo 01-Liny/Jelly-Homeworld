@@ -26,7 +26,7 @@ public class BasicEnemy : MonoBehaviour
 
     private bool isDied = false;
     private float damageTemp;
-    private new Collider m_Collider;
+    private Collider m_Collider;
 
     // Use this for initialization
     void Start()
@@ -130,7 +130,7 @@ public class BasicEnemy : MonoBehaviour
         Debug.Log("Damage:" + damageTemp + " Health:" + health);
     }
 
-    protected void SetStunTime(TowerLevel towerLevel)
+    public void TakeStun(TowerLevel towerLevel)
     {
 
     }
