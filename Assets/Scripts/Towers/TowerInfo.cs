@@ -37,6 +37,7 @@ public class TowerInfo : MonoBehaviour
     public static float[,] sourceBuffSlow;             //百分比减速
     public static float[,] sourceBuffDamage;           //攻击加成 简单叠加
     public static float[,] sourceBuffFireRate;         //百分比加成
+    public static float[,] debuffDuringTime;            //Debuff持续时间 秒
 
     //初始化防御塔数据
     public static void Init()
@@ -50,6 +51,7 @@ public class TowerInfo : MonoBehaviour
         sourceBuffSlow = new float[(int)TowerType.MaxCount, (int)TowerLevel.MaxLevel];
         sourceBuffDamage = new float[(int)TowerType.MaxCount, (int)TowerLevel.MaxLevel];
         sourceBuffFireRate = new float[(int)TowerType.MaxCount, (int)TowerLevel.MaxLevel];
+        debuffDuringTime = new float[(int)TowerType.MaxCount, (int)TowerLevel.MaxLevel];
 
         //单体，减甲塔
         {
@@ -58,24 +60,28 @@ public class TowerInfo : MonoBehaviour
             fireDamage[(int)TowerType.Strike, (int)TowerLevel.One] = 20;
             fireRate[(int)TowerType.Strike, (int)TowerLevel.One] = 1f;
             strikeArmor[(int)TowerType.Strike, (int)TowerLevel.One] = 5;
+            debuffDuringTime[(int)TowerType.Strike, (int)TowerLevel.One] = 1f;
 
             //二级
             fireRange[(int)TowerType.Strike, (int)TowerLevel.Two] = 2;
             fireDamage[(int)TowerType.Strike, (int)TowerLevel.Two] = 30;
             fireRate[(int)TowerType.Strike, (int)TowerLevel.Two] = 1.5f;
             strikeArmor[(int)TowerType.Strike, (int)TowerLevel.Two] = 10;
+            debuffDuringTime[(int)TowerType.Strike, (int)TowerLevel.Two] = 1f;
 
             //三级
             fireRange[(int)TowerType.Strike, (int)TowerLevel.Three] = 2;
             fireDamage[(int)TowerType.Strike, (int)TowerLevel.Three] = 40;
             fireRate[(int)TowerType.Strike, (int)TowerLevel.Three] = 2f;
             strikeArmor[(int)TowerType.Strike, (int)TowerLevel.Three] = 15;
+            debuffDuringTime[(int)TowerType.Strike, (int)TowerLevel.Three] = 1f;
 
             //四级
             fireRange[(int)TowerType.Strike, (int)TowerLevel.Four] = 2;
             fireDamage[(int)TowerType.Strike, (int)TowerLevel.Four] = 50;
             fireRate[(int)TowerType.Strike, (int)TowerLevel.Four] = 2.5f;
             strikeArmor[(int)TowerType.Strike, (int)TowerLevel.Four] = 20;
+            debuffDuringTime[(int)TowerType.Strike, (int)TowerLevel.Four] = 1f;
         }
 
         //单体，眩晕塔
@@ -139,24 +145,28 @@ public class TowerInfo : MonoBehaviour
             fireDamage[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.One] = 6;
             fireRate[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.One] = 1f;
             sourceBuffSlow[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.One] = 0.15f;
+            debuffDuringTime[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.One] = 1f;
 
             //二级
             fireRange[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Two] = 3.5f;
             fireDamage[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Two] = 9;
             fireRate[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Two] = 1.5f;
             sourceBuffSlow[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Two] = 0.25f;
+            debuffDuringTime[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Two] = 1f;
 
             //三级
             fireRange[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Three] = 4f;
             fireDamage[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Three] = 12;
             fireRate[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Three] = 2f;
             sourceBuffSlow[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Three] = 0.4f;
+            debuffDuringTime[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Three] = 1f;
 
             //四级
             fireRange[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Four] = 4.5f;
             fireDamage[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Four] = 15;
             fireRate[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Four] = 2.5f;
             sourceBuffSlow[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Four] = 0.55f;
+            debuffDuringTime[(int)TowerType.SourceBuffSlowdown, (int)TowerLevel.Four] = 1f;
         }
 
         //加攻速Buff

@@ -85,13 +85,13 @@ public class BasicEnemy : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    //受到伤害的时候调用，strikeArmorLevel表示破甲等级，默认没有受到减甲；slowdownLevel表示减速等级，默认没有受到减速；debuffDuringTime表示本次debuff持续时间，默认为1s
-    public void TakeDamage(float fireDamage, float debuffDuringTime = 1f, TowerLevel strikeArmorLevel = TowerLevel.Empty, TowerLevel slowdownLevel = TowerLevel.Empty)
+    //受到伤害的时候调用，strikeArmorLevel表示破甲等级，默认没有受到减甲；slowdownLevel表示减速等级，默认没有受到减速；
+    public void TakeDamage(float fireDamage, TowerLevel strikeArmorLevel = TowerLevel.Empty, TowerLevel slowdownLevel = TowerLevel.Empty)
     {
         if (strikeArmorLevel != TowerLevel.Empty)
         {
             //如果在减甲效果内被同一等级的减甲塔再次施加效果，则只刷新时间
-            strikeArmorTime[(int)strikeArmorLevel] = Time.time + debuffDuringTime;
+            strikeArmorTime[(int)strikeArmorLevel] = Time.time + TowerInfo.debuffDuringTime[(int)TowerType.Strike, (int)strikeArmorLevel];
             //不会再次扣除护甲
             if (isStrikeArmor[(int)strikeArmorLevel] == false)
             {
@@ -103,7 +103,7 @@ public class BasicEnemy : MonoBehaviour
         //减速也是同理
         if (slowdownLevel != TowerLevel.Empty)
         {
-            slowdownTime[(int)slowdownLevel] = Time.time + debuffDuringTime;
+            slowdownTime[(int)slowdownLevel] = Time.time + TowerInfo.debuffDuringTime[(int)TowerType.SourceBuffSlowdown, (int)strikeArmorLevel];
             if (isSlowdown[(int)slowdownLevel] == false)
             {
                 isSlowdown[(int)slowdownLevel] = true;
@@ -117,6 +117,7 @@ public class BasicEnemy : MonoBehaviour
     //计算扣血量
     protected void TakeHealth(float fireDamage)
     {
+        //护甲大于0和小于0时的计算方式不一样
         if(armor>=0)
         {
             damageTemp = fireDamage * (1 - ((armor * 0.06f) / (1 + 0.06f * armor)));

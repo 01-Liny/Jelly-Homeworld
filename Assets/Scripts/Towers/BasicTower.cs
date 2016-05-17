@@ -70,27 +70,35 @@ public class BasicTower : MonoBehaviour                                         
     }
 
     //敌人出现在塔的攻击范围内，加入到敌人列表中
-    protected void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
-        if (!m_EnemyTriggerList.Contains(other))
+        if (other.tag == "Enemy")
         {
-            m_EnemyTriggerList.Add(other);
+            if (!m_EnemyTriggerList.Contains(other))
+            {
+                m_EnemyTriggerList.Add(other);
+            }
         }
+        if(other.tag=="Tower")
         Debug.Log("Enter");
     }
 
     //敌人离开塔的攻击范围，将敌人从敌人列表中移除
-    protected void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
-        if (m_EnemyTriggerList.Contains(other))
+        if (other.tag == "Enemy")
         {
-            m_EnemyTriggerList.Remove(other);
+            if (m_EnemyTriggerList.Contains(other))
+            {
+                m_EnemyTriggerList.Remove(other);
+            }
+            //如果该塔攻击的敌人已经离开塔的范围，不再跟随该敌人旋转
+            if (m_RigidbodyEnemy == other.GetComponent<Rigidbody>())
+            {
+                m_RigidbodyEnemy = null;
+            }
         }
-        //如果该塔攻击的敌人已经离开塔的范围，不再跟随该敌人旋转
-        if(m_RigidbodyEnemy==other.GetComponent<Rigidbody>())
-        {
-            m_RigidbodyEnemy = null;
-        }
+
         Debug.Log("Exit");
     }
 

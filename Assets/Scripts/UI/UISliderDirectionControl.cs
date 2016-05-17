@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class UIDirectionControl : MonoBehaviour 
+public class UISliderDirectionControl : MonoBehaviour 
 {
     Quaternion m_ParentRotation;
     private void Start()
