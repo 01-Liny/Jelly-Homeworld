@@ -6,17 +6,17 @@ public class MutipleTower : BasicTower
     [SerializeField]protected int mutipleTargetCount;//多重攻击目标个数
     protected new BasicEnemy[] m_BasicEnemyMinHealth;//临时存放最小血量的多个Enemy信息
     
-    public override void Start()
-    {
-        GameManager.EnemyDied += RemoveEnemy;//注册为订阅者
-        this.towerType = TowerType.Mutiple;
-        this.towerLevel = TowerLevel.One;
-        RereadTowerInfo();
-        m_AttackRangeCollider = GetComponent<SphereCollider>();
-        m_AttackRangeCollider.radius = fireRange;//设置攻击范围
-        ResetMinEnemyHealth();
-        RecalcInfo();
-    }
+    // public override void Start()
+    // {
+    //     GameManager.EnemyDied += RemoveEnemy;//注册为订阅者
+    //     this.towerType = TowerType.Mutiple;
+    //     this.towerLevel = TowerLevel.One;
+    //     RereadTowerInfo();
+    //     m_AttackRangeCollider = GetComponent<SphereCollider>();
+    //     m_AttackRangeCollider.radius = fireRange;//设置攻击范围
+    //     ResetMinEnemyHealth();
+    //     RecalcInfo();
+    // }
     public override void Init(TowerLevel towerLevel)
     {
         towerType = TowerType.Mutiple;

@@ -7,8 +7,11 @@ public class UISelectedArea : MonoBehaviour
     public Camera m_Camera;
     public RaycastHit m_Hit;
     public TowerManager m_TowerManager;
+    public MapManager m_MapManager;
 
     private Vector3 m_VecTemp=new Vector3();
+
+    private bool isOutRange = false;
 
     public void Update()
     {
@@ -27,13 +30,23 @@ public class UISelectedArea : MonoBehaviour
         m_VecTemp.x=(int)(m_Hit.point.x+0.5f*Mathf.Sign(m_Hit.point.x));
         m_VecTemp.z=(int)(m_Hit.point.z+0.5f*Mathf.Sign(m_Hit.point.z));
         m_VecTemp.y = 0.1f;
-
-        m_Prefabs.transform.position = m_VecTemp;
+        //判断是非超出地图范围,用mapRegionY判断m_VecTemp.z是正确的
+        if(m_VecTemp.x>=0&&m_VecTemp.y<MapManager.mapRegionX
+        &&m_VecTemp.z>=0&&m_VecTemp.z<MapManager.mapRegionY)
+        {
+            isOutRange = false;
+            m_Prefabs.transform.position = m_VecTemp;
+        }
+        else
+        {
+            isOutRange = true;
+        }    
         
         //如果点击鼠标左键
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1")&&isOutRange==false)
         {
-            m_TowerManager.RandomInstantiate(m_VecTemp);
+            if(m_MapManager.SetMap((int)m_VecTemp.x, (int)m_VecTemp.z, MapManager.MapType.Tower))
+                m_TowerManager.RandomInstantiate(m_VecTemp);
         }
     }
 }

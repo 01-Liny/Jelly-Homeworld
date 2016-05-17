@@ -30,17 +30,17 @@ public class BasicTower : MonoBehaviour                                         
 
 
     //临时初始化函数                                                                           非正式代码，测试后删除
-    public virtual void Start()
-    {
-        GameManager.EnemyDied += RemoveEnemy;//注册为订阅者
-        this.towerType = TowerType.Strike;
-        this.towerLevel = TowerLevel.One;
-        RereadTowerInfo();
-        m_AttackRangeCollider = GetComponent<SphereCollider>();
-        m_AttackRangeCollider.radius = fireRange;//设置攻击范围
-        ResetMinEnemyHealth();
-        RecalcInfo();
-    }
+    // public virtual void Start()
+    // {
+    //     GameManager.EnemyDied += RemoveEnemy;//注册为订阅者
+    //     this.towerType = TowerType.Strike;
+    //     this.towerLevel = TowerLevel.One;
+    //     RereadTowerInfo();
+    //     m_AttackRangeCollider = GetComponent<SphereCollider>();
+    //     m_AttackRangeCollider.radius = fireRange;//设置攻击范围
+    //     ResetMinEnemyHealth();
+    //     RecalcInfo();
+    // }
 
     protected virtual void ResetMinEnemyHealth()
     {
