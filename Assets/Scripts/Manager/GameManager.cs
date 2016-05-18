@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
             EnemyDied(null, e);
     }
 
+    //                          关卡重置的时候只要调用List.clear就行
     //整个游戏的初始化
     void Awake()
     {

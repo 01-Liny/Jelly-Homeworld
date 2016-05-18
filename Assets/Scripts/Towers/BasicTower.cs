@@ -4,14 +4,15 @@ using System.Collections.Generic;
 
 public class BasicTower : MonoBehaviour                                                     //该类应该为abstract
 {
+    public bool updateTower;
     [SerializeField]public TowerType towerType;
     [SerializeField]public TowerLevel towerLevel;
 
     [SerializeField]protected float fireRange;//攻击范围
     [SerializeField]protected float fireDamage;//攻击伤害
     [SerializeField]protected float fireRate;//攻击频率
-    [SerializeField]protected float buffDamage;//攻击伤害加成
-    [SerializeField]protected float buffFireRate;//攻击频率加成
+    [SerializeField]public float buffDamage;//攻击伤害加成
+    [SerializeField]public float buffFireRate;//攻击频率加成
 
     [SerializeField]protected float realFireDamage;//总攻击伤害
     [SerializeField]protected float realFireRate;//总攻击频率
@@ -55,6 +56,24 @@ public class BasicTower : MonoBehaviour                                         
         {
             TryFire();
         }
+        
+        if(updateTower==true)
+        {
+            updateTower = false;
+        }
+    }
+    
+    public virtual void UpdateTower()
+    {
+        //如果塔还没达到最高等级
+        if(towerLevel+1!=TowerLevel.MaxLevel)
+        {
+            ResetLevel(towerLevel + 1);
+        }
+        else
+        {
+            Debug.LogError("TowerLevel reached Top!");
+        }
     }
 
     protected void FixedUpdate()
@@ -78,9 +97,8 @@ public class BasicTower : MonoBehaviour                                         
             {
                 m_EnemyTriggerList.Add(other);
             }
+            Debug.Log("Enter");
         }
-        if(other.tag=="Tower")
-        Debug.Log("Enter");
     }
 
     //敌人离开塔的攻击范围，将敌人从敌人列表中移除
@@ -97,9 +115,8 @@ public class BasicTower : MonoBehaviour                                         
             {
                 m_RigidbodyEnemy = null;
             }
+            Debug.Log("Exit");
         }
-
-        Debug.Log("Exit");
     }
 
 
@@ -112,14 +129,16 @@ public class BasicTower : MonoBehaviour                                         
         m_AttackRangeCollider = GetComponent<SphereCollider>();
         m_AttackRangeCollider.radius = fireRange;//设置攻击范围
         ResetMinEnemyHealth();
-        RecalcInfo();
+        RecalcFireInfo();
     }
 
     //重新设置塔等级
-    public void ResetLevel(TowerLevel towerLevel)
+    public virtual void ResetLevel(TowerLevel towerLevel)
     {
         this.towerLevel = towerLevel;
         RereadTowerInfo();
+        m_AttackRangeCollider.radius = fireRange;
+        RecalcFireInfo();
     }
 
     //重新读取塔数据
@@ -169,18 +188,11 @@ public class BasicTower : MonoBehaviour                                         
     }
 
     //重新计算总攻击伤害和频率
-    public void RecalcInfo()
+    public void RecalcFireInfo()
     {
         realFireDamage = fireDamage + buffDamage;
         realFireRate = fireRate * (1 + buffFireRate);
         realFireRateSpendSec = 1 / realFireRate;
-    }
-
-    //重置攻击伤害和频率加成
-    public void ResetInfo()
-    {
-        buffDamage = 0;
-        buffFireRate = 0;
     }
 
     //增加攻击伤害加成
@@ -188,12 +200,10 @@ public class BasicTower : MonoBehaviour                                         
     {
         this.buffDamage += buffDamage;
     }
-
-
-    //增加攻击频率加成
-    public void AddBuffFireRate(float buffFireRate)
+    
+    public void MinusBuffDamage(float buffDamage)
     {
-        this.buffFireRate += buffFireRate;
+        this.buffDamage -= buffDamage;
     }
 
     //作为EnemyDied事件的订阅者，当敌人死亡时将会受到来自GameManager发送的关于敌人死亡的信息
@@ -205,5 +215,10 @@ public class BasicTower : MonoBehaviour                                         
             m_EnemyTriggerList.Remove(e.enemyCollider);
             Debug.Log("Enemy Died And Removed");
         }   
+    }
+    
+    public void ClearEnemyList()
+    {
+        m_EnemyTriggerList.Clear();
     }
 }
