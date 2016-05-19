@@ -12,6 +12,6 @@ public class StrikeTower : BasicTower
 
     protected override void Fire()
     {
-        m_BasicEnemyMinHealth.TakeDamage(realFireDamage,towerLevel,TowerLevel.Empty);
+        m_BasicEnemyMinHealth.TakeDamage(realFireDamage,towerLevel);
     }
 }

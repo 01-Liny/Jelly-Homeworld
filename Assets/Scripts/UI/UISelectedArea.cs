@@ -12,6 +12,15 @@ public class UISelectedArea : MonoBehaviour
     private Vector3 m_VecTemp=new Vector3();
 
     private bool isOutRange = false;
+    private float size;
+    private float halfSize;
+    private int temp;
+
+    private void Start()
+    {
+        size = MapManager.mapSize;
+        halfSize = size / 2;
+    }
 
     public void Update()
     {
@@ -26,13 +35,16 @@ public class UISelectedArea : MonoBehaviour
             Debug.DrawLine(m_Hit.point, m_VecTemp, Color.blue);
             Debug.DrawRay(ray.origin, ray.direction * 20, Color.yellow);
         }
+
         //给选中框做位置偏移
-        m_VecTemp.x=(int)(m_Hit.point.x+0.5f*Mathf.Sign(m_Hit.point.x));
-        m_VecTemp.z=(int)(m_Hit.point.z+0.5f*Mathf.Sign(m_Hit.point.z));
+        m_VecTemp.x=((int)((m_Hit.point.x+halfSize*Mathf.Sign(m_Hit.point.x))/size))*size;
+        
+        m_VecTemp.z=((int)((m_Hit.point.z+halfSize*Mathf.Sign(m_Hit.point.z))/size))*size;
+
         m_VecTemp.y = 0.1f;
         //判断是非超出地图范围,用mapRegionY判断m_VecTemp.z是正确的
-        if(m_VecTemp.x>=0&&m_VecTemp.y<MapManager.mapRegionX
-        &&m_VecTemp.z>=0&&m_VecTemp.z<MapManager.mapRegionY)
+        if(m_VecTemp.x>=0&&m_VecTemp.y<(MapManager.mapRegionX*size)
+        &&m_VecTemp.z>=0&&m_VecTemp.z<(MapManager.mapRegionY*size))
         {
             isOutRange = false;
             m_Prefabs.transform.position = m_VecTemp;
@@ -45,7 +57,8 @@ public class UISelectedArea : MonoBehaviour
         //如果点击鼠标左键
         if (Input.GetButtonDown("Fire1")&&isOutRange==false)
         {
-            if(m_MapManager.SetMap((int)m_VecTemp.x, (int)m_VecTemp.z, MapManager.MapType.Tower))
+            //将游戏地图上的坐标转换为地图数组的下标
+            if(m_MapManager.SetMap((int)(m_VecTemp.x/size), (int)(m_VecTemp.z/size), MapType.Tower))
                 m_TowerManager.RandomInstantiate(m_VecTemp);
         }
     }

@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class TowerManager : MonoBehaviour 
 {
@@ -7,6 +7,7 @@ public class TowerManager : MonoBehaviour
     private  GameObject m_SelectedPrefab;
     private GameObject m_Instance;
     private BasicTower m_InstanceBasicTower;
+    [SerializeField]private List<BasicTower> m_TowerList = new List<BasicTower>();
 
     public void RandomInstantiate(Vector3 m_Position)
     {
@@ -18,6 +19,7 @@ public class TowerManager : MonoBehaviour
             m_Instance=Instantiate(m_SelectedPrefab, m_Position, Quaternion.identity)as GameObject;
             m_InstanceBasicTower = m_Instance.GetComponent<BasicTower>();
             m_InstanceBasicTower.Init(TowerLevel.One);//目前先定为一级，后续将会随机
+            m_TowerList.Add(m_InstanceBasicTower);
         }
     }
 }

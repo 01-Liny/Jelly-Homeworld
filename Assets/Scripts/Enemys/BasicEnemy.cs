@@ -85,8 +85,8 @@ public class BasicEnemy : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    //受到伤害的时候调用，strikeArmorLevel表示破甲等级，默认没有受到减甲；slowdownLevel表示减速等级，默认没有受到减速；
-    public void TakeDamage(float fireDamage, TowerLevel strikeArmorLevel = TowerLevel.Empty, TowerLevel slowdownLevel = TowerLevel.Empty)
+    //受到伤害的时候调用，strikeArmorLevel表示破甲等级，默认没有受到减甲；
+    public void TakeDamage(float fireDamage, TowerLevel strikeArmorLevel = TowerLevel.Empty)
     {
         if (strikeArmorLevel != TowerLevel.Empty)
         {
@@ -100,18 +100,17 @@ public class BasicEnemy : MonoBehaviour
             }
         }
 
-        //减速也是同理
-        if (slowdownLevel != TowerLevel.Empty)
-        {
-            slowdownTime[(int)slowdownLevel] = Time.time + TowerInfo.debuffDuringTime[(int)TowerType.SourceBuffSlowdown, (int)strikeArmorLevel];
+        TakeHealth(fireDamage);
+    }
+    
+    public void TakeSlowdown(TowerLevel slowdownLevel)
+    {
+            slowdownTime[(int)slowdownLevel] = Time.time + TowerInfo.debuffDuringTime[(int)TowerType.SourceBuffSlowdown, (int)slowdownLevel];
             if (isSlowdown[(int)slowdownLevel] == false)
             {
                 isSlowdown[(int)slowdownLevel] = true;
                 slowdownRate += TowerInfo.sourceBuffSlow[(int)TowerType.SourceBuffSlowdown, (int)slowdownLevel];
             }
-        }
-
-        TakeHealth(fireDamage);
     }
 
     //计算扣血量

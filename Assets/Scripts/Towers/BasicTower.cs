@@ -60,6 +60,7 @@ public class BasicTower : MonoBehaviour                                         
         if(updateTower==true)
         {
             updateTower = false;
+            UpdateTower();
         }
     }
     

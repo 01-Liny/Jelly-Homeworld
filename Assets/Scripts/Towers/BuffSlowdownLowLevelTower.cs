@@ -4,6 +4,7 @@ using System.Collections;
 public class BuffSlowdownLowLevelTower : BasicTower 
 {
     public GameObject m_HighLevelTowerPrefab;
+    private GameObject m_Instance;
     public override void Init(TowerLevel towerLevel)
     {
         towerType = TowerType.SourceBuffSlowdown;
@@ -12,7 +13,8 @@ public class BuffSlowdownLowLevelTower : BasicTower
     
     protected override void Fire()
     {
-        m_BasicEnemyMinHealth.TakeDamage(realFireDamage, TowerLevel.Empty, towerLevel);
+        m_BasicEnemyMinHealth.TakeDamage(realFireDamage);
+        m_BasicEnemyMinHealth.TakeSlowdown(towerLevel);
     }
     
     public override void ResetLevel(TowerLevel towerLevel)
@@ -20,9 +22,9 @@ public class BuffSlowdownLowLevelTower : BasicTower
         base.ResetLevel(towerLevel);
         if(this.towerLevel>TowerLevel.Two)
         {
-            Destroy(this);
-            Instantiate(m_HighLevelTowerPrefab, transform.position, transform.rotation);
+            Destroy(gameObject);
+            m_Instance=Instantiate(m_HighLevelTowerPrefab, transform.position, transform.rotation)as GameObject;
+            m_Instance.GetComponent<BasicTower>().Init(TowerLevel.Three);
         }
     }
-    //未测试
 }
