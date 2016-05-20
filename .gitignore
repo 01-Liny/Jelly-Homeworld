@@ -79,6 +79,8 @@ $RECYCLE.BIN/
 /[Bb]uild/
 /[Bb]uilds/
 /Assets/AssetStoreTools*
+/Assets/VSCode/
+VSCode.meta
 
 ### VSCode ###
 /.vscode
