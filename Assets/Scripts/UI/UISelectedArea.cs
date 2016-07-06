@@ -54,8 +54,13 @@ public class UISelectedArea : MonoBehaviour
             isOutRange = true;
         }    
         
-        //如果点击鼠标左键
-        if (Input.GetButtonDown("Fire1")&&isOutRange==false)
+    }
+
+    //当鼠标左键被触发时，调用此函数
+    public void ClickConfirmed()
+    {
+        //如果在地图范围内
+        if(isOutRange==false)
         {
             //将游戏地图上的坐标转换为地图数组的下标
             if(m_MapManager.SetMap((int)(m_VecTemp.x/size), (int)(m_VecTemp.z/size), MapType.Tower))
