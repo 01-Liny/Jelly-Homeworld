@@ -11,6 +11,7 @@ public class InputManager : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             m_SelectedArea.ClickConfirmed();
+            Global_Variables.fsm.Test();
         }
     }
 }

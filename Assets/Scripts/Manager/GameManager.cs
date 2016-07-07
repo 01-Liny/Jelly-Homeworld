@@ -4,6 +4,8 @@ using System;
 
 public class GameManager : MonoBehaviour 
 {
+    public FSM fsm;
+
     //声明委托
     public delegate void EnemyDiedEventHandler(object sender, EnemyDiedEventsArgs e);
     public static event EnemyDiedEventHandler EnemyDied;
@@ -29,6 +31,7 @@ public class GameManager : MonoBehaviour
     //整个游戏的初始化
     void Awake()
     {
+        Global_Variables.fsm = fsm;
         TowerInfo.Init();
     }
 }
