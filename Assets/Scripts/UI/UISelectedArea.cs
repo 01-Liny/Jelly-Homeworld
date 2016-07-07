@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class UISelectedArea : MonoBehaviour 
 {
 	public GameObject m_Prefabs;
@@ -15,6 +16,7 @@ public class UISelectedArea : MonoBehaviour
     private float size;
     private float halfSize;
     private int temp;
+    private Ray ray;
 
     private void Start()
     {
@@ -25,7 +27,7 @@ public class UISelectedArea : MonoBehaviour
     public void Update()
     {
         //从摄像头的坐标到鼠标在屏幕上的坐标的方向向量
-        Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
+        ray = m_Camera.ScreenPointToRay(Input.mousePosition);
         
         //以ray的方向和原点，发射一条射线，检测射线是否碰撞到LayerMask为Plane的Collider
         if(Physics.Raycast(ray.origin, ray.direction, out m_Hit, Mathf.Infinity, 1 << 8))
@@ -59,8 +61,13 @@ public class UISelectedArea : MonoBehaviour
     //当鼠标左键被触发时，调用此函数
     public void ClickConfirmed()
     {
+        RaycastHit m_Hit;
+        if(Physics.Raycast(ray.origin, ray.direction, out m_Hit, Mathf.Infinity, 1 << 5))
+        {
+            Debug.Log("Suc");
+        }
         //如果在地图范围内
-        if(isOutRange==false)
+        if (isOutRange==false)
         {
             //将游戏地图上的坐标转换为地图数组的下标
             if(m_MapManager.SetMap((int)(m_VecTemp.x/size), (int)(m_VecTemp.z/size), MapType.Tower))
