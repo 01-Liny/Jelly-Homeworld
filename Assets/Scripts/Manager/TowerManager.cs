@@ -11,7 +11,6 @@ public class TowerManager : MonoBehaviour
 
     public void RandomInstantiate(Vector3 m_Position)
     {
-        int prefabCount=m_TowerPrefabs.Length;
         if(m_TowerPrefabs.Length!=0)
         {
             m_SelectedPrefab = m_TowerPrefabs[Random.Range(0, m_TowerPrefabs.Length)];

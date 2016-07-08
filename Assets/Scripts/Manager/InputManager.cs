@@ -14,10 +14,10 @@ public class InputManager : MonoBehaviour
             //如果点击到UI则不触发事件
             if (EventSystem.current.IsPointerOverGameObject())
             {
-                //return;
+                return;
             }
             m_SelectedArea.ClickConfirmed();
-            Global_Variables.fsm.Test();
+            Global_Variables.FSMConstruct.Test();
         }
     }
 }

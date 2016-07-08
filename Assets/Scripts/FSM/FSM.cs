@@ -9,9 +9,8 @@ public enum FSM_ConstructeState
 
 public class FSM : MonoBehaviour 
 {
-    protected Dictionary<string, IState> m_States;
+    protected Dictionary<string, IState> m_States=new Dictionary<string, IState>();
     protected string currentStateName;
-    protected IState currentStateObject;
 
     private void Start()
     {
@@ -33,7 +32,22 @@ public class FSM : MonoBehaviour
     public void Update()
     {
         if(currentStateName!=null)
-        currentStateObject.OnUpdate();
+        m_States[currentStateName].OnUpdate();
+    }
+
+    public void ChangeState(string newStateName)
+    {
+        if(currentStateName!=null)
+        {
+            m_States[currentStateName].OnExit();
+        }
+        if(m_States.ContainsKey(newStateName))
+        {
+            m_States[newStateName].OnEnter();
+            currentStateName = newStateName;
+        }
+        else
+            Debug.LogError("No Exist State :"+newStateName+",Cannot Change State");
     }
 
     public void Test()

@@ -9,6 +9,7 @@ public class UISelectedArea : MonoBehaviour
     public RaycastHit m_Hit;
     public TowerManager m_TowerManager;
     public MapManager m_MapManager;
+    public ConstructUIController m_ConstructUIController;
 
     private Vector3 m_VecTemp=new Vector3();
 
@@ -61,17 +62,22 @@ public class UISelectedArea : MonoBehaviour
     //当鼠标左键被触发时，调用此函数
     public void ClickConfirmed()
     {
-        RaycastHit m_Hit;
-        if(Physics.Raycast(ray.origin, ray.direction, out m_Hit, Mathf.Infinity, 1 << 5))
-        {
-            Debug.Log("Suc");
-        }
         //如果在地图范围内
         if (isOutRange==false)
         {
-            //将游戏地图上的坐标转换为地图数组的下标
-            if(m_MapManager.SetMap((int)(m_VecTemp.x/size), (int)(m_VecTemp.z/size), MapType.Tower))
-                m_TowerManager.RandomInstantiate(m_VecTemp);
+            if(m_ConstructUIController.enabled==true)
+            {
+                m_ConstructUIController.enabled = false;
+            }
+            else
+            {
+                {
+                    //将游戏地图上的坐标转换为地图数组的下标
+                    if (m_MapManager.SetMap((int)(m_VecTemp.x / size), (int)(m_VecTemp.z / size), MapType.Tower))
+                        m_TowerManager.RandomInstantiate(m_VecTemp);
+                }
+            }
+
         }
     }
 }
