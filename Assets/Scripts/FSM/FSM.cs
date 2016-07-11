@@ -35,6 +35,19 @@ public class FSM : MonoBehaviour
         m_States[currentStateName].OnUpdate();
     }
 
+    public string GetCurrentState()
+    {
+        return currentStateName;
+    }
+
+    public void OnStart()
+    {
+        if(currentStateName!=null)
+            m_States[currentStateName].OnStart();
+        else
+            Debug.LogError("Cannot OnStart.currentStateName not exist");
+    }
+
     public void ChangeState(string newStateName)
     {
         if(currentStateName!=null)

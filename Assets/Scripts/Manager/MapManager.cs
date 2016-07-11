@@ -48,6 +48,11 @@ public class MapManager : MonoBehaviour
 
     }
 
+    public MapType GetMap(int posX,int posY)
+    {
+        return map[posX,posY];
+    }
+
     public MapType[,] GetMap()
     {
         return map;

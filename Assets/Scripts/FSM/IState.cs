@@ -6,4 +6,5 @@ public interface  IState
     void OnEnter(string prevState="");
     void OnExit(string nextState="");
     void OnUpdate();
+    void OnStart();
 }

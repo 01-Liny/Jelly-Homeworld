@@ -10,6 +10,7 @@ public class UISelectedArea : MonoBehaviour
     public TowerManager m_TowerManager;
     public MapManager m_MapManager;
     public ConstructUIController m_ConstructUIController;
+    public FSM fsm;
 
     private Vector3 m_VecTemp=new Vector3();
 
@@ -65,7 +66,37 @@ public class UISelectedArea : MonoBehaviour
         //如果在地图范围内
         if (isOutRange==false)
         {
-            if(m_ConstructUIController.enabled==true)
+            //将游戏地图上的坐标转换为地图数组的下标
+            int posX,posY;
+            posX=(int)(m_VecTemp.x / size);
+            posY=(int)(m_VecTemp.z / size);
+
+            MapType mapType=m_MapManager.GetMap(posX,posY);
+
+            //只有该位置有石头或防御塔的时候才会显示ConstructUI
+            switch (mapType)
+            {
+                case MapType.Empty:
+                {
+                    if(fsm.GetCurrentState()=="Stone")
+                    {
+                        m_ConstructUIController.enabled=true;
+                    }
+                    break;
+                }
+                case MapType.Basic://就是石头的意思
+                {
+                    if(fsm.GetCurrentState()=="Tower")
+                    {
+                        m_ConstructUIController.enabled=true;
+                    }
+                    break;
+                }
+                //default:
+            }
+
+            /*
+            if()
             {
                 m_ConstructUIController.enabled = false;
             }
@@ -74,10 +105,10 @@ public class UISelectedArea : MonoBehaviour
                 {
                     //将游戏地图上的坐标转换为地图数组的下标
                     if (m_MapManager.SetMap((int)(m_VecTemp.x / size), (int)(m_VecTemp.z / size), MapType.Tower))
-                        m_TowerManager.RandomInstantiate(m_VecTemp);
+                        m_TowerManager.RandomInstantiateTower(m_VecTemp);
                 }
             }
-
+            */
         }
     }
 }

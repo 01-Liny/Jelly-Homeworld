@@ -2,15 +2,15 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class UISelectStoneState : MonoBehaviour ,IState
+public class UISelectTowerState : MonoBehaviour ,IState
 {
-    public FSM FSMConstruct;
+	public FSM FSMConstruct;
     private Image m_Image;
 
     private void Start()
     {
         m_Image = GetComponent<Image>();
-        FSMConstruct.Register("Stone", this);
+        FSMConstruct.Register("Tower", this);
     }
 
     #region IState Members
