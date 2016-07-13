@@ -6,11 +6,13 @@ public class UISelectedArea : MonoBehaviour
 {
 	public GameObject m_Prefabs;
     public Camera m_Camera;
-    public RaycastHit m_Hit;
+
     public TowerManager m_TowerManager;
     public MapManager m_MapManager;
     public ConstructUIController m_ConstructUIController;
     public FSM fsm;
+
+    private RaycastHit m_Hit;
 
     private Vector3 m_VecTemp=new Vector3();
 
@@ -20,10 +22,15 @@ public class UISelectedArea : MonoBehaviour
     private int temp;
     private Ray ray;
 
+    //专门记录要传递的地图位置信息
+    private Vector2 m_MapPosTemp;
+
+
     private void Start()
     {
         size = MapManager.mapSize;
         halfSize = size / 2;
+        m_MapPosTemp=new Vector2();
     }
 
     public void Update()
@@ -60,6 +67,34 @@ public class UISelectedArea : MonoBehaviour
         
     }
 
+    public Vector2 GetClickMapPos()
+    {
+         //将游戏地图上的坐标转换为地图数组的下标
+
+         m_MapPosTemp.x=(int)(m_VecTemp.x / size);
+         m_MapPosTemp.y=(int)(m_VecTemp.z / size);
+
+         return m_MapPosTemp;
+    }
+
+    public Vector3 GetClickOffsetRealPos()
+    {
+        return m_VecTemp;
+    }
+
+    public Ray GetCameraRay()
+    {
+        return ray;
+    }
+
+    public Vector2 RealPosToMapPos(Vector3 m_RealPos)
+    {
+         m_MapPosTemp.x=(int)(m_RealPos.x / size);
+         m_MapPosTemp.y=(int)(m_RealPos.z / size);
+
+         return m_MapPosTemp;
+    }
+
     //当鼠标左键被触发时，调用此函数
     public void ClickConfirmed()
     {
@@ -80,7 +115,16 @@ public class UISelectedArea : MonoBehaviour
                 {
                     if(fsm.GetCurrentState()=="Stone")
                     {
-                        m_ConstructUIController.enabled=true;
+                        //写到一个函数里面
+                        m_ConstructUIController.MoveTo(m_VecTemp.x,m_VecTemp.z);
+                        m_ConstructUIController.UpdateMapPos(RealPosToMapPos(m_VecTemp));
+                        m_ConstructUIController.UpdateCameraRay(ray);
+                        m_ConstructUIController.ChangeButtonText("Stone");
+                        m_ConstructUIController.Enable();
+                    }
+                    else
+                    {
+                        m_ConstructUIController.Disable();
                     }
                     break;
                 }
@@ -88,27 +132,25 @@ public class UISelectedArea : MonoBehaviour
                 {
                     if(fsm.GetCurrentState()=="Tower")
                     {
-                        m_ConstructUIController.enabled=true;
+                        //写到一个函数里面
+                        m_ConstructUIController.MoveTo(m_VecTemp.x,m_VecTemp.z);
+                        m_ConstructUIController.UpdateMapPos(RealPosToMapPos(m_VecTemp));
+                        m_ConstructUIController.UpdateCameraRay(ray);
+                        m_ConstructUIController.ChangeButtonText("Tower");
+                        m_ConstructUIController.Enable();
+                    }
+                    else
+                    {
+                        m_ConstructUIController.Disable();
                     }
                     break;
                 }
-                //default:
-            }
-
-            /*
-            if()
-            {
-                m_ConstructUIController.enabled = false;
-            }
-            else
-            {
+                default:
                 {
-                    //将游戏地图上的坐标转换为地图数组的下标
-                    if (m_MapManager.SetMap((int)(m_VecTemp.x / size), (int)(m_VecTemp.z / size), MapType.Tower))
-                        m_TowerManager.RandomInstantiateTower(m_VecTemp);
+                    m_ConstructUIController.Disable();
+                    break;
                 }
             }
-            */
         }
     }
 }

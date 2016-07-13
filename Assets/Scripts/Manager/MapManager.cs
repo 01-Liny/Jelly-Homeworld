@@ -19,6 +19,7 @@ public class MapManager : MonoBehaviour
     //存放地图位置信息
     private MapType[,] map;
 
+    //初始化地图信息，默认值为0（Empty），地图边缘有一圈围墙，建筑类型为石头（Basic）
     private void Start()
     {
         map = new MapType[mapRegionX, mapRegionY];
@@ -28,31 +29,50 @@ public class MapManager : MonoBehaviour
             {
                 if (j == 0 || j == mapRegionX - 1 || k == 0 || k == mapRegionY - 1)
                 {
-                    map[j, k] = MapType.Tower;
+                    map[j, k] = MapType.Basic;
                 }
             }
         }
     }
 
-    //不完整代码               要改要改！！！！！！！！！
+    //是非可以建造制定建筑，如果可以则修改地图信息并返回true，不行则为false
     public bool SetMap(int posX, int posY, MapType mapType)
     {
-        //如果该位置没有防御塔
-        if (map[posX, posY] != MapType.Tower)
+        //通过建筑类型执行分支
+        switch (map[posX, posY])
         {
-            map[posX, posY] = mapType;
-            return true;
+            case MapType.Empty:
+            {
+                //石头只能在空地上建造
+                if(mapType==MapType.Basic)
+                {
+                    map[posX, posY] = mapType;
+                    return true;
+                }
+                break;
+            }
+            case MapType.Basic:
+            {
+                //塔只能在石头上建造
+                if(mapType==MapType.Tower)
+                {
+                    map[posX, posY] = mapType;
+                    return true;
+                }
+                break;
+            }
         }
         Debug.LogError("Map Error");
         return false;
-
     }
 
+    //根据参数地图位置信息，返回该位置的建筑类型
     public MapType GetMap(int posX,int posY)
     {
         return map[posX,posY];
     }
 
+    //返回所有地图信息
     public MapType[,] GetMap()
     {
         return map;

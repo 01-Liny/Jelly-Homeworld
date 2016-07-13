@@ -16,8 +16,8 @@ public class InputManager : MonoBehaviour
             {
                 return;
             }
+            //转到该实体进行鼠标位置分析和接下来的行为
             m_SelectedArea.ClickConfirmed();
-            Global_Variables.FSMConstruct.Test();
         }
     }
 }
