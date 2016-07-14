@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;//使用泛型的时候需要这个
 
-public class MonsterPathFinding : MonoBehaviour
+public class MonsterPathFinding
 {
     private int currentWayPoint = 0;
     private float speed = 1.0f;
