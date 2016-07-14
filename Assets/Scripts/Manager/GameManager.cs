@@ -4,6 +4,8 @@ using System;
 
 public class GameManager : MonoBehaviour 
 {
+    //寻路实体
+    MonsterPathFinding monsterPathFinding = new MonsterPathFinding();
     //声明委托
     public delegate void EnemyDiedEventHandler(object sender, EnemyDiedEventsArgs e);
     public static event EnemyDiedEventHandler EnemyDied;
@@ -30,5 +32,13 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         TowerInfo.Init();
+        int[,] map = new int[7, 7]{{1, 1, 1, 1, 1, 1, 1},
+                                    {1, 0, 1, 0, 0, 0, 1},
+                                    {1, 0, 1, 0, 1, 0, 1},
+                                    {1, 0, 0, 0, 0, 0, 1},
+                                    {1, 0, 1, 1, 1, 0, 1},
+                                    {1, 0, 0, 0, 1, 0, 1},
+                                    {1, 1, 1, 1, 1, 1, 1}};
+        monsterPathFinding.monsterPathFinding(map, 5, 3, 5, 5);
     }
 }
