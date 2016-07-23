@@ -45,6 +45,7 @@ public class ConstructUIController : MonoBehaviour
     {
         this.m_MapPos.x=m_MapPos.x;
         this.m_MapPos.y=m_MapPos.y;
+        Debug.Log("X:"+m_MapPos.x+" Y:"+m_MapPos.y);
     }
 
     //更新上一次显示UI时屏幕到鼠标的射线信息

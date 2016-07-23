@@ -181,6 +181,7 @@ public class MonsterPathFinding
                         //}
                     }
                 }
+                //m_pathStore.Pop();
             }
             else
             {

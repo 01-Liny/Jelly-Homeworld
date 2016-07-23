@@ -36,7 +36,7 @@ public class UISelectStoneState : MonoBehaviour ,IState
 	{
         Vector2 m_MapPos=m_ConstructUIController.m_MapPos;
         //如果可以添加到地图
-        if(m_MapManager.SetMap((int)m_MapPos.x,(int)m_MapPos.y,MapType.Basic))
+        if(m_MapManager.ModifyMap((int)m_MapPos.x,(int)m_MapPos.y,MapType.Basic))
         {
             m_TowerManger.RandomInstantiateStone(m_ConstructUIController.transform.position);
         }

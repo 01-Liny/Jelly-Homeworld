@@ -9,6 +9,7 @@ public class TowerManager : MonoBehaviour
     private GameObject m_Instance;
     private BasicTower m_InstanceBasicTower;
     [SerializeField]private List<BasicTower> m_TowerList = new List<BasicTower>();
+    [SerializeField]private List<GameObject> m_StoneList = new List<GameObject>();
 
     private RaycastHit m_Hit;
 
@@ -32,6 +33,7 @@ public class TowerManager : MonoBehaviour
 			m_SelectedPrefab=m_StonePrefabs[Random.Range(0, m_StonePrefabs.Length)];
             m_Position.y = 0.158f;
             m_Instance=Instantiate(m_SelectedPrefab,m_Position,Quaternion.identity)as GameObject;
+            m_StoneList.Add(m_Instance);
         }
     }
 
