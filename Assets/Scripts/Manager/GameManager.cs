@@ -4,8 +4,8 @@ using System;
 
 public class GameManager : MonoBehaviour 
 {
-    //寻路实体
-    MonsterPathFinding monsterPathFinding = new MonsterPathFinding();
+     //寻路实体
+    private MonsterPathFinding monsterPathFinding = new MonsterPathFinding();
     //声明委托
     public delegate void EnemyDiedEventHandler(object sender, EnemyDiedEventsArgs e);
     public static event EnemyDiedEventHandler EnemyDied;

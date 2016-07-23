@@ -13,14 +13,14 @@ public enum MapType
 public class MapManager : MonoBehaviour
 {
     public static int mapSize = 2;
-    public static int mapRegionX = 50;
-    public static int mapRegionY = 50;
+    public static int mapRegionX = 7;//实际要减1，外围有围墙
+    public static int mapRegionY = 8;//实际要减1，外围有围墙
 
     //存放地图位置信息
     private MapType[,] map;
 
     //初始化地图信息，默认值为0（Empty），地图边缘有一圈围墙，建筑类型为石头（Basic）
-    private void Start()
+    private void Awake()
     {
         map = new MapType[mapRegionX, mapRegionY];
         for (int j = 0; j < mapRegionX; j++)
@@ -33,6 +33,7 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
+        //monsterPathFinding.monsterPathFinding(map, 5, 3, 5, 5);
     }
 
     //是非可以建造制定建筑，如果可以则修改地图信息并返回true，不行则为false
