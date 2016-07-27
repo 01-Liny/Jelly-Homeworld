@@ -115,12 +115,17 @@ public class UISelectedArea : MonoBehaviour
                 {
                     if(fsm.GetCurrentState()=="Stone")
                     {
-                        //写到一个函数里面
-                        m_ConstructUIController.MoveTo(m_VecTemp.x,m_VecTemp.z);
-                        m_ConstructUIController.UpdateMapPos(RealPosToMapPos(m_VecTemp));
-                        m_ConstructUIController.UpdateCameraRay(ray);
-                        m_ConstructUIController.ChangeButtonText("Stone");
-                        m_ConstructUIController.Enable();
+                        //直接建造 不经过UI确认
+                        //如果可以添加到地图
+                        if (m_MapManager.ModifyMap(posX, posY, MapType.Basic))
+                        {
+                            m_TowerManager.RandomInstantiateStone(GetClickOffsetRealPos());
+                        }
+                        // m_ConstructUIController.MoveTo(m_VecTemp.x,m_VecTemp.z);
+                        // m_ConstructUIController.UpdateMapPos(RealPosToMapPos(m_VecTemp));
+                        // m_ConstructUIController.UpdateCameraRay(ray);
+                        // m_ConstructUIController.ChangeButtonText("Stone");
+                        // m_ConstructUIController.Enable();
                     }
                     else
                     {
@@ -142,6 +147,17 @@ public class UISelectedArea : MonoBehaviour
                     else
                     {
                         m_ConstructUIController.Disable();
+                        if(fsm.GetCurrentState()=="DeleteStone")
+                        {
+                            //直接删除 不经过UI确认
+                            if (m_MapManager.GetMap(posX,posY)==MapType.Basic)
+                            {
+                                //先删除石头实体模型，再删除地图上的石头信息，防止石头模型实体未被删除，地图已被删除的情况，石头的Collider未覆盖整个石头建造区域
+                                //由于边界的石头没有实体模型，所以同时可以防止边界石头的地图信息被删除
+                                if(m_TowerManager.DestroyStone(ray))
+                                    m_MapManager.DeleteStone(posX, posY);
+                            }
+                        }
                     }
                     break;
                 }

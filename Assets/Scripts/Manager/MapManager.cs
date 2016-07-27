@@ -32,14 +32,15 @@ public class MapManager : MonoBehaviour
     private MonsterPathFinding monsterPathFinding;
 
     //测试代码
-    public bool GenerateStone=false;
+    public bool isGenerateStone=false;
     public bool isModifyMap=false;
+    public bool isResetStone=false;
 
     public void FixedUpdate()
     {
-        if(GenerateStone)
+        if(isGenerateStone)
         {
-            GenerateStone=false;
+            isGenerateStone=false;
             GenerateStoneByMap();
         }
         if(isModifyMap)
@@ -47,6 +48,11 @@ public class MapManager : MonoBehaviour
             isModifyMap=false;
             ModifyMapFile(0);
             SaveMapFile();
+        }
+        if(isResetStone)
+        {
+            isResetStone=false;
+            ResetStone();
         }
     }
 
@@ -57,6 +63,19 @@ public class MapManager : MonoBehaviour
         map = new MapType[mapRegionX, mapRegionY];
         mapFileCache=new MapType[5,mapRegionX, mapRegionY];//最多5份地图
         mapTemp=new int[mapRegionX, mapRegionY];
+        InitMap();
+        //monsterPathFinding.monsterPathFinding(mapTemp, 5, 3, 5, 5);
+        Debug.Log("Path Finding Successed");
+
+        availableMapCount=0;
+        filePath=Application.persistentDataPath+"//map.txt";
+        fileInfo=new FileInfo(filePath);
+        LoadMapFile();
+        ChooseMapFile(0);
+    }
+
+    public void InitMap()
+    {
         for (int j = 0; j < mapRegionX; j++)
         {
             for (int k = 0; k < mapRegionY; k++)
@@ -66,16 +85,19 @@ public class MapManager : MonoBehaviour
                     map[j, k] = MapType.Basic;
                     mapTemp[j,k]=(int)MapType.Basic;
                 }
+                else
+                {
+                    map[j, k] = MapType.Empty;
+                }
             }
         }
-        //monsterPathFinding.monsterPathFinding(mapTemp, 5, 3, 5, 5);
-        Debug.Log("Path Finding Successed");
+    }
 
-        availableMapCount=0;
-        filePath=Application.persistentDataPath+"//map.txt";
-        fileInfo=new FileInfo(filePath);
-        LoadMapFile();
-        ChooseMapFile(0);
+    public void ResetStone()
+    {
+        InitMap();
+        m_TowerManager.ClearStoneList();
+        GenerateStoneByMap();
     }
 
     //是非可以建造制定建筑，如果可以则修改地图信息并返回true，不行则为false
@@ -108,6 +130,16 @@ public class MapManager : MonoBehaviour
         Debug.LogError("Map Error");
         return false;
     }
+    
+    public bool DeleteStone(int posX,int posY)
+    {
+        if(map[posX,posY]==MapType.Basic)
+        {
+            map[posX,posY]=MapType.Empty;
+            return true;
+        }
+        return false;
+    }
 
     public void GenerateStoneByMap()
     {
@@ -118,9 +150,14 @@ public class MapManager : MonoBehaviour
             {
                 if(map[j,k]==MapType.Basic)
                 {
-                    m_VecTemp.x=j*mapSize;
-                    m_VecTemp.z=k*mapSize;
-                    m_TowerManager.RandomInstantiateStone(m_VecTemp);
+                    //不属于边界的石头才会生成
+                    //先注释，方便测试                                            正式程序需要解除注释
+                    //if (!(j == 0 || j == mapRegionX - 1 || k == 0 || k == mapRegionY - 1))
+                    {
+                        m_VecTemp.x=j*mapSize;
+                        m_VecTemp.z=k*mapSize;
+                        m_TowerManager.RandomInstantiateStone(m_VecTemp);
+                    }
                 }
             }
         }
@@ -175,7 +212,6 @@ public class MapManager : MonoBehaviour
                     map[j,k]=mapFileCache[mapIndex,j,k];
                 }
             }
-            GenerateStoneByMap();
             return true;
         }
         else
@@ -256,6 +292,7 @@ public class MapManager : MonoBehaviour
         m_SW.Close();
         m_SW.Dispose();
     }
+
 
     //根据参数地图位置信息，返回该位置的建筑类型
     public MapType GetMap(int posX,int posY)

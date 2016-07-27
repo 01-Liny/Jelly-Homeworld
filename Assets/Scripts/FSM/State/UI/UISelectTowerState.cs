@@ -6,7 +6,7 @@ public class UISelectTowerState : MonoBehaviour ,IState
 {
 	public FSM FSMConstruct;
     public MapManager m_MapManager;
-    public TowerManager m_TowerManger;
+    public TowerManager m_TowerManager;
     public ConstructUIController m_ConstructUIController;
     private Image m_Image;
 
@@ -40,7 +40,7 @@ public class UISelectTowerState : MonoBehaviour ,IState
             //摧毁石头
             //m_TowerManger.DestroyStone(m_ConstructUIController.m_Ray);
             //建造防御塔
-            m_TowerManger.RandomInstantiateTower(m_ConstructUIController.transform.position);
+            m_TowerManager.RandomInstantiateTower(m_ConstructUIController.transform.position);
         }
 	}
 
