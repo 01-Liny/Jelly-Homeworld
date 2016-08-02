@@ -8,7 +8,7 @@ public class MonsterPathFinding
     private int currentWayPoint = 0;
     private float speed = 1.0f;
 
-    private static int m = 5, n = 5;			//定义地图的高和宽
+    private static int m = 5, n = 6;			//定义地图的高和宽
     private int shortestPath = 1000;
     public static int stackSize;				//最短路径的数组大小（最小路径的栈的大小）
     public static int ListSize = 0;
@@ -58,10 +58,11 @@ public class MonsterPathFinding
         public bool whetherMove()
         {
             int tempX, tempY;
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 8; i++)
             {
                 tempX = x + moveArray[i, 0];
                 tempY = y + moveArray[i, 1];
+                Debug.Log("tempX:" + tempX + " tempY:" + tempY);
                 if (markMapArray[tempX, tempY] == 0)
                 {
                     return true;
@@ -154,7 +155,7 @@ public class MonsterPathFinding
                 //......优化当pathLength等于他们之间斜线的距离时，那就直接跳出
 
                 m_pathStore.Push(m_tempNode);
-                if (m_tempNode.arriveEndPosition(endX, endY))
+                if (m_tempNode.arriveEndPosition(endX, endY)==true)
                 {
                     findPath = true;
                     if (m_tempNode.pathLength < shortestPath)
@@ -178,10 +179,10 @@ public class MonsterPathFinding
                         //{
                         //    m_pathArray[j] = (Node)m_tempStore.Peek().DeepClone();
                         //    m_tempStore.Pop();
-                        //}
+                        //}                      
                     }
+                    m_pathStore.Pop();
                 }
-                //m_pathStore.Pop();
             }
             else
             {

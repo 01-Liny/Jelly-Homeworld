@@ -12,7 +12,8 @@ public class MonsterWalk : MonoBehaviour
     private float lastWaypointSwitchTime;
     private float speed = 1.0f;
     private MonsterPathFinding.Node[] m_pathArray;
-    private List<MonsterPathFinding.Node> m_ListPath;
+    //private List<MonsterPathFinding.Node> m_ListPath;
+    private List<Point> m_ListPath;
     // Use this for initialization
     void Start()
     {
@@ -29,7 +30,8 @@ public class MonsterWalk : MonoBehaviour
 
         lastWaypointSwitchTime = Time.time;
         m_pathArray = MonsterPathFinding.m_pathArray;
-        m_ListPath = MonsterPathFinding.m_ListPath;
+        //m_ListPath = MonsterPathFinding.m_ListPath;
+        m_ListPath = AStar.m_ListPath;
     }
 
     // Update is called once per frame
@@ -74,14 +76,21 @@ public class MonsterWalk : MonoBehaviour
         //}
         if (m_ListPath[0] != null)
         {
-            for (int i = 0; i < MonsterPathFinding.stackSize - 1; i++)
+            //for (int i = 0; i < MonsterPathFinding.stackSize - 1; i++)
+            //{
+            //    temp1.Set(m_ListPath[i].x, 1, m_ListPath[i].y);
+            //    temp2.Set(m_ListPath[i + 1].x, 1, m_ListPath[i + 1].y);
+            //    Debug.DrawLine(temp1, temp2, Color.blue);
+            //}
+            for (int i = 0; i < AStar.m_ListPath.Count - 1; i++)
             {
-                temp1.Set(m_ListPath[i].x, 1, m_ListPath[i].y);
-                temp2.Set(m_ListPath[i + 1].x, 1, m_ListPath[i + 1].y);
+                temp1.Set(m_ListPath[i].X, 1, m_ListPath[i].Y);
+                temp2.Set(m_ListPath[i + 1].X, 1, m_ListPath[i + 1].Y);
+                Debug.DrawRay(temp1, Vector3.up,Color.red);
                 Debug.DrawLine(temp1, temp2, Color.blue);
             }
-            startPosition.Set(m_ListPath[currentWayPoint].x, 1, m_ListPath[currentWayPoint].y);
-            endPosition.Set(m_ListPath[currentWayPoint + 1].x, 1, m_ListPath[currentWayPoint + 1].y);
+            startPosition.Set(m_ListPath[currentWayPoint].X, 1, m_ListPath[currentWayPoint].Y);
+            endPosition.Set(m_ListPath[currentWayPoint + 1].X, 1, m_ListPath[currentWayPoint + 1].Y);
             newDirection = (endPosition - startPosition);
 
             rotation = Quaternion.LookRotation(newDirection);
@@ -101,7 +110,7 @@ public class MonsterWalk : MonoBehaviour
             //RotateIntoMoveDirection();
             if (transform.position == endPosition)
             {
-                if (currentWayPoint < MonsterPathFinding.stackSize - 2)
+                if (currentWayPoint < AStar.m_ListPath.Count - 2)
                 {
                     currentWayPoint++;
                     lastWaypointSwitchTime = Time.time;

@@ -105,6 +105,8 @@ public class MapManager : MonoBehaviour
     {
         m_TowerManager.ClearStoneList();
         GenerateStoneByMap();
+        //monsterPathFinding.monsterPathFinding(mapTemp, 5, 3, 5, 5);
+        Debug.Log("Path Finding Successed");
     }
 
     //是非可以建造制定建筑，如果可以则修改地图信息并返回true，不行则为false
