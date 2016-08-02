@@ -54,7 +54,7 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
-        monsterPathFinding.monsterPathFinding(mapTemp, 5, 3, 5, 5);
+        //monsterPathFinding.monsterPathFinding(mapTemp, 5, 3, 5, 5);
         Debug.Log("Path Finding Successed");
     }
 
