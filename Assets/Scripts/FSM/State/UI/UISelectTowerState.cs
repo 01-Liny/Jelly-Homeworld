@@ -2,9 +2,10 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class UISelectTowerState : MonoBehaviour ,IState
+//UI已重写 该UI已作废
+public class UISelectTowerState : MonoBehaviour, IState
 {
-	public FSM FSMConstruct;
+    public FSM FSMConstruct;
     public MapManager m_MapManager;
     public TowerManager m_TowerManager;
     public ConstructUIController m_ConstructUIController;
@@ -24,25 +25,25 @@ public class UISelectTowerState : MonoBehaviour ,IState
     }
     public void OnExit(string nextState)
     {
-        m_Image.color=Color.white;
+        m_Image.color = Color.white;
     }
     public void OnUpdate()
     {
-        
+
     }
 
-	public void OnTrigger()
-	{
-        Vector2 m_MapPos=m_ConstructUIController.m_MapPos;
+    public void OnTrigger()
+    {
+        Vector2 m_MapPos = m_ConstructUIController.m_MapPos;
         //如果可以添加到地图
-        if(m_MapManager.ModifyMap((int)m_MapPos.x,(int)m_MapPos.y,MapType.Tower))
+        if (m_MapManager.ModifyMap((int)m_MapPos.x, (int)m_MapPos.y, MapType.Tower))
         {
             //摧毁石头
             //m_TowerManger.DestroyStone(m_ConstructUIController.m_Ray);
             //建造防御塔
             m_TowerManager.RandomInstantiateTower(m_ConstructUIController.transform.position);
         }
-	}
+    }
 
     #endregion
 }

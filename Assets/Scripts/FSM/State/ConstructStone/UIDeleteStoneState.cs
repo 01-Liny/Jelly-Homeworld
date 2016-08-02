@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class UIDeleteStoneState : MonoBehaviour ,IState
+public class UIDeleteStoneState : MonoBehaviour, IState
 {
     public FSM FSMConstruct;
 
@@ -10,28 +10,28 @@ public class UIDeleteStoneState : MonoBehaviour ,IState
 
     private void Start()
     {
-        m_Image=GetComponent<Image>();
+        m_Image = GetComponent<Image>();
         //注册到状态机
         FSMConstruct.Register("DeleteStone", this);
     }
 
-	#region IState Members
+    #region IState Members
     public void OnEnter(string prevState)
     {
         m_Image.color = Color.green;
     }
     public void OnExit(string nextState)
     {
-        m_Image.color=Color.white;
+        m_Image.color = Color.white;
     }
     public void OnUpdate()
     {
-        
+
     }
 
-	public void OnTrigger()
-	{
+    public void OnTrigger()
+    {
 
-	}
+    }
     #endregion
 }

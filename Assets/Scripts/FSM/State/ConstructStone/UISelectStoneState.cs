@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class UISelectStoneState : MonoBehaviour ,IState
+public class UISelectStoneState : MonoBehaviour, IState
 {
     public FSM FSMConstruct;
     //public MapManager m_MapManager;
@@ -26,16 +26,16 @@ public class UISelectStoneState : MonoBehaviour ,IState
 
     public void OnExit(string nextState)
     {
-        m_Image.color=Color.white;
+        m_Image.color = Color.white;
     }
 
     public void OnUpdate()
     {
-        
+
     }
 
-	public void OnTrigger()
-	{
+    public void OnTrigger()
+    {
         //建造石头时不再触发确认UI，已作废
         // Vector2 m_MapPos=m_ConstructUIController.m_MapPos;
         // //如果可以添加到地图
@@ -43,6 +43,6 @@ public class UISelectStoneState : MonoBehaviour ,IState
         // {
         //     m_TowerManager.RandomInstantiateStone(m_ConstructUIController.transform.position);
         // }
-	}
+    }
     #endregion
 }
