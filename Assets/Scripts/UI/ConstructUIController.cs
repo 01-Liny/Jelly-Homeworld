@@ -47,6 +47,7 @@ public class ConstructUIController : MonoBehaviour
     public void ChangeState(string state)
     {
         this.state = state;
+        m_Tower.active
     }
 
     //更新地图坐标，参数来自上一次显示UI时的地图坐标
