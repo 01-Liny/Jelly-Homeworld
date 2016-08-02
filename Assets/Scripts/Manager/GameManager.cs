@@ -30,13 +30,29 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         TowerInfo.Init();
-        // int[,] map = new int[7, 7]{{1, 1, 1, 1, 1, 1, 1},
-        //                             {1, 0, 1, 0, 0, 0, 1},
-        //                             {1, 0, 1, 0, 1, 0, 1},
-        //                             {1, 0, 0, 0, 0, 0, 1},
-        //                             {1, 0, 1, 1, 1, 0, 1},
-        //                             {1, 0, 0, 0, 1, 0, 1},
-        //                             {1, 1, 1, 1, 1, 1, 1}};
+        int[,] map = new int[7, 7]{{1, 1, 1, 1, 1, 1, 1},
+                                     {1, 0, 1, 0, 0, 0, 1},
+                                     {1, 0, 1, 0, 1, 0, 1},
+                                     {1, 0, 0, 0, 0, 0, 1},
+                                     {1, 0, 1, 1, 0, 0, 1},
+                                     {1, 0, 0, 0, 1, 0, 1},
+                                     {1, 1, 1, 1, 1, 1, 1}};
+        //测试
+        MapType[,] mapTemp = new MapType[7, 7];
+        for (int i = 0; i < 7; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                mapTemp[i, j] = (MapType)map[i, j];
+            }
+        }
+        Point start = new Point(5, 3);
+        Point end = new Point(5, 5);
+        Point[] pointA = new Point[2] { start, end };
+        Point[] pointB = new Point[2] { start, end };
+        AStar.Maze maze = new AStar.Maze(mapTemp, 7, 7, start, end, pointA, pointB);
+        maze.FindFinalPath();
+        //Debug.Log("Print path:");
         //monsterPathFinding.monsterPathFinding(map, 5, 3, 5, 5);
     }
 }
