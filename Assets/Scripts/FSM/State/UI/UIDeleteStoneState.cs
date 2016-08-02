@@ -16,7 +16,6 @@ public class UIDeleteStoneState : MonoBehaviour ,IState
     }
 
 	#region IState Members
-
     public void OnEnter(string prevState)
     {
         m_Image.color = Color.green;
@@ -30,10 +29,9 @@ public class UIDeleteStoneState : MonoBehaviour ,IState
         
     }
 
-	public void OnStart()
+	public void OnTrigger()
 	{
 
 	}
-
     #endregion
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class BasicTower : MonoBehaviour                                                     //该类应该为abstract
 {
     public bool updateTower;
+    public GameObject m_Hightlight;
     [SerializeField]public TowerType towerType;
     [SerializeField]public TowerLevel towerLevel;
 
@@ -29,7 +30,7 @@ public class BasicTower : MonoBehaviour                                         
     protected float nextFire;//下次攻击的时间
     protected List<Collider> m_EnemyTriggerList = new List<Collider>();
 
-
+    protected Material m_Material;
     //临时初始化函数                                                                           非正式代码，测试后删除
     // public virtual void Start()
     // {
@@ -42,6 +43,31 @@ public class BasicTower : MonoBehaviour                                         
     //     ResetMinEnemyHealth();
     //     RecalcInfo();
     // }
+
+    public virtual void Awake()
+    {
+        //m_Hightlight.SetActive(false);
+        //m_Material = m_Hightlight.GetComponent<Renderer>().material;
+
+    }
+
+    public void NoticeEnableUpdate()
+    {
+        Color temp = m_Material.color;
+        temp.r = 255 / 255.0f;
+        temp.g = 152 / 255.0f;
+        temp.b = 0 / 255.0f;
+        m_Material.color = temp;
+    }
+
+    public void NoticeEnableMerge()
+    {
+        Color temp = m_Material.color;
+        temp.r = 3 / 255.0f;
+        temp.g = 169 / 255.0f;
+        temp.b = 244 / 255.0f;
+        m_Material.color = temp;
+    }
 
     protected virtual void ResetMinEnemyHealth()
     {
@@ -124,6 +150,11 @@ public class BasicTower : MonoBehaviour                                         
     //外部调用初始化
     public virtual void Init(TowerLevel towerLevel)
     {
+        m_Material = m_Hightlight.GetComponent<Renderer>().material;
+        Vector3 temp = m_Hightlight.transform.localScale;
+        temp.Set(0.1f * MapManager.mapSize, 1, 0.1f * MapManager.mapSize);
+        m_Hightlight.transform.localScale = temp;
+
         GameManager.EnemyDied += RemoveEnemy;//注册为订阅者
         this.towerLevel = towerLevel;
         RereadTowerInfo();
@@ -131,6 +162,7 @@ public class BasicTower : MonoBehaviour                                         
         m_AttackRangeCollider.radius = fireRange;//设置攻击范围
         ResetMinEnemyHealth();
         RecalcFireInfo();
+        m_Hightlight.SetActive(false);
     }
 
     //重新设置塔等级

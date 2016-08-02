@@ -31,7 +31,7 @@ public class UISelectTowerState : MonoBehaviour ,IState
         
     }
 
-	public void OnStart()
+	public void OnTrigger()
 	{
         Vector2 m_MapPos=m_ConstructUIController.m_MapPos;
         //如果可以添加到地图

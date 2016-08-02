@@ -1,20 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public enum FSM_ConstructeState
-{
-    Stone,
-    Tower
-}
 
-public class FSM : MonoBehaviour 
+public class FSM : MonoBehaviour, IState, IInput
 {
     protected Dictionary<string, IState> m_States=new Dictionary<string, IState>();
-    protected string currentStateName;
+    [SerializeField]protected string currentStateName;
 
-    private void Start()
+    protected virtual void Start()
     {
-        currentStateName = null;
+        //currentStateName = null;
+        if (currentStateName != "")
+            m_States[currentStateName].OnEnter();
     }
 
     public void Register(string stateName,IState stateObject)
@@ -31,7 +28,7 @@ public class FSM : MonoBehaviour
 
     public void Update()
     {
-        if(currentStateName!=null)
+        if(currentStateName!="")
         m_States[currentStateName].OnUpdate();
     }
 
@@ -40,22 +37,14 @@ public class FSM : MonoBehaviour
         return currentStateName;
     }
 
-    public void OnStart()
-    {
-        if(currentStateName!=null)
-            m_States[currentStateName].OnStart();
-        else
-            Debug.LogError("Cannot OnStart.currentStateName not exist");
-    }
-
     public void ChangeState(string newStateName)
     {
-        if(currentStateName!=null)
-        {
-            m_States[currentStateName].OnExit();
-        }
         if(m_States.ContainsKey(newStateName))
         {
+            if (currentStateName != "")
+            {
+                m_States[currentStateName].OnExit();
+            }
             m_States[newStateName].OnEnter();
             currentStateName = newStateName;
         }
@@ -63,8 +52,40 @@ public class FSM : MonoBehaviour
             Debug.LogError("No Exist State :"+newStateName+",Cannot Change State");
     }
 
-    public void Test()
+    #region IState Members
+    public virtual void OnEnter(string prevState = "")
     {
-        Debug.Log("invoke test");
+        
     }
+
+    public virtual void OnExit(string nextState = "")
+    {
+        
+    }
+
+    public virtual void OnUpdate()
+    {
+        
+    }
+
+    public virtual void OnTrigger()
+    {
+        if (currentStateName != "")
+            m_States[currentStateName].OnTrigger();
+        else
+            Debug.LogError("Cannot OnStart.currentStateName not exist");
+    }
+    #endregion
+
+    #region IInput Members
+    public virtual void OnClick()
+    {
+        if (currentStateName != "")
+        {
+            IInput m_Temp = m_States[currentStateName] as IInput;
+            m_Temp.OnClick();
+        }
+            
+    }
+    #endregion
 }

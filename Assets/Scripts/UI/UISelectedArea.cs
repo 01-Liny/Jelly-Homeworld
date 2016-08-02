@@ -16,7 +16,7 @@ public class UISelectedArea : MonoBehaviour
 
     private Vector3 m_VecTemp=new Vector3();
 
-    private bool isOutRange = false;
+    public bool isOutRange = false;
     private float size;
     private float halfSize;
     private int temp;
@@ -67,6 +67,11 @@ public class UISelectedArea : MonoBehaviour
         
     }
 
+    public bool IsOutRange()
+    {
+        return isOutRange;
+    }
+
     public Vector2 GetClickMapPos()
     {
          //将游戏地图上的坐标转换为地图数组的下标
@@ -95,7 +100,23 @@ public class UISelectedArea : MonoBehaviour
          return m_MapPosTemp;
     }
 
+    //返回当前Ray穿过的可升级或可合并的塔
+    public GameObject GetUpdateTower()
+    {
+        RaycastHit m_Hit;
+        //以ray的方向和原点，发射一条射线，检测射线是否碰撞到LayerMask为Update的Collider
+        //为什么不用加parent
+        if (Physics.Raycast(ray.origin, ray.direction, out m_Hit, Mathf.Infinity, 1 << 11))
+        {
+            //return m_Hit.transform.parent.gameObject;
+            return m_Hit.transform.gameObject;
+        }
+        else
+            return null;
+    }
+
     //当鼠标左键被触发时，调用此函数
+    //已弃用
     public void ClickConfirmed()
     {
         //如果在地图范围内
@@ -138,7 +159,7 @@ public class UISelectedArea : MonoBehaviour
                     if(fsm.GetCurrentState()=="Tower")
                     {
                         //写到一个函数里面
-                        m_ConstructUIController.MoveTo(m_VecTemp.x,m_VecTemp.z);
+                        //m_ConstructUIController.MoveTo(m_VecTemp.x,m_VecTemp.z);
                         m_ConstructUIController.UpdateMapPos(RealPosToMapPos(m_VecTemp));
                         m_ConstructUIController.UpdateCameraRay(ray);
                         m_ConstructUIController.ChangeButtonText("Tower");

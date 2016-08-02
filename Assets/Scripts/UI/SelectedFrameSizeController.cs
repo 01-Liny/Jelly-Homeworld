@@ -13,7 +13,7 @@ public class SelectedFrameSizeController : MonoBehaviour
         frameSize = MapManager.mapSize;
         
         //修改偏移量
-        offset.Set(-frameSize / 2, 0, -frameSize / 2);
+        offset.Set(-frameSize / 2.0f, 0, -frameSize / 2.0f);
         m_OffsetTransform.localPosition = offset;
         
         //画线

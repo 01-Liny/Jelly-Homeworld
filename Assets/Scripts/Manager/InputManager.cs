@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour 
 {
+    public FSM m_FSM;//总状态机
     public UISelectedArea m_SelectedArea;
 
     private void Update()
@@ -17,7 +18,9 @@ public class InputManager : MonoBehaviour
                 return;
             }
             //转到该实体进行鼠标位置分析和接下来的行为
-            m_SelectedArea.ClickConfirmed();
+            //当前状态对应的鼠标事件
+            m_FSM.OnClick();
+            //m_SelectedArea.ClickConfirmed();
         }
     }
 }

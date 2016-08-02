@@ -15,9 +15,10 @@ public enum MapType
 public class MapManager : MonoBehaviour
 {
     public TowerManager m_TowerManager;
-    public static int mapSize = 2;
+    public static int mapSize = 3;
     public static int mapRegionX = 7;//实际要减1，外围有围墙
     public static int mapRegionY = 8;//实际要减1，外围有围墙
+    public int currentMapIndex = 0;//现在读取的地图下标，默认为0
 
     //存放地图位置信息
     private MapType[,] map;
@@ -46,7 +47,7 @@ public class MapManager : MonoBehaviour
         if(isModifyMap)
         {
             isModifyMap=false;
-            ModifyMapFile(0);
+            ModifyMapFile();
             SaveMapFile();
         }
         if(isResetStone)
@@ -100,6 +101,12 @@ public class MapManager : MonoBehaviour
         GenerateStoneByMap();
     }
 
+    public void ReGenerateStoneByMap()
+    {
+        m_TowerManager.ClearStoneList();
+        GenerateStoneByMap();
+    }
+
     //是非可以建造制定建筑，如果可以则修改地图信息并返回true，不行则为false
     public bool ModifyMap(int posX, int posY, MapType mapType)
     {
@@ -141,6 +148,16 @@ public class MapManager : MonoBehaviour
         return false;
     }
 
+    public bool DeleteTower(int posX,int posY)
+    {
+        if (map[posX, posY] == MapType.Tower)
+        {
+            map[posX, posY] = MapType.Basic;
+            return true;
+        }
+        return false;
+    }
+
     public void GenerateStoneByMap()
     {
         Vector3 m_VecTemp=new Vector3();
@@ -166,14 +183,17 @@ public class MapManager : MonoBehaviour
     //读取地图文件，并把地图信息赋值到临时地图数组
     public void LoadMapFile()
     {
-        if(!fileInfo.Exists)//如果不存在地图文件，则初始化一个地图文件，不包含任何地图
+        if(!fileInfo.Exists)//如果不存在地图文件，则初始化一个地图文件，包含5个默认地图
         {
-            StreamWriter m_SW;
-            m_SW=fileInfo.CreateText();
-            m_SW.WriteLine("0");
+            //StreamWriter m_SW;
+            //m_SW=fileInfo.CreateText();
+            //m_SW.WriteLine("0");
             availableMapCount=0;
-            m_SW.Close();
-            m_SW.Dispose();
+            for (int i = 0; i < 5; i++)
+                NewMapFile();
+            SaveMapFile();
+            //m_SW.Close();
+            //m_SW.Dispose();
         }
         else
         {
@@ -200,11 +220,12 @@ public class MapManager : MonoBehaviour
     }
 
     //加载哪个临时地图数组到现有地图数组
-    public bool ChooseMapFile(int mapIndex)
+    private bool ChooseMapFile(int mapIndex)
     {
         //范围内才能加载
         if(availableMapCount>mapIndex)
         {
+            currentMapIndex = mapIndex;
             for(int j=0;j<mapRegionX;j++)
             {
                 for(int k=0;k<mapRegionY;k++)
@@ -220,17 +241,23 @@ public class MapManager : MonoBehaviour
         }
     }
 
+    //临时代码 被按钮调用
+    public void ChooseMap(int mapIndex)
+    {
+        ChooseMapFile(mapIndex);
+    }
+
     //保存当前地图数组到临时地图数组
-    public bool ModifyMapFile(int mapIndex)
+    public bool ModifyMapFile()
     {
         //在范围内才可以修改
-        if(availableMapCount>mapIndex)
+        if(availableMapCount>currentMapIndex)
         {
             for(int j=0;j<mapRegionX;j++)
             {
                 for(int k=0;k<mapRegionY;k++)
                 {
-                    mapFileCache[mapIndex,j,k]=map[j,k];
+                    mapFileCache[currentMapIndex,j,k]=map[j,k];
                 }
             }
             return true;
@@ -239,6 +266,11 @@ public class MapManager : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void ModifyMap()
+    {
+        ModifyMapFile();
     }
 
     //添加新的地图数组到临时地图数组
@@ -283,9 +315,9 @@ public class MapManager : MonoBehaviour
                     temp+=((int)(mapFileCache[i,j,k])).ToString();
                     // temp.Remove(k);
                     // temp.Insert(k,((int)(mapFileCache[i,j,k])).ToString());
-                    Debug.Log(((int)(mapFileCache[i,j,k])).ToString());
+                    //Debug.Log(((int)(mapFileCache[i,j,k])).ToString());
                 }
-                Debug.Log("Temp:"+temp);
+                //Debug.Log("Temp:"+temp);
                 m_SW.WriteLine(temp);
             }
         }

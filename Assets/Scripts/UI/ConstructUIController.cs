@@ -6,9 +6,13 @@ public class ConstructUIController : MonoBehaviour
 {
     public Text text;
     public float UIHeight;
+    public MapManager m_MapManager;
+    public TowerManager m_TowerManager;
 
     private Canvas m_Canvas;
     private Vector3 m_Pos;
+    private GameObject m_Tower;
+    private string state;
 
     [HideInInspector]public Vector2 m_MapPos;
     [HideInInspector]public Ray m_Ray;
@@ -27,10 +31,10 @@ public class ConstructUIController : MonoBehaviour
     }
     
     //将UI移动至参数坐标
-    public void MoveTo(float x,float z)
+    public void MoveTo(Vector3 m_PosTemp)
     {
-        m_Pos.x=x;
-        m_Pos.z=z;
+        m_Pos.x= m_PosTemp.x;
+        m_Pos.z= m_PosTemp.z;
         transform.position=m_Pos;
     }
 
@@ -38,6 +42,11 @@ public class ConstructUIController : MonoBehaviour
     public void ChangeButtonText(string content)
     {
         this.text.text=content;
+    }
+
+    public void ChangeState(string state)
+    {
+        this.state = state;
     }
 
     //更新地图坐标，参数来自上一次显示UI时的地图坐标
@@ -69,5 +78,37 @@ public class ConstructUIController : MonoBehaviour
     {
         //Debug.Log("Invoke ConstructUIController OnDisable");
         m_Canvas.enabled=false;
+    }
+
+    public void SetTowerGameObject(GameObject m_Tower)
+    {
+        this.m_Tower = m_Tower;
+    }
+
+    public GameObject GetTowerGameObject()
+    {
+        return m_Tower;
+    }
+
+    public void OnClick()
+    {
+        //点击后，UI消失
+        Disable();
+        switch (state)
+        {
+            case "Tower":
+                {
+                    m_MapManager.ModifyMap((int)m_MapPos.x, (int)m_MapPos.y, MapType.Tower);
+                    m_TowerManager.RandomInstantiateTower(transform.position);
+                    m_TowerManager.RetrieveUpdatableTower();
+                    UIRemainTowerCount.SubTowerCount();
+                    break;
+                }
+            case "Update":
+                {
+                    m_TowerManager.RetrieveMergeableTower(m_Tower);
+                    break;
+                }
+        }
     }
 }

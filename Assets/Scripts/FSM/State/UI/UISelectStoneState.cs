@@ -5,9 +5,9 @@ using System.Collections;
 public class UISelectStoneState : MonoBehaviour ,IState
 {
     public FSM FSMConstruct;
-    public MapManager m_MapManager;
-    public TowerManager m_TowerManager;
-    public ConstructUIController m_ConstructUIController;
+    //public MapManager m_MapManager;
+    //public TowerManager m_TowerManager;
+    //public ConstructUIController m_ConstructUIController;
     private Image m_Image;
 
     private void Start()
@@ -23,16 +23,18 @@ public class UISelectStoneState : MonoBehaviour ,IState
     {
         m_Image.color = Color.green;
     }
+
     public void OnExit(string nextState)
     {
         m_Image.color=Color.white;
     }
+
     public void OnUpdate()
     {
         
     }
 
-	public void OnStart()
+	public void OnTrigger()
 	{
         //建造石头时不再触发确认UI，已作废
         // Vector2 m_MapPos=m_ConstructUIController.m_MapPos;
@@ -42,6 +44,5 @@ public class UISelectStoneState : MonoBehaviour ,IState
         //     m_TowerManager.RandomInstantiateStone(m_ConstructUIController.transform.position);
         // }
 	}
-
     #endregion
 }
