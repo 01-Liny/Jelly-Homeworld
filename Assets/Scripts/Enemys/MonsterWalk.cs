@@ -74,7 +74,7 @@ public class MonsterWalk : MonoBehaviour
         //        }
         //    }
         //}
-        if (m_ListPath[0] != null)
+        if (m_ListPath.Count!= 0)
         {
             //for (int i = 0; i < MonsterPathFinding.stackSize - 1; i++)
             //{

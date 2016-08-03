@@ -48,10 +48,10 @@ public class GameManager : MonoBehaviour
         }
         Point start = new Point(5, 3);
         Point end = new Point(5, 5);
-        Point[] pointA = new Point[2] { start, end };
+        Point[] pointA = new Point[2] { new Point(1,12), new Point(1, 12) };
         Point[] pointB = new Point[2] { start, end };
-        AStar.Maze maze = new AStar.Maze(mapTemp, 7, 7, start, end, pointA, pointB);
-        maze.FindFinalPath();
+        //AStar.Maze maze = new AStar.Maze(mapTemp, 7, 7, start, end, pointA, pointB);
+        //maze.FindFinalPath();
         //Debug.Log("Print path:");
         //monsterPathFinding.monsterPathFinding(map, 5, 3, 5, 5);
     }

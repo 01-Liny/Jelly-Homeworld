@@ -16,13 +16,18 @@ public class MapManager : MonoBehaviour
 {
     public TowerManager m_TowerManager;
     public static int mapSize = 3;
-    public static int mapRegionX = 7;//实际要减1，外围有围墙
-    public static int mapRegionY = 8;//实际要减1，外围有围墙
+    public static int mapRegionX = 17;//实际要减2，外围有围墙
+    public static int mapRegionY = 13;//实际要减2，外围有围墙
     public int currentMapIndex = 0;//现在读取的地图下标，默认为0
 
     //存放地图位置信息
     private MapType[,] map;
     private MapType[,,] mapFileCache;//存放读取地图文件的临时数组
+    private Point start;
+    private Point end = new Point(5, 5);
+    private Point[] pointA;
+    private Point[] pointB;
+
     private int availableMapCount;//可用地图数组数量
     private string filePath;
     private FileInfo fileInfo;
@@ -30,7 +35,7 @@ public class MapManager : MonoBehaviour
     private int[,] mapTemp;
 
     //寻路实体
-    private MonsterPathFinding monsterPathFinding;
+    private AStar.Maze m_Maze;
 
     //测试代码
     public bool isGenerateStone=false;
@@ -59,12 +64,18 @@ public class MapManager : MonoBehaviour
 
     //初始化地图信息，默认值为0（Empty），地图边缘有一圈围墙，建筑类型为石头（Basic）
     private void Awake()
-    {
-        monsterPathFinding = new MonsterPathFinding();
+    {     
         map = new MapType[mapRegionX, mapRegionY];
         mapFileCache=new MapType[5,mapRegionX, mapRegionY];//最多5份地图
         mapTemp=new int[mapRegionX, mapRegionY];
+
+        start= new Point(1, 1);
+        end = new Point(15, 11);
+        pointA = new Point[2] { new Point(1, 7), new Point(7, 1) };
+        pointB = new Point[2] { new Point(7, 11), new Point(15, 7) };
         InitMap();
+        m_Maze = new AStar.Maze(map, mapRegionY, mapRegionX, start, end, pointA, pointB);
+        m_Maze.FindFinalPath();
         //monsterPathFinding.monsterPathFinding(mapTemp, 5, 3, 5, 5);
         Debug.Log("Path Finding Successed");
 

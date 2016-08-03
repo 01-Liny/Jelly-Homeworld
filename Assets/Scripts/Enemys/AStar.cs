@@ -20,19 +20,19 @@ public class AStar
         private Point start;
         private Point end;
 
-        public Maze(MapType[,] maze,int weight,int height,Point start,Point end, Point[] pointA,Point[] pointB)
+        public Maze(MapType[,] maze,int width,int height,Point start,Point end, Point[] pointA,Point[] pointB)
         {
-            MazeArray = new int[height, weight];
+            MazeArray = new int[height, width];
             this.pointA = pointA;
             this.pointB = pointB;
             for (int i = 0; i < height; i++)
             {
-                for (int j = 0; j < weight; j++)
+                for (int j = 0; j < width; j++)
                 {
                     this.MazeArray[i,j] = (int)maze[i,j];
                 }
             }
-            this.weight= weight;
+            this.weight= width;
             this.height= height;
             this.start = start;
             this.end = end;
@@ -162,6 +162,7 @@ public class AStar
         //在二维数组对应的位置不为障碍物
         private bool CanReach(int x, int y)
         {
+            Debug.Log(x+" "+ y);
             return MazeArray[x, y] == 0;
         }
 

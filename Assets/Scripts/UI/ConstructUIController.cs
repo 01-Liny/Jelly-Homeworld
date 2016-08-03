@@ -8,6 +8,9 @@ public class ConstructUIController : MonoBehaviour
     public float UIHeight;
     public MapManager m_MapManager;
     public TowerManager m_TowerManager;
+    public Camera m_Camera;
+
+    private Vector3 m_Scale;
 
     private Canvas m_Canvas;
     private Vector3 m_Pos;
@@ -18,6 +21,7 @@ public class ConstructUIController : MonoBehaviour
     [HideInInspector]public Ray m_Ray;
     private void Awake()
     {
+        m_Scale = transform.localScale;
         m_Canvas=GetComponent<Canvas>();
         m_Pos=new Vector3();
         m_MapPos=new Vector2();
@@ -28,6 +32,13 @@ public class ConstructUIController : MonoBehaviour
     {
         m_Canvas.enabled=false;
         m_Pos.y=UIHeight;
+    }
+
+    private void Update()
+    {
+        float temp = m_Camera.orthographicSize / 10f;
+        m_Scale.Set(temp,temp,temp);
+        transform.localScale = m_Scale;
     }
     
     //将UI移动至参数坐标
@@ -47,7 +58,6 @@ public class ConstructUIController : MonoBehaviour
     public void ChangeState(string state)
     {
         this.state = state;
-        m_Tower.active
     }
 
     //更新地图坐标，参数来自上一次显示UI时的地图坐标
