@@ -10,10 +10,12 @@ public class MonsterWalk : MonoBehaviour
     private Rigidbody rb;
     private int currentWayPoint = 0;
     private float lastWaypointSwitchTime;
-    private float speed = 1.0f;
+    public static float speed = 1.0f;
     private MonsterPathFinding.Node[] m_pathArray;
     //private List<MonsterPathFinding.Node> m_ListPath;
     private List<Point> m_ListPath;
+
+
     // Use this for initialization
     void Start()
     {
@@ -32,6 +34,9 @@ public class MonsterWalk : MonoBehaviour
         m_pathArray = MonsterPathFinding.m_pathArray;
         //m_ListPath = MonsterPathFinding.m_ListPath;
         m_ListPath = AStar.m_ListPath;
+        Vector3 temp = transform.position;
+        temp.Set(m_ListPath[0].X, 1, m_ListPath[0].Y);
+        transform.position=temp;
     }
 
     // Update is called once per frame
@@ -89,9 +94,9 @@ public class MonsterWalk : MonoBehaviour
                 Debug.DrawRay(temp1, Vector3.up,Color.red);
                 Debug.DrawLine(temp1, temp2, Color.blue);
             }
-            startPosition.Set(m_ListPath[currentWayPoint].X, 1, m_ListPath[currentWayPoint].Y);
+            //startPosition.Set(m_ListPath[currentWayPoint].X, 1, m_ListPath[currentWayPoint].Y);
             endPosition.Set(m_ListPath[currentWayPoint + 1].X, 1, m_ListPath[currentWayPoint + 1].Y);
-            newDirection = (endPosition - startPosition);
+            newDirection = (endPosition - transform.position);
 
             rotation = Quaternion.LookRotation(newDirection);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 0.25f);
@@ -106,15 +111,20 @@ public class MonsterWalk : MonoBehaviour
             pathLength = Vector3.Distance(startPosition, endPosition);
             totalTimeForPath = pathLength / speed;//路径上总共需要花费的时间
             currentTimeOnPath = Time.time - lastWaypointSwitchTime;
-            transform.position = Vector3.Lerp(startPosition, endPosition, currentTimeOnPath / totalTimeForPath);
+            //transform.position = Vector3.Lerp(startPosition, endPosition, currentTimeOnPath / totalTimeForPath);
             //RotateIntoMoveDirection();
-            if (transform.position == endPosition)
+            rb.velocity = transform.forward * speed;
+            if (Vector3.Distance(transform.position, endPosition)<=0.25f)
             {
                 if (currentWayPoint < AStar.m_ListPath.Count - 2)
                 {
                     currentWayPoint++;
                     lastWaypointSwitchTime = Time.time;
                     // TODO: Rotate into move direction
+                }
+                else
+                {
+                    speed=Mathf.Lerp(speed, 0, 0.25f);
                 }
             }
         }

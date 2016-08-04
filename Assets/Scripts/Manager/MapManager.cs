@@ -41,6 +41,7 @@ public class MapManager : MonoBehaviour
     public bool isGenerateStone=false;
     public bool isModifyMap=false;
     public bool isResetStone=false;
+    public bool isPause = false;
 
     public void FixedUpdate()
     {
@@ -59,6 +60,11 @@ public class MapManager : MonoBehaviour
         {
             isResetStone=false;
             ResetStone();
+        }
+        if (isPause)
+        {
+            isResetStone = false;
+            MonsterWalk.speed = 0.5f;
         }
     }
 
