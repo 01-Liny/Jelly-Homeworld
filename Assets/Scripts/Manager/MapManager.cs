@@ -75,7 +75,7 @@ public class MapManager : MonoBehaviour
         pointB = new Point[2] { new Point(7, 11), new Point(15, 7) };
         InitMap();
         m_Maze = new AStar.Maze(map, mapRegionY, mapRegionX, start, end, pointA, pointB);
-        m_Maze.FindFinalPath();
+        //m_Maze.FindFinalPath();
         //monsterPathFinding.monsterPathFinding(mapTemp, 5, 3, 5, 5);
         Debug.Log("Path Finding Successed");
 
@@ -246,6 +246,8 @@ public class MapManager : MonoBehaviour
                     map[j,k]=mapFileCache[mapIndex,j,k];
                 }
             }
+            m_Maze.ChangeMazeArray(map);
+            m_Maze.FindFinalPath();
             return true;
         }
         else
