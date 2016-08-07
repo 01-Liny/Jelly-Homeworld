@@ -12,8 +12,8 @@ public class MonsterWalk : MonoBehaviour
     private float lastWaypointSwitchTime;
     private float pauseStartTime;
     private float pauseTime = 0;
-    private float speed = 1.0f;
-    private float tempSpeed = 1.0f;
+    private float speed = 2.0f;
+    private float tempSpeed;
     private MonsterPathFinding.Node[] m_pathArray;
     //private List<MonsterPathFinding.Node> m_ListPath;
     private List<Point> m_ListPath;
@@ -36,6 +36,7 @@ public class MonsterWalk : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        tempSpeed = speed;
         rb = GetComponent<Rigidbody>();
         temp1 = new Vector3();
         temp2 = new Vector3();
@@ -156,7 +157,7 @@ public class MonsterWalk : MonoBehaviour
         //transform.position = Vector3.Lerp(startPosition, endPosition, currentTimeOnPath / totalTimeForPath);
         //RotateIntoMoveDirection();
         rb.velocity = transform.forward * speed;
-        if (Vector3.Distance(transform.position, endPosition) <= 0.2f)
+        if (Vector3.Distance(transform.position, endPosition) <= 0.5f)
         {
             if (currentWayPoint < AStar.m_ListPath.Count - 2)
             {
@@ -167,6 +168,7 @@ public class MonsterWalk : MonoBehaviour
             else
             {
                 speed = Mathf.Lerp(speed, 0, 0.25f);
+                tempSpeed = speed;
             }
         }
     }
