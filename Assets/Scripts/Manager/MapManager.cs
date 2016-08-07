@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.IO;
-using System.Collections;
+using System.Collections.Generic;
 using System;
 
 public enum MapType
@@ -38,38 +38,55 @@ public class MapManager : MonoBehaviour
     private AStar.Maze m_Maze;
 
     //测试代码
-    public bool isGenerateStone=false;
-    public bool isModifyMap=false;
-    public bool isResetStone=false;
+    public bool isGenerateStone = false;
+    public bool isModifyMap = false;
+    public bool isResetStone = false;
+    private List<Point> m_ListPath;
+    private Vector3 temp1 = new Vector3();
+    private Vector3 temp2 = new Vector3();
 
     public void FixedUpdate()
     {
-        if(isGenerateStone)
+        if (isGenerateStone)
         {
-            isGenerateStone=false;
+            isGenerateStone = false;
             GenerateStoneByMap();
         }
-        if(isModifyMap)
+        if (isModifyMap)
         {
-            isModifyMap=false;
+            isModifyMap = false;
             ModifyMapFile();
             SaveMapFile();
         }
-        if(isResetStone)
+        if (isResetStone)
         {
-            isResetStone=false;
+            isResetStone = false;
             ResetStone();
+        }
+
+        m_ListPath = AStar.m_ListPath;
+        for (int i = 0; i < AStar.m_ListPath.Count - 1; i++)
+        {
+            if (m_ListPath[i + 1].X == -1)
+            {
+                i++;
+                continue;
+            }
+            temp1.Set(m_ListPath[i].X, 1, m_ListPath[i].Y);
+            temp2.Set(m_ListPath[i + 1].X, 1, m_ListPath[i + 1].Y);
+            Debug.DrawRay(temp1, Vector3.up, Color.red);
+            Debug.DrawLine(temp1, temp2, Color.blue);
         }
     }
 
     //初始化地图信息，默认值为0（Empty），地图边缘有一圈围墙，建筑类型为石头（Basic）
     private void Awake()
-    {     
+    {
         map = new MapType[mapRegionX, mapRegionY];
-        mapFileCache=new MapType[5,mapRegionX, mapRegionY];//最多5份地图
-        mapTemp=new int[mapRegionX, mapRegionY];
+        mapFileCache = new MapType[5, mapRegionX, mapRegionY];//最多5份地图
+        mapTemp = new int[mapRegionX, mapRegionY];
 
-        start= new Point(1, 1);
+        start = new Point(1, 1);
         end = new Point(15, 11);
         pointA = new Point[2] { new Point(1, 6), new Point(8, 1) };
         pointB = new Point[2] { new Point(8, 11), new Point(15, 6) };
@@ -79,9 +96,9 @@ public class MapManager : MonoBehaviour
         //monsterPathFinding.monsterPathFinding(mapTemp, 5, 3, 5, 5);
         Debug.Log("Path Finding Successed");
 
-        availableMapCount=0;
-        filePath=Application.persistentDataPath+"//map.txt";
-        fileInfo=new FileInfo(filePath);
+        availableMapCount = 0;
+        filePath = Application.persistentDataPath + "//map.txt";
+        fileInfo = new FileInfo(filePath);
         LoadMapFile();
         ChooseMapFile(0);
     }
@@ -93,12 +110,12 @@ public class MapManager : MonoBehaviour
             for (int k = 0; k < mapRegionY; k++)
             {
                 //初始化传送门
-                if((j==pointA[0].X&&k==pointA[0].Y)||(j == pointA[1].X && k == pointA[1].Y))
+                if ((j == pointA[0].X && k == pointA[0].Y) || (j == pointA[1].X && k == pointA[1].Y))
                 {
                     map[j, k] = MapType.TeleportA;
                     continue;
                 }
-                if((j == pointB[0].X && k == pointB[0].Y) || (j == pointB[1].X && k == pointB[1].Y))
+                if ((j == pointB[0].X && k == pointB[0].Y) || (j == pointB[1].X && k == pointB[1].Y))
                 {
                     map[j, k] = MapType.TeleportB;
                     continue;
@@ -107,7 +124,7 @@ public class MapManager : MonoBehaviour
                 if (j == 0 || j == mapRegionX - 1 || k == 0 || k == mapRegionY - 1)
                 {
                     map[j, k] = MapType.Basic;
-                    mapTemp[j,k]=(int)MapType.Basic;
+                    mapTemp[j, k] = (int)MapType.Basic;
                 }
                 else
                 {
@@ -141,41 +158,52 @@ public class MapManager : MonoBehaviour
         switch (map[posX, posY])
         {
             case MapType.Empty:
-            {
-                //石头只能在空地上建造
-                if(mapType==MapType.Basic)
                 {
-                    map[posX, posY] = mapType;
-                    return true;
+                    //石头只能在空地上建造
+                    if (mapType == MapType.Basic)
+                    {
+                        map[posX, posY] = mapType;
+                        m_Maze.ChangeMazeArray(map);
+                        if (m_Maze.FindFinalPath() == false)
+                        {
+                            map[posX, posY] = MapType.Empty;
+                            m_Maze.ChangeMazeArray(map);
+                            m_Maze.FindFinalPath();
+                            return false;
+                        }
+                        return true;
+                    }
+                    break;
                 }
-                break;
-            }
             case MapType.Basic:
-            {
-                //塔只能在石头上建造
-                if(mapType==MapType.Tower)
                 {
-                    map[posX, posY] = mapType;
-                    return true;
+                    //塔只能在石头上建造
+                    if (mapType == MapType.Tower)
+                    {
+                        map[posX, posY] = mapType;
+                        return true;
+                    }
+                    break;
                 }
-                break;
-            }
         }
         Debug.LogError("Map Error");
         return false;
     }
-    
-    public bool DeleteStone(int posX,int posY)
+
+    public bool DeleteStone(int posX, int posY)
     {
-        if(map[posX,posY]==MapType.Basic)
+        if (map[posX, posY] == MapType.Basic)
         {
-            map[posX,posY]=MapType.Empty;
+            map[posX, posY] = MapType.Empty;
+            m_Maze.ChangeMazeArray(map);
+            //删除石头不可能造成寻路出错问题，不用判断返回值
+            m_Maze.FindFinalPath();
             return true;
         }
         return false;
     }
 
-    public bool DeleteTower(int posX,int posY)
+    public bool DeleteTower(int posX, int posY)
     {
         if (map[posX, posY] == MapType.Tower)
         {
@@ -187,24 +215,24 @@ public class MapManager : MonoBehaviour
 
     public void GenerateStoneByMap()
     {
-        Vector3 m_VecTemp=new Vector3();
+        Vector3 m_VecTemp = new Vector3();
         for (int j = 0; j < mapRegionX; j++)
         {
             for (int k = 0; k < mapRegionY; k++)
             {
                 m_VecTemp.x = j * mapSize;
                 m_VecTemp.z = k * mapSize;
-                if (map[j,k]==MapType.Basic)
+                if (map[j, k] == MapType.Basic)
                 {
                     //不属于边界的石头才会生成
                     //先注释，方便测试                                            正式程序需要解除注释
                     //if (!(j == 0 || j == mapRegionX - 1 || k == 0 || k == mapRegionY - 1))
-                    {  
+                    {
                         m_TowerManager.RandomInstantiateStone(m_VecTemp);
                     }
                 }
                 //生成传送门
-                if(map[j,k]==MapType.TeleportA|| map[j, k] == MapType.TeleportB)
+                if (map[j, k] == MapType.TeleportA || map[j, k] == MapType.TeleportB)
                 {
                     m_TowerManager.RandomInstantiateTeleport(map[j, k], m_VecTemp);
                 }
@@ -215,12 +243,12 @@ public class MapManager : MonoBehaviour
     //读取地图文件，并把地图信息赋值到临时地图数组
     public void LoadMapFile()
     {
-        if(!fileInfo.Exists)//如果不存在地图文件，则初始化一个地图文件，包含5个默认地图
+        if (!fileInfo.Exists)//如果不存在地图文件，则初始化一个地图文件，包含5个默认地图
         {
             //StreamWriter m_SW;
             //m_SW=fileInfo.CreateText();
             //m_SW.WriteLine("0");
-            availableMapCount=0;
+            availableMapCount = 0;
             for (int i = 0; i < 5; i++)
                 NewMapFile();
             SaveMapFile();
@@ -230,19 +258,19 @@ public class MapManager : MonoBehaviour
         else
         {
             StreamReader m_SR;
-            m_SR=fileInfo.OpenText();
-            availableMapCount=Int32.Parse(m_SR.ReadLine());
+            m_SR = fileInfo.OpenText();
+            availableMapCount = Int32.Parse(m_SR.ReadLine());
 
             string temp;
-            for(int i=0;i<availableMapCount;i++)
+            for (int i = 0; i < availableMapCount; i++)
             {
                 m_SR.ReadLine();//每个数组前会空一行
-                for(int j=0;j<mapRegionX;j++)
+                for (int j = 0; j < mapRegionX; j++)
                 {
-                    temp=m_SR.ReadLine();
-                    for(int k=0;k<mapRegionY;k++)
+                    temp = m_SR.ReadLine();
+                    for (int k = 0; k < mapRegionY; k++)
                     {
-                        mapFileCache[i,j,k]=(MapType)(int)temp[k]-48;
+                        mapFileCache[i, j, k] = (MapType)(int)temp[k] - 48;
                     }
                 }
             }
@@ -255,14 +283,14 @@ public class MapManager : MonoBehaviour
     private bool ChooseMapFile(int mapIndex)
     {
         //范围内才能加载
-        if(availableMapCount>mapIndex)
+        if (availableMapCount > mapIndex)
         {
             currentMapIndex = mapIndex;
-            for(int j=0;j<mapRegionX;j++)
+            for (int j = 0; j < mapRegionX; j++)
             {
-                for(int k=0;k<mapRegionY;k++)
+                for (int k = 0; k < mapRegionY; k++)
                 {
-                    map[j,k]=mapFileCache[mapIndex,j,k];
+                    map[j, k] = mapFileCache[mapIndex, j, k];
                 }
             }
             m_Maze.ChangeMazeArray(map);
@@ -285,13 +313,13 @@ public class MapManager : MonoBehaviour
     public bool ModifyMapFile()
     {
         //在范围内才可以修改
-        if(availableMapCount>currentMapIndex)
+        if (availableMapCount > currentMapIndex)
         {
-            for(int j=0;j<mapRegionX;j++)
+            for (int j = 0; j < mapRegionX; j++)
             {
-                for(int k=0;k<mapRegionY;k++)
+                for (int k = 0; k < mapRegionY; k++)
                 {
-                    mapFileCache[currentMapIndex,j,k]=map[j,k];
+                    mapFileCache[currentMapIndex, j, k] = map[j, k];
                 }
             }
             return true;
@@ -311,13 +339,13 @@ public class MapManager : MonoBehaviour
     public bool NewMapFile()
     {
         //地图数量不能超过5
-        if(availableMapCount<5)
+        if (availableMapCount < 5)
         {
-            for(int j=0;j<mapRegionX;j++)
+            for (int j = 0; j < mapRegionX; j++)
             {
-                for(int k=0;k<mapRegionY;k++)
+                for (int k = 0; k < mapRegionY; k++)
                 {
-                    mapFileCache[availableMapCount,j,k]=map[j,k];
+                    mapFileCache[availableMapCount, j, k] = map[j, k];
                 }
             }
             availableMapCount++;
@@ -334,19 +362,19 @@ public class MapManager : MonoBehaviour
     {
         File.Create(filePath).Close();
         StreamWriter m_SW;
-        m_SW=fileInfo.AppendText();
+        m_SW = fileInfo.AppendText();
 
         m_SW.WriteLine(availableMapCount);
-        string temp="";
+        string temp = "";
         for (int i = 0; i < availableMapCount; i++)
         {
             m_SW.WriteLine();//每个数组前会空一行
             for (int j = 0; j < mapRegionX; j++)
             {
-                temp="";
+                temp = "";
                 for (int k = 0; k < mapRegionY; k++)
                 {
-                    temp+=((int)(mapFileCache[i,j,k])).ToString();
+                    temp += ((int)(mapFileCache[i, j, k])).ToString();
                     // temp.Remove(k);
                     // temp.Insert(k,((int)(mapFileCache[i,j,k])).ToString());
                     //Debug.Log(((int)(mapFileCache[i,j,k])).ToString());
@@ -361,9 +389,9 @@ public class MapManager : MonoBehaviour
 
 
     //根据参数地图位置信息，返回该位置的建筑类型
-    public MapType GetMap(int posX,int posY)
+    public MapType GetMap(int posX, int posY)
     {
-        return map[posX,posY];
+        return map[posX, posY];
     }
 
     //返回所有地图信息

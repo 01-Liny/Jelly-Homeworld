@@ -118,18 +118,18 @@ public class MonsterWalk : MonoBehaviour
             changeSpeed(tempSpeed);
         }
 
-        for (int i = 0; i < AStar.m_ListPath.Count - 1; i++)
-        {
-            if (m_ListPath[i + 1].X == -1)
-            {
-                i++;
-                continue;
-            }
-            temp1.Set(m_ListPath[i].X, 1, m_ListPath[i].Y);
-            temp2.Set(m_ListPath[i + 1].X, 1, m_ListPath[i + 1].Y);
-            Debug.DrawRay(temp1, Vector3.up, Color.red);
-            Debug.DrawLine(temp1, temp2, Color.blue);
-        }
+        //for (int i = 0; i < AStar.m_ListPath.Count - 1; i++)
+        //{
+        //    if (m_ListPath[i + 1].X == -1)
+        //    {
+        //        i++;
+        //        continue;
+        //    }
+        //    temp1.Set(m_ListPath[i].X, 1, m_ListPath[i].Y);
+        //    temp2.Set(m_ListPath[i + 1].X, 1, m_ListPath[i + 1].Y);
+        //    Debug.DrawRay(temp1, Vector3.up, Color.red);
+        //    Debug.DrawLine(temp1, temp2, Color.blue);
+        //}
         //startPosition.Set(m_ListPath[currentWayPoint].X, 1, m_ListPath[currentWayPoint].Y);
         if (m_ListPath[currentWayPoint + 1].X == -1)
         {
