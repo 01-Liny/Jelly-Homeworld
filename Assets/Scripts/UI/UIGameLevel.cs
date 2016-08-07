@@ -22,14 +22,14 @@ public class UIGameLevel : MonoBehaviour
 
     public static void ResetLevel()
     {
-        level=0;
+        level=1;
         text.text = level.ToString();
     }
 
     //给UI使用
     public void Reset()
     {
-        level = 0;
+        level = 1;
         text.text = level.ToString();
     }
 

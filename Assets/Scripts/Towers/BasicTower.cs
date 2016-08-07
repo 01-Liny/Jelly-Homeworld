@@ -88,6 +88,8 @@ public class BasicTower : MonoBehaviour                                         
             updateTower = false;
             UpdateTower();
         }
+
+        m_Hightlight.transform.rotation = Quaternion.identity;
     }
     
     public virtual void UpdateTower()

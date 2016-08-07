@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StunTower : BasicTower 
+public class StunTower : BasicTower
 {
-	// public override void Start()
+    // public override void Start()
     // {
     //     GameManager.EnemyDied += RemoveEnemy;//注册为订阅者
     //     this.towerType = TowerType.Stun;
@@ -14,13 +14,13 @@ public class StunTower : BasicTower
     //     ResetMinEnemyHealth();
     //     RecalcInfo();
     // }
-	public override void Init(TowerLevel towerLevel)
+    public override void Init(TowerLevel towerLevel)
     {
         towerType = TowerType.Stun;
         base.Init(towerLevel);
     }
-	
-	protected override void Fire()
+
+    protected override void Fire()
     {
         m_BasicEnemyMinHealth.TakeDamage(realFireDamage);
         m_BasicEnemyMinHealth.TakeStun(towerLevel);
