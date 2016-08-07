@@ -9,11 +9,15 @@ public class TowerManager : MonoBehaviour
     public BasicTower m_NewTower;
     public GameObject[] m_TowerPrefabs;
     public GameObject[] m_StonePrefabs;
-    private  GameObject m_SelectedPrefab;
+    public GameObject m_TeleportAPrefab;
+    public GameObject m_TeleportBPrefab;
+    private GameObject m_SelectedPrefab;
     private GameObject m_Instance;
     private BasicTower m_InstanceBasicTower;
     [SerializeField]private List<BasicTower> m_TowerList = new List<BasicTower>();
     [SerializeField]private List<GameObject> m_StoneList = new List<GameObject>();
+    [SerializeField]
+    private List<GameObject> m_TeleportList = new List<GameObject>();
 
     private RaycastHit m_Hit;
 
@@ -42,6 +46,17 @@ public class TowerManager : MonoBehaviour
         }
     }
 
+    public void RandomInstantiateTeleport(MapType mapType, Vector3 m_Position)
+    {
+        if (mapType == MapType.TeleportA)
+            m_SelectedPrefab = m_TeleportAPrefab;
+        else
+            m_SelectedPrefab = m_TeleportBPrefab;
+        m_Position.y = 1f;
+        m_Instance = Instantiate(m_SelectedPrefab, m_Position, Quaternion.identity) as GameObject;
+        m_TeleportList.Add(m_Instance);
+    }
+
     //删除石头模型实体
     public bool DestroyStone(Ray ray)
     {
@@ -66,6 +81,15 @@ public class TowerManager : MonoBehaviour
             Destroy(m_StoneList[i]);
         }
         m_StoneList.Clear();
+    }
+
+    public void ClearTeleportList()
+    {
+        for(int i=0;i<m_TeleportList.Count;i++)
+        {
+            Destroy(m_TeleportList[i]);
+        }
+        m_TeleportList.Clear();
     }
 
     public void RetrieveUpdatableTower()

@@ -71,8 +71,8 @@ public class MapManager : MonoBehaviour
 
         start= new Point(1, 1);
         end = new Point(15, 11);
-        pointA = new Point[2] { new Point(1, 7), new Point(7, 1) };
-        pointB = new Point[2] { new Point(7, 11), new Point(15, 7) };
+        pointA = new Point[2] { new Point(1, 6), new Point(8, 1) };
+        pointB = new Point[2] { new Point(8, 11), new Point(15, 6) };
         InitMap();
         m_Maze = new AStar.Maze(map, mapRegionY, mapRegionX, start, end, pointA, pointB);
         m_Maze.FindFinalPath();
@@ -92,6 +92,18 @@ public class MapManager : MonoBehaviour
         {
             for (int k = 0; k < mapRegionY; k++)
             {
+                //初始化传送门
+                if((j==pointA[0].X&&k==pointA[0].Y)||(j == pointA[1].X && k == pointA[1].Y))
+                {
+                    map[j, k] = MapType.TeleportA;
+                    continue;
+                }
+                if((j == pointB[0].X && k == pointB[0].Y) || (j == pointB[1].X && k == pointB[1].Y))
+                {
+                    map[j, k] = MapType.TeleportB;
+                    continue;
+                }
+
                 if (j == 0 || j == mapRegionX - 1 || k == 0 || k == mapRegionY - 1)
                 {
                     map[j, k] = MapType.Basic;
@@ -109,12 +121,14 @@ public class MapManager : MonoBehaviour
     {
         InitMap();
         m_TowerManager.ClearStoneList();
+        m_TowerManager.ClearTeleportList();
         GenerateStoneByMap();
     }
 
     public void ReGenerateStoneByMap()
     {
         m_TowerManager.ClearStoneList();
+        m_TowerManager.ClearTeleportList();
         GenerateStoneByMap();
         //monsterPathFinding.monsterPathFinding(mapTemp, 5, 3, 5, 5);
         Debug.Log("Path Finding Successed");
@@ -178,16 +192,21 @@ public class MapManager : MonoBehaviour
         {
             for (int k = 0; k < mapRegionY; k++)
             {
-                if(map[j,k]==MapType.Basic)
+                m_VecTemp.x = j * mapSize;
+                m_VecTemp.z = k * mapSize;
+                if (map[j,k]==MapType.Basic)
                 {
                     //不属于边界的石头才会生成
                     //先注释，方便测试                                            正式程序需要解除注释
                     //if (!(j == 0 || j == mapRegionX - 1 || k == 0 || k == mapRegionY - 1))
-                    {
-                        m_VecTemp.x=j*mapSize;
-                        m_VecTemp.z=k*mapSize;
+                    {  
                         m_TowerManager.RandomInstantiateStone(m_VecTemp);
                     }
+                }
+                //生成传送门
+                if(map[j,k]==MapType.TeleportA|| map[j, k] == MapType.TeleportB)
+                {
+                    m_TowerManager.RandomInstantiateTeleport(map[j, k], m_VecTemp);
                 }
             }
         }

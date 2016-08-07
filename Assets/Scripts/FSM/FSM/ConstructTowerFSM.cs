@@ -9,6 +9,7 @@ public class ConstructTowerFSM : FSM
     public MapManager m_MapManager;
     public TowerManager m_TowerManager;
     public ConstructUIController m_ConstructUIController;
+    public bool isOnPlayMode = false;
     private Canvas m_Canvas;
 
     protected void Awake()
@@ -21,6 +22,7 @@ public class ConstructTowerFSM : FSM
     public override void OnEnter(string prevState = "")
     {
         m_Canvas.enabled = true;
+        UIRemainTowerCount.ResetTowerCount();
     }
 
     public override void OnExit(string nextState = "")
@@ -34,6 +36,9 @@ public class ConstructTowerFSM : FSM
 
     public override void OnClick()
     {
+        //如果在生成怪物状态，不能建造塔
+        if (isOnPlayMode)
+            return;
         //如果在地图范围内
         if (m_UISelectedArea.IsOutRange() == false)
         {
