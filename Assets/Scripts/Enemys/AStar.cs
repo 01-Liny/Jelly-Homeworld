@@ -171,7 +171,7 @@ public class AStar
         //在二维数组对应的位置不为障碍物
         private bool CanReach(int x, int y)
         {
-            return MazeArray[x, y] == 0;
+            return (MazeArray[x, y] == 0 || MazeArray[x, y] == 3 || MazeArray[x, y] == 4);
         }
 
         private bool CanReach(Point start, int x, int y, bool IsIgnoreCorner)
