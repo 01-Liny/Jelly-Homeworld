@@ -169,8 +169,10 @@ public class MapManager : MonoBehaviour
                             map[posX, posY] = MapType.Empty;
                             m_Maze.ChangeMazeArray(map);
                             m_Maze.FindFinalPath();
+                            Debug.Log(AStar.m_ListPath.Count);
                             return false;
                         }
+                        Debug.Log(AStar.m_ListPath.Count);
                         return true;
                     }
                     break;
@@ -198,6 +200,7 @@ public class MapManager : MonoBehaviour
             m_Maze.ChangeMazeArray(map);
             //删除石头不可能造成寻路出错问题，不用判断返回值
             m_Maze.FindFinalPath();
+            Debug.Log(AStar.m_ListPath.Count);
             return true;
         }
         return false;

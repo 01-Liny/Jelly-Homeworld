@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class UIRemainTowerCount : MonoBehaviour 
 {
-    static public int remainTowerCount;
+    static public int remainTowerCount { get; private set; }
     private static Text text;
 
     private void Start()
@@ -26,6 +26,13 @@ public class UIRemainTowerCount : MonoBehaviour
     }
 
     public static void ResetTowerCount()
+    {
+        remainTowerCount = TowerManager.TowerCount;
+        text.text = remainTowerCount.ToString();
+    }
+
+    //给UI使用
+    public void Reset()
     {
         remainTowerCount = TowerManager.TowerCount;
         text.text = remainTowerCount.ToString();

@@ -23,6 +23,7 @@ public class ConstructTowerFSM : FSM
     {
         m_Canvas.enabled = true;
         UIRemainTowerCount.ResetTowerCount();
+        UIGameLevel.ResetLevel();
     }
 
     public override void OnExit(string nextState = "")
