@@ -54,16 +54,25 @@ public class AStar
 
         public bool FindFinalPath()
         {
+            OpenList.Clear();
+            CloseList.Clear();
+            m_ListPath.Clear();
             FindOncePath(start, pointA[0], false);
             if (parent == null)
                 return false;
             else
+            { 
                 Addm_ListPath();
+                m_ListPath.Add(new Point(-1, -1));
+            }
             FindOncePath(pointA[1], pointB[0], false);
             if (parent == null)
                 return false;
             else
+            { 
                 Addm_ListPath();
+                m_ListPath.Add(new Point(-1, -1));
+            }
             FindOncePath(pointB[1], end, false);
             if (parent == null)
                 return false;
@@ -107,7 +116,7 @@ public class AStar
         {
             while (parent != null)
             {
-                m_ListPath.Add(parent);
+                m_ListPath.Add(new Point(parent.X * MapManager.mapSize, parent.Y * MapManager.mapSize));
                 parent = parent.ParentPoint;
             }
         }
@@ -162,7 +171,6 @@ public class AStar
         //在二维数组对应的位置不为障碍物
         private bool CanReach(int x, int y)
         {
-            Debug.Log(x+" "+ y);
             return MazeArray[x, y] == 0;
         }
 
