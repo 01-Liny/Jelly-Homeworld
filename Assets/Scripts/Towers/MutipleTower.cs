@@ -29,11 +29,11 @@ public class MutipleTower : BasicTower
         mutipleTargetCount = TowerInfo.mutipleTargetCount[(int)towerType, (int)towerLevel];
         m_BasicEnemyMinHealth = new BasicEnemy[mutipleTargetCount];
     }
-    
+
     protected override void ResetMinEnemyHealth()
     {
         minEnemyHealth = 500000;
-        for(int i=0;i<mutipleTargetCount;i++)
+        for (int i = 0; i < mutipleTargetCount; i++)
         {
             m_BasicEnemyMinHealth[i] = null;
         }
