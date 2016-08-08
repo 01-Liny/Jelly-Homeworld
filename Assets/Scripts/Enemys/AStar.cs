@@ -65,6 +65,10 @@ public class AStar
                 Addm_ListPath();
                 m_ListPath.Add(new Point(-1, -1));
             }
+
+            OpenList.Clear();
+            CloseList.Clear();
+
             FindOncePath(pointA[1], pointB[0], false);
             if (parent == null)
                 return false;
@@ -73,6 +77,10 @@ public class AStar
                 Addm_ListPath();
                 m_ListPath.Add(new Point(-1, -1));
             }
+
+            OpenList.Clear();
+            CloseList.Clear();
+
             FindOncePath(pointB[1], end, false);
             if (parent == null)
                 return false;
@@ -88,7 +96,7 @@ public class AStar
             while (OpenList.Count != 0)
             {
                 //找出F值最小的点
-                Point tempStart = ListHelp.MinPoint(ref OpenList);
+                Point tempStart = ListHelp.MinPoint(ref OpenList);//ref为引用调用
                 OpenList.RemoveAt(0);
                 CloseList.Add(tempStart);
                 //找出它相邻的点
@@ -150,8 +158,10 @@ public class AStar
 
         private int CalcH(Point end, Point point)
         {
-            int step = System.Math.Abs(point.X - end.X) + System.Math.Abs(point.Y - end.Y);
-            return step * STEP;
+            //int step = System.Math.Abs(point.X - end.X) + System.Math.Abs(point.Y - end.Y);
+            //return step * STEP;
+            int step = (int)System.Math.Sqrt((point.X - end.X) * (point.X - end.X) + (point.Y - end.Y) * (point.Y - end.Y));
+            return step;
         }
 
         //获取某个点周围可以到达的点
