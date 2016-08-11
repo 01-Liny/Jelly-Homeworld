@@ -6,6 +6,7 @@ public class BasicTower : MonoBehaviour                                         
 {
     public bool updateTower;
     public GameObject m_Hightlight;
+    public GameObject m_Body;
     [SerializeField]public TowerType towerType;
     [SerializeField]public TowerLevel towerLevel;
 
@@ -171,6 +172,12 @@ public class BasicTower : MonoBehaviour                                         
     public virtual void ResetLevel(TowerLevel towerLevel)
     {
         this.towerLevel = towerLevel;
+        Vector3 temp = m_Body.transform.localScale;
+        temp.Set(TowerInfo.towerLevelSize[(int)towerLevel, 0], TowerInfo.towerLevelSize[(int)towerLevel, 1], TowerInfo.towerLevelSize[(int)towerLevel, 2]);
+        m_Body.transform.localScale = temp;
+        temp = m_Body.transform.localPosition;
+        temp.y = TowerInfo.towerLevelSize[(int)towerLevel, 3];
+        m_Body.transform.localPosition = temp;
         RereadTowerInfo();
         m_AttackRangeCollider.radius = fireRange;
         RecalcFireInfo();

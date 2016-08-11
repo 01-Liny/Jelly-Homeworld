@@ -39,6 +39,8 @@ public class TowerInfo : MonoBehaviour
     public static float[,] sourceBuffFireRate;         //百分比加成
     public static float[,] debuffDuringTime;            //Debuff持续时间 秒
 
+    public static float[,] towerLevelSize;              //塔随着等级的大小
+
     //初始化防御塔数据
     public static void Init()
     {
@@ -52,6 +54,36 @@ public class TowerInfo : MonoBehaviour
         sourceBuffDamage = new float[(int)TowerType.MaxCount, (int)TowerLevel.MaxLevel];
         sourceBuffFireRate = new float[(int)TowerType.MaxCount, (int)TowerLevel.MaxLevel];
         debuffDuringTime = new float[(int)TowerType.MaxCount, (int)TowerLevel.MaxLevel];
+
+        //后面四个值对应transform scale的x,y,x和position的y
+        towerLevelSize = new float[(int)TowerLevel.MaxLevel, 4];
+
+        //塔的Size
+        {
+            //一级
+            towerLevelSize[(int)TowerLevel.One, 0] = 1;
+            towerLevelSize[(int)TowerLevel.One, 1] = 1;
+            towerLevelSize[(int)TowerLevel.One, 2] = 1;
+            towerLevelSize[(int)TowerLevel.One, 3] = 0;
+
+            //二级
+            towerLevelSize[(int)TowerLevel.Two, 0] = 1.5f;
+            towerLevelSize[(int)TowerLevel.Two, 1] = 1.25f;
+            towerLevelSize[(int)TowerLevel.Two, 2] = 1.5f;
+            towerLevelSize[(int)TowerLevel.Two, 3] = 0;
+
+            //三级
+            towerLevelSize[(int)TowerLevel.Three, 0] = 2f;
+            towerLevelSize[(int)TowerLevel.Three, 1] = 1.5f;
+            towerLevelSize[(int)TowerLevel.Three, 2] = 2f;
+            towerLevelSize[(int)TowerLevel.Three, 3] = 0;
+
+            //四级
+            towerLevelSize[(int)TowerLevel.Four, 0] = 2f;
+            towerLevelSize[(int)TowerLevel.Four, 1] = 2f;
+            towerLevelSize[(int)TowerLevel.Four, 2] = 2f;
+            towerLevelSize[(int)TowerLevel.Four, 3] = 0f;
+        }
 
         //单体，减甲塔
         {
