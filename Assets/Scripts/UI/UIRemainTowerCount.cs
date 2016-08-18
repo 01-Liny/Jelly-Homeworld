@@ -7,7 +7,7 @@ public class UIRemainTowerCount : MonoBehaviour
     static public int remainTowerCount { get; private set; }
     private static Text text;
 
-    private void Start()
+    private void Awake()
     {
         remainTowerCount = TowerManager.TowerCount;
         text = GetComponent<Text>();
