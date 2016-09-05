@@ -127,6 +127,7 @@ public class BasicEnemy : MonoBehaviour
         }
         health -= damageTemp;
         slider.value = health / maxHealth;
+        UIScore.Add(damageTemp);
         Debug.Log("Damage:" + damageTemp + " Health:" + health);
     }
 

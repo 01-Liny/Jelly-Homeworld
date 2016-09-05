@@ -10,7 +10,7 @@ public class FSM : MonoBehaviour, IState, IInput
     protected virtual void Start()
     {
         //currentStateName = null;
-        if (currentStateName != "")
+        if (currentStateName != ""&&m_States.ContainsKey(currentStateName))
             m_States[currentStateName].OnEnter();
     }
 
