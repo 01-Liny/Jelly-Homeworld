@@ -131,6 +131,8 @@ public class MonsterWalk : MonoBehaviour
         //    Debug.DrawLine(temp1, temp2, Color.blue);
         //}
         //startPosition.Set(m_ListPath[currentWayPoint].X, 1, m_ListPath[currentWayPoint].Y);
+
+        //碰到x，y为-1，-1的点时，把list下标往后移两个单位
         if (m_ListPath[currentWayPoint + 1].X == -1)
         {
             currentWayPoint += 2;

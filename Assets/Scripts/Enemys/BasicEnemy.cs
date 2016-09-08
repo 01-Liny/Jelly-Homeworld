@@ -11,6 +11,8 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField]protected float health = 100;//血量
     [SerializeField]protected float armor = 20;//护甲
     [SerializeField]protected float slowdownRate = 0.0f;//减速百分比
+    [SerializeField]
+    protected int restore = 5;//回血
 
     [SerializeField]
     private bool[] isStrikeArmor;//是否受到减甲
@@ -70,6 +72,15 @@ public class BasicEnemy : MonoBehaviour
                 isSlowdown[i] = false;
                 slowdownRate -= TowerInfo.sourceBuffSlow[(int)TowerType.SourceBuffSlowdown, i];
             }
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (health < maxHealth)
+        {
+            health += restore * Time.deltaTime;
+            health = health > maxHealth ? maxHealth : health;
         }
     }
 
