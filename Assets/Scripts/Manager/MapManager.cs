@@ -20,6 +20,9 @@ public class MapManager : MonoBehaviour
     public static int mapRegionY = 13;//实际要减2，外围有围墙
     public int currentMapIndex = 0;//现在读取的地图下标，默认为0
 
+    //临时代码                                                     &&&&&&&&&
+    public MonsterManager m_MonsterManager;
+
     //存放地图位置信息
     private MapType[,] map;
     private MapType[,,] mapFileCache;//存放读取地图文件的临时数组
@@ -401,5 +404,15 @@ public class MapManager : MonoBehaviour
     public MapType[,] GetMap()
     {
         return map;
+    }
+
+    //临时代码                             &&&&&&&&&&
+    public void CreateMonster()
+    {
+        Vector3 temp = new Vector3();
+        temp.x = start.X;
+        temp.z = start.Y;
+        temp.y = 1;
+        m_MonsterManager.setCreatMonster(temp, 5, 2);
     }
 }

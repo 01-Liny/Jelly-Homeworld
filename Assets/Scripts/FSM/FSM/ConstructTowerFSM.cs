@@ -38,7 +38,7 @@ public class ConstructTowerFSM : FSM
     public override void OnClick()
     {
         //如果在生成怪物状态，不能建造塔
-        if (isOnPlayMode)
+        if (currentStateName == "Play")
             return;
         //如果在地图范围内
         if (m_UISelectedArea.IsOutRange() == false)

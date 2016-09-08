@@ -90,7 +90,7 @@ public class BasicEnemy : MonoBehaviour
         //防止在敌人死亡的过程中出现在新的塔的范围内
         m_Collider.enabled = false;
 
-        GameManager.OnEnemyDied(new GameManager.EnemyDiedEventsArgs(m_Collider));
+        //GameManager.OnEnemyDied(new GameManager.EnemyDiedEventsArgs(m_Collider));
         Debug.Log("Died");
         //死亡后自我销毁
         Destroy(this.gameObject);
@@ -153,4 +153,8 @@ public class BasicEnemy : MonoBehaviour
         return health;
     }
 
+    protected void OnDestroy()
+    {
+        GameManager.OnEnemyDied(new GameManager.EnemyDiedEventsArgs(m_Collider));
+    }
 }

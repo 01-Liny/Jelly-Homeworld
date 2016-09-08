@@ -9,7 +9,7 @@ public class UIGameLevel : MonoBehaviour
 
     private void Start()
     {
-        level = 1;
+        level = 0;
         text = GetComponent<Text>();
         text.text = level.ToString();
     }
@@ -22,14 +22,14 @@ public class UIGameLevel : MonoBehaviour
 
     public static void ResetLevel()
     {
-        level=1;
+        level=0;
         text.text = level.ToString();
     }
 
     //给UI使用
     public void Reset()
     {
-        level = 1;
+        level = 0;
         text.text = level.ToString();
     }
 
