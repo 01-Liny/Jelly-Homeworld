@@ -10,6 +10,7 @@ public class ConstructTowerFSM : FSM
     public TowerManager m_TowerManager;
     public ConstructUIController m_ConstructUIController;
     public bool isOnPlayMode = false;
+    public Canvas m_StartLevelCanvas;
     private Canvas m_Canvas;
 
     protected void Awake()
@@ -22,6 +23,7 @@ public class ConstructTowerFSM : FSM
     public override void OnEnter(string prevState = "")
     {
         m_Canvas.enabled = true;
+        m_StartLevelCanvas.enabled = true;
         UIRemainTowerCount.ResetTowerCount();
         UIGameLevel.ResetLevel();
     }
@@ -32,6 +34,7 @@ public class ConstructTowerFSM : FSM
         {
             m_States.Values.ElementAt(i).OnExit();
         }
+        m_StartLevelCanvas.enabled = false;
         m_Canvas.enabled = false;
     }
 
