@@ -68,6 +68,7 @@ public class MapManager : MonoBehaviour
         }
 
         m_ListPath = AStar.m_ListPath;
+
         for (int i = 0; i < AStar.m_ListPath.Count - 1; i++)
         {
             if (m_ListPath[i + 1].X == -1)

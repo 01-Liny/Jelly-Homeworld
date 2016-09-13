@@ -166,6 +166,7 @@ public class BasicTower : MonoBehaviour                                         
         ResetMinEnemyHealth();
         RecalcFireInfo();
         m_Hightlight.SetActive(false);
+        ResetLevel(towerLevel);
     }
 
     //重新设置塔等级

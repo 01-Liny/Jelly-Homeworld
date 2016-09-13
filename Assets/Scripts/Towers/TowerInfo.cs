@@ -61,15 +61,15 @@ public class TowerInfo : MonoBehaviour
         //塔的Size
         {
             //一级
-            towerLevelSize[(int)TowerLevel.One, 0] = 1;
-            towerLevelSize[(int)TowerLevel.One, 1] = 1;
-            towerLevelSize[(int)TowerLevel.One, 2] = 1;
+            towerLevelSize[(int)TowerLevel.One, 0] = 1.5f;
+            towerLevelSize[(int)TowerLevel.One, 1] = 1.5f;
+            towerLevelSize[(int)TowerLevel.One, 2] = 1.5f;
             towerLevelSize[(int)TowerLevel.One, 3] = 0;
 
             //二级
-            towerLevelSize[(int)TowerLevel.Two, 0] = 1.5f;
-            towerLevelSize[(int)TowerLevel.Two, 1] = 1.25f;
-            towerLevelSize[(int)TowerLevel.Two, 2] = 1.5f;
+            towerLevelSize[(int)TowerLevel.Two, 0] = 2f;
+            towerLevelSize[(int)TowerLevel.Two, 1] = 1.5f;
+            towerLevelSize[(int)TowerLevel.Two, 2] = 2f;
             towerLevelSize[(int)TowerLevel.Two, 3] = 0;
 
             //三级
