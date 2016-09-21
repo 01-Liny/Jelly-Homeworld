@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum TowerType
+
+public enum TowerType //Deprecated
 {
     Strike,         //单体，减甲
     Stun,           //单体，眩晕
@@ -14,6 +15,19 @@ public enum TowerType
     MaxCount
 }
 
+public enum TowerElem
+{
+    Strike, //破甲
+    Stun,   //眩晕
+    Slowdown,   //减速
+    Rate,   //攻速
+    Range,  //范围
+
+    MaxCount
+}
+
+
+
 public enum TowerLevel
 {
     One,
@@ -23,6 +37,111 @@ public enum TowerLevel
 
     MaxLevel,
     Empty//表示没有这个参数，用于TakeDamage函数
+}
+
+
+public class TowerElemInfo
+{
+    public static int MAX_ELEM = 3;
+
+    public static float[] basicFireRange;//基础攻击范围
+    public static float[] basicFireDamage;//基础攻击伤害
+    public static float[] basicFireRate;//基础攻击频率 每秒攻击几次
+
+
+    public static float[] strikeArmor;//破甲 破甲值为具体数值
+    public static float[] stunTime;//眩晕时间 单位秒
+    public static float[] fireRate;//攻击频率
+
+    public static float[] slowdownDegree;//减速幅度 百分比减速
+    public static float[] slowdownTime;//减速时间
+
+    public static float[] fireRange;//攻击范围
+    public static float[] fireRangeOffset;//攻击范围元素造成的各属性削弱
+
+    //初始化防御塔数据
+    public static void Init()
+    {
+        int temp = MAX_ELEM + 1;//从1开始算，初始的塔自带一个元素，值为1
+        basicFireRange = new float[temp];
+        basicFireDamage = new float[temp];
+        basicFireRate = new float[temp];
+        strikeArmor = new float[temp];
+        stunTime = new float[temp];
+        fireRate = new float[temp];
+        slowdownDegree = new float[temp];
+        slowdownTime = new float[temp];
+        fireRange = new float[temp];
+        fireRangeOffset = new float[temp];
+
+        #region basicFireRange
+        basicFireRange[0] = 0;
+        basicFireRange[1] = 2;
+        basicFireRange[2] = 2;
+        basicFireRange[3] = 2;
+        #endregion
+
+        #region basicFireDamage
+        basicFireDamage[0] = 0;
+        basicFireDamage[1] = 20;
+        basicFireDamage[2] = 40;
+        basicFireDamage[3] = 80;
+        #endregion
+
+        #region basicFireRate
+        basicFireRate[0] = 0;
+        basicFireRate[1] = 1;
+        basicFireRate[2] = 1;
+        basicFireRate[3] = 1;
+        #endregion
+
+        #region strikeArmor
+        strikeArmor[0] = 0;
+        strikeArmor[1] = 10;
+        strikeArmor[2] = 20;
+        strikeArmor[3] = 40;
+        #endregion
+
+        #region stunTime
+        stunTime[0] = 0;
+        stunTime[1] = 0.2f;
+        stunTime[2] = 0.4f;
+        stunTime[3] = 0.8f;
+        #endregion
+
+        #region fireRate
+        fireRate[0] = 0;
+        fireRate[1] = 1;
+        fireRate[2] = 1.5f;
+        fireRate[3] = 2;
+        #endregion
+
+        #region slowdownDegree
+        slowdownDegree[0] = 0;
+        slowdownDegree[1] = 0.15f;
+        slowdownDegree[2] = 0.25f;
+        slowdownDegree[3] = 0.4f;
+        #endregion
+        #region slowdownTime
+        slowdownTime[0] = 0;
+        slowdownTime[1] = 0.3f;
+        slowdownTime[2] = 0.6f;
+        slowdownTime[3] = 1;
+        #endregion
+
+        #region fireRange
+        fireRange[0] = 0;
+        fireRange[1] = 1;
+        fireRange[2] = 2;
+        fireRange[3] = 3;
+        #endregion
+        #region fireRangeOffset
+        fireRangeOffset[0] = 0;
+        fireRangeOffset[1] = 0.5f;
+        fireRangeOffset[2] = 0.5f;
+        fireRangeOffset[3] = 0.5f;
+        #endregion
+    }
 }
 
 public class TowerInfo : MonoBehaviour
