@@ -9,7 +9,7 @@ public class UIRemainTowerCount : MonoBehaviour
 
     private void Awake()
     {
-        remainTowerCount = TowerManager.TowerCount;
+        remainTowerCount = TowerManager.MaxTowerCount;
         text = GetComponent<Text>();
     }
 
@@ -27,14 +27,14 @@ public class UIRemainTowerCount : MonoBehaviour
 
     public static void ResetTowerCount()
     {
-        remainTowerCount = TowerManager.TowerCount;
+        remainTowerCount = TowerManager.MaxTowerCount;
         text.text = remainTowerCount.ToString();
     }
 
     //给UI使用
     public void Reset()
     {
-        remainTowerCount = TowerManager.TowerCount;
+        remainTowerCount = TowerManager.MaxTowerCount;
         text.text = remainTowerCount.ToString();
     }
 }

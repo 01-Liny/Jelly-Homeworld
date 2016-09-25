@@ -63,8 +63,10 @@ public class ConstructTowerFSM : FSM
                     posX = (int)pos.x;
                     posY = (int)pos.y;
                     m_MapManager.DeleteTower(posX, posY);
+                    //取得升级元素
+                    TowerElem updateElem = m_MergeableTower.GetComponent<Tower>().GetUpdateElem();
                     m_TowerManager.DestroyTower(m_MergeableTower);
-                    m_TowerManager.UpdateTower(m_ConstructUIController.GetTowerGameObject());
+                    m_TowerManager.UpdateTower(m_ConstructUIController.GetTowerGameObject(),updateElem);
                     //再次搜索
                     m_TowerManager.RetrieveUpdatableTower();
                 }
@@ -73,6 +75,12 @@ public class ConstructTowerFSM : FSM
             {
                 switch (mapType)
                 {
+                    case MapType.Empty:
+                        {
+                            //隐藏UI
+                            m_ConstructUIController.Disable();
+                            break;
+                        }
                     case MapType.Basic:
                         {
                             //如果还有剩余的建造塔数量

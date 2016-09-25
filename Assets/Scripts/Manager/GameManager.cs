@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         TowerInfo.Init();
+        TowerElemInfo.Init();
         int[,] map = new int[7, 7]{{1, 1, 1, 1, 1, 1, 1},
                                      {1, 0, 1, 0, 0, 0, 1},
                                      {1, 0, 1, 0, 1, 0, 1},

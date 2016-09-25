@@ -109,7 +109,8 @@ public class UISelectedArea : MonoBehaviour
         if (Physics.Raycast(ray.origin, ray.direction, out m_Hit, Mathf.Infinity, 1 << 11))
         {
             //return m_Hit.transform.parent.gameObject;
-            return m_Hit.transform.gameObject;
+            //被搜索出来的是basicTower所在的gameobject 所以要加parent，取得Tower所在的gameobject
+            return m_Hit.transform.parent.gameObject;
         }
         else
             return null;

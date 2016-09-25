@@ -3,19 +3,20 @@ using System.Collections.Generic;
 
 public class TowerManager : MonoBehaviour
 {
-    public const int TowerCount = 50;//测试代码 临时修改
-    static public int remainTowerCount = TowerCount;
+    public const int MaxTowerCount = 50;//测试代码 临时修改
+    static public int remainTowerCount = MaxTowerCount;
     static public bool isOnUpdate = false;
-    public BasicTower m_NewTower;
-    public GameObject[] m_TowerPrefabs;
+    public GameObject[] m_TowerModules;
+    public GameObject m_Tower;
+
     public GameObject[] m_StonePrefabs;
     public GameObject m_TeleportAPrefab;
     public GameObject m_TeleportBPrefab;
     private GameObject m_SelectedPrefab;
     private GameObject m_Instance;
-    private BasicTower m_InstanceBasicTower;
+    private Tower m_InstanceTower;
     [SerializeField]
-    private List<BasicTower> m_TowerList = new List<BasicTower>();
+    private List<Tower> m_TowerList = new List<Tower>();
     [SerializeField]
     private List<GameObject> m_StoneList = new List<GameObject>();
     [SerializeField]
@@ -35,38 +36,13 @@ public class TowerManager : MonoBehaviour
 
     public void RandomInstantiateTower(Vector3 m_Position)
     {
-        if (m_TowerPrefabs.Length != 0)
-        {
-            m_SelectedPrefab = m_TowerPrefabs[Random.Range(0, m_TowerPrefabs.Length)];
-            m_Position.y = 1.3f;
-            m_Instance = Instantiate(m_SelectedPrefab, m_Position, Quaternion.identity) as GameObject;
-            m_InstanceBasicTower = m_Instance.GetComponent<BasicTower>();
-            m_InstanceBasicTower.Init((TowerLevel)GetTowerLevel());//随机确认等级
-            m_TowerList.Add(m_InstanceBasicTower);
-            m_NewTower = m_InstanceBasicTower;
-        }
+        m_Position.y = 1.3f;
+        m_Instance = Instantiate(m_Tower, m_Position, Quaternion.identity) as GameObject;
+        m_InstanceTower = m_Instance.GetComponent<Tower>();
+        m_InstanceTower.Init((TowerElem)Random.Range(0, (int)TowerElem.MaxCount), m_TowerModules);//随机添加一个元素
+        //m_InstanceTower.Init(TowerElem.Rate, m_TowerModules);
+        m_TowerList.Add(m_InstanceTower);
     }
-
-    #region Judge TowerLevel from GameLevel
-    //根据关卡随机确认等级
-    //缺点：不依赖TowerLevel类型
-    private int GetTowerLevel()
-    {
-        int index= (UIGameLevel.level - 1) / 5;
-        int rd = Random.Range(1, 101);
-        for(int i=0;i<4; i++)
-        {
-            if(rd<=towerLevelRandomMap[index,i])
-            {
-                return i;
-            }
-        }
-
-        //逻辑上代码不应该走到这里
-        Debug.LogError("Judge TowerLevel from GameLevel Function ERROR");
-        return 1;
-    }
-    #endregion
 
     public void RandomInstantiateStone(Vector3 m_Position)
     {
@@ -132,20 +108,31 @@ public class TowerManager : MonoBehaviour
         for (int i = 0; i < m_TowerList.Count; i++)
         {
             //如果已经被激活说明已被之前的塔搜索过，跳过该塔
-            if (m_TowerList[i].m_Hightlight.activeSelf == true)
+            if (m_TowerList[i].m_BasicTower.m_Hightlight.activeSelf == true)
                 continue;
             //如果塔已经达到最大等级，则不能升级
-            if ((int)m_TowerList[i].towerLevel >= (int)TowerLevel.MaxLevel)
+            if ((int)m_TowerList[i].GetElemCount() >= 3)
                 continue;
             for (int j = 0; j < m_TowerList.Count; j++)
             {
                 if (i == j)
                     continue;
-                if (m_TowerList[i].towerType == m_TowerList[j].towerType &&
-                   m_TowerList[i].towerLevel == m_TowerList[j].towerLevel)
+                if (m_TowerList[i].GetElemCount() == m_TowerList[j].GetElemCount())
                 {
-                    m_TowerList[i].NoticeEnableUpdate();
-                    m_TowerList[i].m_Hightlight.SetActive(true);
+                    //能进入这个条件的塔，元素数量只有可能是1或2
+                    //数量为1的直接标记
+
+                    //写成这样 方便查阅 ref:KISS
+                    if (m_TowerList[i].GetElemCount() == 1)
+                    {
+                        m_TowerList[i].m_BasicTower.NoticeEnableUpdate();
+                        m_TowerList[i].m_BasicTower.m_Hightlight.SetActive(true);
+                    }
+                    if (m_TowerList[i].GetElemCount() == 2 && m_TowerList[j].GetMultipleElem() != TowerElem.NULL)
+                    {
+                        m_TowerList[i].m_BasicTower.NoticeEnableUpdate();
+                        m_TowerList[i].m_BasicTower.m_Hightlight.SetActive(true);
+                    }
                 }
             }
         }
@@ -155,7 +142,7 @@ public class TowerManager : MonoBehaviour
     {
         //进入升级塔模式          考虑是否需要创建状态机
         isOnUpdate = true;
-        BasicTower m_UpdateTower = m_GameObject.GetComponent<BasicTower>();
+        Tower m_UpdateTower = m_GameObject.GetComponent<Tower>();
         DisableHightlight();
 
         for (int i = 0; i < m_TowerList.Count; i++)
@@ -163,11 +150,23 @@ public class TowerManager : MonoBehaviour
             //要升级的塔自己不会高亮
             if (m_TowerList[i] != m_UpdateTower)
             {
-                if (m_TowerList[i].towerType == m_UpdateTower.towerType &&
-                   m_TowerList[i].towerLevel == m_UpdateTower.towerLevel)
+                //元素一样多的塔才能升级
+                if (m_UpdateTower.GetElemCount() == m_TowerList[i].GetElemCount())
                 {
-                    m_TowerList[i].NoticeEnableMerge();
-                    m_TowerList[i].m_Hightlight.SetActive(true);
+                    //能进入这个条件的塔，元素数量只有可能是1或2
+                    //数量为1的直接标记
+
+                    //写成这样 方便查阅 ref:KISS
+                    if (m_UpdateTower.GetElemCount() == 1)
+                    {
+                        m_TowerList[i].m_BasicTower.NoticeEnableMerge();
+                        m_TowerList[i].m_BasicTower.m_Hightlight.SetActive(true);
+                    }
+                    if (m_UpdateTower.GetElemCount() == 2 && m_TowerList[i].GetMultipleElem() != TowerElem.NULL)
+                    {
+                        m_TowerList[i].m_BasicTower.NoticeEnableMerge();
+                        m_TowerList[i].m_BasicTower.m_Hightlight.SetActive(true);
+                    }
                 }
             }
         }
@@ -177,13 +176,13 @@ public class TowerManager : MonoBehaviour
     {
         for (int i = 0; i < m_TowerList.Count; i++)
         {
-            m_TowerList[i].m_Hightlight.SetActive(false);
+            m_TowerList[i].m_BasicTower.m_Hightlight.SetActive(false);
         }
     }
 
     public bool DestroyTower(GameObject m_DeleteTower)
     {
-        BasicTower m_Temp = m_DeleteTower.GetComponent<BasicTower>();
+        Tower m_Temp = m_DeleteTower.GetComponent<Tower>();
         //将塔从塔列表中移除
         if (m_TowerList.Remove(m_Temp))
         {
@@ -193,13 +192,10 @@ public class TowerManager : MonoBehaviour
         return false;
     }
 
-    public void UpdateTower(GameObject m_UpdateTower)
+    public void UpdateTower(GameObject m_UpdateTower, TowerElem updateElem)
     {
-        BasicTower m_Temp = m_UpdateTower.GetComponent<BasicTower>();
-        m_Temp.UpdateTower();
-        //如果是最新的塔马上进行升级，奖励额外的一座塔
-        if (m_Temp == m_NewTower)
-            UIRemainTowerCount.AddTowerCount();
+        Tower m_Temp = m_UpdateTower.GetComponent<Tower>();
+        m_Temp.AddElem(updateElem);
         //退出升级模式
         isOnUpdate = false;
     }

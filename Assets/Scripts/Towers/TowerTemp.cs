@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class BasicTower : MonoBehaviour                                                     //该类应该为abstract
+public class TowerTemp : MonoBehaviour 
 {
     public GameObject m_Hightlight;
     protected Material m_Material;
@@ -38,8 +38,7 @@ public class BasicTower : MonoBehaviour                                         
     protected List<Collider> m_EnemyTriggerList = new List<Collider>();
 
     //元素信息
-    [SerializeField]
-    private int[] towerElemCount=new int[(int)TowerElem.MaxCount];
+    private int[] towerElemCount;
     //元素总共的个数
     private int elemCount;
 
@@ -70,7 +69,7 @@ public class BasicTower : MonoBehaviour                                         
         towerElemCount[(int)towerElem]++;
         elemCount++;
         //如果加入的是范围元素
-        if (towerElem == TowerElem.Range)
+        if(towerElem==TowerElem.Range)
         {
             //改变攻击方式
             isFireRange = true;
@@ -81,22 +80,19 @@ public class BasicTower : MonoBehaviour                                         
     {
         //根据现有元素数量决定当前塔的基础属性
         fireRange = TowerElemInfo.basicFireRange[elemCount];
-        fireDamage = TowerElemInfo.basicFireDamage[elemCount];
-        fireRate = TowerElemInfo.basicFireRate[elemCount];
+        fireDamage= TowerElemInfo.basicFireDamage[elemCount];
+        fireRate=TowerElemInfo.basicFireRate[elemCount];
+        
+        fireRate+= TowerElemInfo.extraFireRate[towerElemCount[(int)TowerElem.Rate]];
+        fireRange+= TowerElemInfo.extraFireRange[towerElemCount[(int)TowerElem.Range]];
 
-        fireRate += TowerElemInfo.extraFireRate[towerElemCount[(int)TowerElem.Rate]];
-        fireRange += TowerElemInfo.extraFireRange[towerElemCount[(int)TowerElem.Range]];
-
-        fireStrikeArmor = TowerElemInfo.strikeArmor[towerElemCount[(int)TowerElem.Strike]];
+        fireStrikeArmor =TowerElemInfo.strikeArmor[towerElemCount[(int)TowerElem.Strike]];
         fireStunTime = TowerElemInfo.stunTime[towerElemCount[(int)TowerElem.Stun]];
-        fireSlowdownDegree = TowerElemInfo.slowdownDegree[towerElemCount[(int)TowerElem.Slowdown]];
+        fireSlowdownDegree=TowerElemInfo.slowdownDegree[towerElemCount[(int)TowerElem.Slowdown]];
         fireSlowdownTime = TowerElemInfo.slowdownTime[towerElemCount[(int)TowerElem.Slowdown]];
 
-        //重新调整塔的攻击范围
-        m_AttackRangeCollider.radius = fireRange;
-
         //含有范围攻击的塔属性会被削弱
-        float offset = TowerElemInfo.extraFireRangeOffset[towerElemCount[(int)TowerElem.Range]];
+        float offset= TowerElemInfo.extraFireRangeOffset[towerElemCount[(int)TowerElem.Range]];
         fireDamage *= offset;
         fireRate *= offset;
         fireStrikeArmor *= offset;
@@ -105,7 +101,7 @@ public class BasicTower : MonoBehaviour                                         
         fireSlowdownTime *= offset;
 
         //攻击一次需要多少秒
-        fireRateSpendSec = 1 / fireRate;
+        fireRateSpendSec=1/fireRate;
 
         //重新计算塔的尺寸
         Vector3 temp = m_Body.transform.localScale;
@@ -126,10 +122,7 @@ public class BasicTower : MonoBehaviour                                         
         //因为不一定要升级所有的塔，这要看玩家自己的取舍
         //但由于之前的升级塔判断规则，是否能升级需要Hightlight的启用
         //所以转成透明的material
-
-        //测试阶段，先测试功能完整性，完成后移除注释
-
-        //temp.a = 0;
+        temp.a = 0;
         m_Material.color = temp;
     }
 
@@ -158,7 +151,7 @@ public class BasicTower : MonoBehaviour                                         
 
         //将塔的正面转向被攻击的敌人的位置 
         //范围塔只会自旋转     
-        if (m_RigidbodyEnemy != null && isFireRange == false)
+        if (m_RigidbodyEnemy != null&&isFireRange==false)
         {
             Vector3 relativePos = m_RigidbodyEnemy.position - transform.position;
             relativePos.y = 0;
@@ -178,7 +171,7 @@ public class BasicTower : MonoBehaviour                                         
     }
 
     //攻击
-    private void TryFire()
+    private  void TryFire()
     {
         //当前时间超过下次攻击时间或者没有攻击目标时，开始搜索攻击目标
         //当变成范围塔时，m_RigidbodyEnemy失效
@@ -208,7 +201,7 @@ public class BasicTower : MonoBehaviour                                         
         if (Time.time > nextFire)
         {
             //如果是范围塔，攻击每个进入范围的敌人
-            if (isFireRange)
+            if(isFireRange)
             {
                 for (int i = 0; i < m_EnemyTriggerList.Count; i++)
                 {
@@ -222,7 +215,7 @@ public class BasicTower : MonoBehaviour                                         
                 //但是还是保险起见
                 if (m_BasicEnemyMinHealth != null)
                 {
-                    Fire(m_BasicEnemyMinHealth);
+                    Fire(m_BasicEnemyMinHealth);                 
                 }
             }
             nextFire = Time.time + fireRateSpendSec;//计算下一次攻击时间
@@ -258,7 +251,7 @@ public class BasicTower : MonoBehaviour                                         
             }
             //如果该塔攻击的敌人已经离开塔的范围，不再跟随该敌人旋转
             //当变成范围塔时，m_RigidbodyEnemy失效
-            if (m_RigidbodyEnemy == other.GetComponent<Rigidbody>() && isFireRange == false)
+            if (m_RigidbodyEnemy == other.GetComponent<Rigidbody>()&&isFireRange==false)
             {
                 m_RigidbodyEnemy = null;
             }
