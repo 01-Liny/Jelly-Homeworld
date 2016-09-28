@@ -11,14 +11,14 @@ public class BuffSlowdownHighLevelTower : BasicTower
 
     protected override void Fire()
     {
-        m_BasicEnemyMinHealth.TakeDamage(realFireDamage);
+        //m_BasicEnemyMinHealth.TakeDamage(realFireDamage);
     }
 
     protected void OnTriggerStay(Collider other)
     {
         if (other.tag == "Enemy")
         {
-            other.GetComponent<BasicEnemy>().TakeSlowdown(towerLevel);
+            //other.GetComponent<BasicEnemy>().TakeSlowdown(towerLevel);
             Debug.Log("Stay");
         }
     }

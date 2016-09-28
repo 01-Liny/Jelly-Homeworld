@@ -22,7 +22,7 @@ public class StunTower : BasicTower
 
     protected override void Fire()
     {
-        m_BasicEnemyMinHealth.TakeDamage(realFireDamage);
+        //m_BasicEnemyMinHealth.TakeDamage(realFireDamage);
         m_BasicEnemyMinHealth.TakeStun(towerLevel);
     }
 }

@@ -227,7 +227,7 @@ public class BasicTower : MonoBehaviour                                         
 
     protected virtual void Fire()
     {
-        m_BasicEnemyMinHealth.TakeDamage(realFireDamage);
+        //m_BasicEnemyMinHealth.TakeDamage(realFireDamage);
     }
 
     //重新计算总攻击伤害和频率

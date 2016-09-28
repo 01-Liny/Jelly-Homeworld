@@ -115,7 +115,7 @@ public class MutipleTower : BasicTower
         {
             if(m_BasicEnemyMinHealth[i]!=null)
             {
-                m_BasicEnemyMinHealth[i].TakeDamage(realFireDamage);
+                //m_BasicEnemyMinHealth[i].TakeDamage(realFireDamage);
             }
         }
     }

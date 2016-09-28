@@ -13,8 +13,8 @@ public class BuffSlowdownLowLevelTower : BasicTower
     
     protected override void Fire()
     {
-        m_BasicEnemyMinHealth.TakeDamage(realFireDamage);
-        m_BasicEnemyMinHealth.TakeSlowdown(towerLevel);
+        //m_BasicEnemyMinHealth.TakeDamage(realFireDamage);
+        //m_BasicEnemyMinHealth.TakeSlowdown(towerLevel);
     }
     
     public override void ResetLevel(TowerLevel towerLevel)
