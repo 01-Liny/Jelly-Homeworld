@@ -10,27 +10,65 @@ public class MonsterWalk : MonoBehaviour
     private Rigidbody rb;
     private int currentWayPoint = 0;
     private float lastWaypointSwitchTime;
-    private float pauseStartTime;
-    private float pauseTime = 0;
+
+    //private float pauseStartTime;
+    //private float pauseTime = 0;
+
+    [SerializeField]
     private float speed = 2.0f;
     private float tempSpeed;
+
+
+    //private bool[] isSlowdown;//是否受到减速
+    //protected float slowdownRate = 0.0f;//减速百分比
+    //private float slowdownTime;//减速失效时间
+
+    //减速时间数组
+    private float[] statusTime = new float[5];
+
+    //减速等级
+    private int slowDownLevel;
+
     private MonsterPathFinding.Node[] m_pathArray;
     //private List<MonsterPathFinding.Node> m_ListPath;
     private List<Point> m_ListPath;
 
-    public bool isPause = false;
+    public float isSlowDown = 1;
 
-    public void Pause(float pauseTime)
+    //眩晕时间，减速时间
+    public void setFireStatus(float fireStunTime,int slowDownLevel)
     {
-        pauseStartTime = Time.time;
-        this.pauseTime = pauseTime;
-        tempSpeed = this.speed;
-        changeSpeed(0);
+        //pauseTime = fireStunTime;
+        //slowdownRate = TowerElemInfo.slowdownDegree[slowDownLevel];
+        //slowdownTime = fireSlowdownTime;
+        statusTime[4] = Time.time + fireStunTime;
+        statusTime[slowDownLevel] = Time.time + TowerElemInfo.slowdownTime[slowDownLevel];
+    }
+
+    public void setIsSlownDown(float isSlowDown)
+    {
+        this.isSlowDown = isSlowDown;
+    }
+
+    //怪物被眩晕
+    //public void Pause(float pauseTime)
+    //{
+    //    pauseStartTime = Time.time;
+    //    this.pauseTime = pauseTime;
+    //    tempSpeed = this.speed;
+    //    changeSpeed(0);
+    //}
+
+    //改变速度
+    private void changetempSpeed(float tempSpeed)
+    {
+        this.tempSpeed = tempSpeed;
     }
 
     public void changeSpeed(float speed)
     {
         this.speed = speed;
+        tempSpeed = speed;
     }
 
     // Use this for initialization
@@ -107,16 +145,34 @@ public class MonsterWalk : MonoBehaviour
         //    Debug.DrawLine(temp1, temp2, Color.blue);
         //}
 
-        if (isPause)
+        for (int i = 4; i >= 0; i--)
         {
-            isPause = false;
-            Pause(1);
+            if (Time.time <= statusTime[i])
+            {
+                if(i==4)
+                {
+                    changetempSpeed(0);
+                }
+                else
+                {
+                    if (isSlowDown == 1)
+                        changetempSpeed(speed * (1 - TowerElemInfo.slowdownDegree[slowDownLevel]));
+                }
+                break;
+            }
         }
 
-        if (Time.time - pauseStartTime >= pauseTime)
-        {
-            changeSpeed(tempSpeed);
-        }
+        //if (isPause)
+        //{
+        //    isPause = false;
+        //    Pause(1);
+        //}
+
+        ////暂停后恢复原来速度
+        //if (Time.time - pauseStartTime >= pauseTime)
+        //{
+        //    changeSpeed(tempSpeed);
+        //}
 
         //for (int i = 0; i < AStar.m_ListPath.Count - 1; i++)
         //{
@@ -158,7 +214,7 @@ public class MonsterWalk : MonoBehaviour
         //currentTimeOnPath = Time.time - lastWaypointSwitchTime;
         //transform.position = Vector3.Lerp(startPosition, endPosition, currentTimeOnPath / totalTimeForPath);
         //RotateIntoMoveDirection();
-        rb.velocity = transform.forward * speed;
+        rb.velocity = transform.forward * tempSpeed;
         if (Vector3.Distance(transform.position, endPosition) <= 0.5f)
         {
             if (currentWayPoint < AStar.m_ListPath.Count - 2)
@@ -169,8 +225,9 @@ public class MonsterWalk : MonoBehaviour
             }
             else
             {
-                speed = Mathf.Lerp(speed, 0, 0.25f);
-                tempSpeed = speed;
+                tempSpeed = Mathf.Lerp(tempSpeed, 0, 0.25f);
+                Destroy(this.gameObject);
+                //tempSpeed = speed;
             }
         }
     }
