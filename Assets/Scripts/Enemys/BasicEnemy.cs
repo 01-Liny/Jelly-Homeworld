@@ -6,43 +6,52 @@ using UnityEngine.UI;
 public class BasicEnemy : MonoBehaviour 
 {
     public bool GoDie = false;
+    private float isStun = 0;
     [SerializeField]
     protected float maxHealth = 100;//最初的血量
-    [SerializeField]protected float health = 100;//血量
-    [SerializeField]protected float armor = 20;//护甲
-    [SerializeField]protected float slowdownRate = 0.0f;//减速百分比
     [SerializeField]
-    protected int restore = 5;//回血
+    protected float health = 100;//当前血量
+    [SerializeField]
+    protected float maxArmor = 20;//最初的护甲
+    [SerializeField]
+    protected float armor = 20;//当前的护甲
+
 
     [SerializeField]
-    private bool[] isStrikeArmor;//是否受到减甲
+    protected float stunTime = 0;//眩晕时间
+
+
+    [SerializeField]
+    protected float restore = 5;//回血
+
+
     [SerializeField]
     private bool[] isSlowdown;//是否受到减速
+    [SerializeField]
+    protected float slowdownRate = 0.0f;//减速百分比
+    [SerializeField]
+    private float slowdownTime;//减速失效时间
+    [SerializeField]
 
-    [SerializeField]
-    private float[] strikeArmorTime;//减甲失效时间
-    [SerializeField]
-    private float[] slowdownTime;//减速失效时间
-    [SerializeField]
     private Slider slider;
 
     private bool isDied = false;
     private float damageTemp;
     private Collider m_Collider;
+    private MonsterWalk m_MonsterWalk;
+    private bool isSigned = false;//用来判断是否被标记为攻击目标
 
     // Use this for initialization
     void Start()
     {
         m_Collider = GetComponent<Collider>();
-        isStrikeArmor = new bool[(int)TowerLevel.MaxLevel];
+        m_MonsterWalk = GetComponent<MonsterWalk>();
         isSlowdown = new bool[(int)TowerLevel.MaxLevel];
         for (int i = 0; i < (int)TowerLevel.MaxLevel; i++)
         {
-            isStrikeArmor[i] = false;
             isSlowdown[i] = false;
         }
-        strikeArmorTime = new float[(int)TowerLevel.MaxLevel];
-        slowdownTime = new float[(int)TowerLevel.MaxLevel];
+        //slowdownTime = new float[(int)TowerLevel.MaxLevel];
     }
 
     // Update is called once per frame
@@ -59,30 +68,31 @@ public class BasicEnemy : MonoBehaviour
             Died();
         }
 
-        for (int i = 0; i < (int)TowerLevel.MaxLevel; i++)
-        {
-            //当debuff效果结束时
-            if (Time.time >= strikeArmorTime[i] && isStrikeArmor[i] == true)
-            {
-                isStrikeArmor[i] = false;
-                armor += TowerInfo.strikeArmor[(int)TowerType.Strike, i];
-            }
-            if (Time.time >= slowdownTime[i] && isSlowdown[i]==true)
-            {
-                isSlowdown[i] = false;
-                slowdownRate -= TowerInfo.sourceBuffSlow[(int)TowerType.SourceBuffSlowdown, i];
-            }
-        }
+
+    }
+
+    public void Init(float restore, float maxArmor, float speed, float isStun,float isSlownDown)
+    {
+        //免疫减速还没写
+        //限制受到攻击次数还没写
+        m_MonsterWalk = GetComponent<MonsterWalk>();
+        this.restore = restore;
+        this.maxArmor = maxArmor;
+        m_MonsterWalk.changeSpeed(speed);
+        m_MonsterWalk.setIsSlownDown(isSlownDown);
+        this.isStun = isStun;
     }
 
     void FixedUpdate()
     {
+        //怪物回血
         if (health < maxHealth)
         {
             health += restore * Time.deltaTime;
             health = health > maxHealth ? maxHealth : health;
         }
     }
+
 
     //敌人死后
     protected void Died()
@@ -96,33 +106,30 @@ public class BasicEnemy : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    //受到伤害的时候调用，strikeArmorLevel表示破甲等级，默认没有受到减甲；
-    public void TakeDamage(float fireDamage, TowerLevel strikeArmorLevel = TowerLevel.Empty)
+    //受到伤害的时候调用，fireStrikeArmor表示破甲数值
+    public void TakeDamage(float fireDamage, float fireStrikeArmor, float fireStunTime, int slowDownLevel)
     {
-        if (strikeArmorLevel != TowerLevel.Empty)
-        {
-            //如果在减甲效果内被同一等级的减甲塔再次施加效果，则只刷新时间
-            strikeArmorTime[(int)strikeArmorLevel] = Time.time + TowerInfo.debuffDuringTime[(int)TowerType.Strike, (int)strikeArmorLevel];
-            //不会再次扣除护甲
-            if (isStrikeArmor[(int)strikeArmorLevel] == false)
-            {
-                isStrikeArmor[(int)strikeArmorLevel] = true;
-                armor -= TowerInfo.strikeArmor[(int)TowerType.Strike, (int)strikeArmorLevel];
-            }
-        }
+        stunTime = isStun == 1 ? fireStunTime : 0;
+        slowdownRate = TowerElemInfo.slowdownDegree[slowDownLevel];
+        slowdownTime = TowerElemInfo.slowdownTime[slowDownLevel];
+        //?????减速多次如何操作，可如果减速程度大于以前，可以去掉原来的减速，直接加上新的减速
+        //?????如果减速程度小于以前，就走完程度大的减速时间，计算多出来的程度小的减速时间，然后换成程度小的减速，考虑list
 
+        //传眩晕时间，减速时间给MonsterWalk
+        m_MonsterWalk.setFireStatus(fireStunTime, slowDownLevel);
+        armor = maxArmor - fireStrikeArmor;
         TakeHealth(fireDamage);
     }
     
-    public void TakeSlowdown(TowerLevel slowdownLevel)
-    {
-            slowdownTime[(int)slowdownLevel] = Time.time + TowerInfo.debuffDuringTime[(int)TowerType.SourceBuffSlowdown, (int)slowdownLevel];
-            if (isSlowdown[(int)slowdownLevel] == false)
-            {
-                isSlowdown[(int)slowdownLevel] = true;
-                slowdownRate += TowerInfo.sourceBuffSlow[(int)TowerType.SourceBuffSlowdown, (int)slowdownLevel];
-            }
-    }
+    //public void TakeSlowdown(TowerLevel slowdownLevel)
+    //{
+    //        slowdownTime[(int)slowdownLevel] = Time.time + TowerInfo.debuffDuringTime[(int)TowerType.SourceBuffSlowdown, (int)slowdownLevel];
+    //        if (isSlowdown[(int)slowdownLevel] == false)
+    //        {
+    //            isSlowdown[(int)slowdownLevel] = true;
+    //            slowdownRate += TowerInfo.sourceBuffSlow[(int)TowerType.SourceBuffSlowdown, (int)slowdownLevel];
+    //        }
+    //}
 
     //计算扣血量
     protected void TakeHealth(float fireDamage)

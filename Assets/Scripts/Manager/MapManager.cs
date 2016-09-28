@@ -414,6 +414,6 @@ public class MapManager : MonoBehaviour
         temp.x = start.X;
         temp.z = start.Y;
         temp.y = 1;
-        m_MonsterManager.setCreatMonster(temp, 5, 2);
+        m_MonsterManager.CreatMonster(UIGameLevel.level,5,1);
     }
 }
