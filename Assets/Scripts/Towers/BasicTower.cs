@@ -231,7 +231,7 @@ public class BasicTower : MonoBehaviour                                         
 
     private void Fire(BasicEnemy m_FireTarget)
     {
-        //m_FireTarget.TakeDamage(fireDamage, fireStrikeArmor, fireStunTime, fireSlowdownDegree, fireSlowdownTime);
+        m_FireTarget.TakeDamage(fireDamage, fireStrikeArmor, fireStunTime, towerElemCount[(int)TowerElem.Slowdown]);
     }
 
     //敌人出现在塔的攻击范围内，加入到敌人列表中

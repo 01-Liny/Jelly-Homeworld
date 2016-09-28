@@ -410,10 +410,6 @@ public class MapManager : MonoBehaviour
     //临时代码                             &&&&&&&&&&
     public void CreateMonster()
     {
-        Vector3 temp = new Vector3();
-        temp.x = start.X;
-        temp.z = start.Y;
-        temp.y = 1;
-        m_MonsterManager.CreatMonster(UIGameLevel.level,5,1);
+        m_MonsterManager.CreatMonster(UIGameLevel.level,1,1);
     }
 }

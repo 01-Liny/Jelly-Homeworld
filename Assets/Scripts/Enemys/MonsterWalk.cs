@@ -41,6 +41,7 @@ public class MonsterWalk : MonoBehaviour
         //pauseTime = fireStunTime;
         //slowdownRate = TowerElemInfo.slowdownDegree[slowDownLevel];
         //slowdownTime = fireSlowdownTime;
+        //if(fireStunTime!=0f)
         statusTime[4] = Time.time + fireStunTime;
         statusTime[slowDownLevel] = Time.time + TowerElemInfo.slowdownTime[slowDownLevel];
     }
@@ -147,18 +148,24 @@ public class MonsterWalk : MonoBehaviour
 
         for (int i = 4; i >= 0; i--)
         {
-            if (Time.time <= statusTime[i])
+            if (Time.time < statusTime[i])
             {
-                if(i==4)
+                if (i == 4)
                 {
                     changetempSpeed(0);
                 }
                 else
                 {
                     if (isSlowDown == 1)
+                    {
                         changetempSpeed(speed * (1 - TowerElemInfo.slowdownDegree[slowDownLevel]));
+                    }
                 }
                 break;
+            }
+            else if (Time.time > statusTime[i])
+            {
+                tempSpeed = speed;
             }
         }
 

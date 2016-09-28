@@ -91,6 +91,7 @@ public class BasicEnemy : MonoBehaviour
             health += restore * Time.deltaTime;
             health = health > maxHealth ? maxHealth : health;
         }
+        slider.value = health / maxHealth;
     }
 
 
@@ -144,7 +145,6 @@ public class BasicEnemy : MonoBehaviour
             damageTemp = fireDamage * (1 + (2 - Mathf.Pow(0.94f, -armor)));
         }
         health -= damageTemp;
-        slider.value = health / maxHealth;
         UIScore.Add(damageTemp);
         Debug.Log("Damage:" + damageTemp + " Health:" + health);
     }
