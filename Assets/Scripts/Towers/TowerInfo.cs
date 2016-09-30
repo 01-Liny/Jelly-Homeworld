@@ -52,6 +52,7 @@ public class TowerElemInfo
 
     public static float[] strikeArmor;//破甲 破甲值为具体数值
     public static float[] stunTime;//眩晕时间 单位秒
+    public static float[] stunProbability;//眩晕几率 0~100
     public static float[] extraFireRate;//攻击频率
 
     public static float[] slowdownDegree;//减速幅度 百分比减速
@@ -71,6 +72,7 @@ public class TowerElemInfo
         basicFireRate = new float[temp];
         strikeArmor = new float[temp];
         stunTime = new float[temp];
+        stunProbability = new float[temp];
         extraFireRate = new float[temp];
         slowdownDegree = new float[temp];
         slowdownTime = new float[temp];
@@ -80,9 +82,9 @@ public class TowerElemInfo
 
         #region basicFireRange
         basicFireRange[0] = 0;
-        basicFireRange[1] = 2;
-        basicFireRange[2] = 2;
-        basicFireRange[3] = 2;
+        basicFireRange[1] = 4;
+        basicFireRange[2] = 4;
+        basicFireRange[3] = 4;
         #endregion
 
         #region basicFireDamage
@@ -108,9 +110,16 @@ public class TowerElemInfo
 
         #region stunTime
         stunTime[0] = 0;
-        stunTime[1] = 0.2f;
-        stunTime[2] = 0.4f;
-        stunTime[3] = 0.8f;
+        stunTime[1] = 0.5f;
+        stunTime[2] = 0.5f;
+        stunTime[3] = 0.5f;
+        #endregion
+
+        #region stunProbability
+        stunProbability[0] = 0;
+        stunProbability[1] = 3;
+        stunProbability[2] = 0.4f;
+        stunProbability[3] = 0.5f;
         #endregion
 
         #region fireRate
@@ -126,6 +135,7 @@ public class TowerElemInfo
         slowdownDegree[2] = 0.25f;
         slowdownDegree[3] = 0.4f;
         #endregion
+
         #region slowdownTime
         slowdownTime[0] = 0;
         slowdownTime[1] = 0.3f;
@@ -135,10 +145,11 @@ public class TowerElemInfo
 
         #region fireRange
         extraFireRange[0] = 0;
-        extraFireRange[1] = 1;
-        extraFireRange[2] = 2;
-        extraFireRange[3] = 3;
+        extraFireRange[1] = 2;
+        extraFireRange[2] = 4;
+        extraFireRange[3] = 6;
         #endregion
+
         #region fireRangeOffset
         extraFireRangeOffset[0] = 1;
         extraFireRangeOffset[1] = 0.5f;

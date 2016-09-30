@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class BasicTower : MonoBehaviour                                                     //该类应该为abstract
 {
     public GameObject m_Hightlight;
+    public GameObject m_ForDetect;
     protected Material m_Material;
     public GameObject m_Body;
 
@@ -49,6 +50,7 @@ public class BasicTower : MonoBehaviour                                         
         m_Material = m_Hightlight.GetComponent<Renderer>().material;
         Vector3 temp = m_Hightlight.transform.localScale;
         temp.Set(0.1f * MapManager.mapSize, 1, 0.1f * MapManager.mapSize);
+        m_ForDetect.transform.localScale = temp;
         m_Hightlight.transform.localScale = temp;
         m_Hightlight.SetActive(false);
 
@@ -280,5 +282,10 @@ public class BasicTower : MonoBehaviour                                         
     public void ClearEnemyList()
     {
         m_EnemyTriggerList.Clear();
+    }
+
+    public float GetTowerRange()
+    {
+        return fireRange;
     }
 }

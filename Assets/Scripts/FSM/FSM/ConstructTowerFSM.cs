@@ -9,6 +9,7 @@ public class ConstructTowerFSM : FSM
     public MapManager m_MapManager;
     public TowerManager m_TowerManager;
     public ConstructUIController m_ConstructUIController;
+    public UIRangeIndicator m_UIRangeIndicator;
     public bool isOnPlayMode = false;
     public Canvas m_StartLevelCanvas;
     private Canvas m_Canvas;
@@ -40,9 +41,13 @@ public class ConstructTowerFSM : FSM
 
     public override void OnClick()
     {
-        //如果在生成怪物状态，不能建造塔
+        GameObject m_SelectedTower = m_UISelectedArea.GetSelectedTower();
+        //如果在生成怪物状态，不能建造塔，只能显示UI
         if (currentStateName == "Play")
+        {
+            m_UIRangeIndicator.ShowTowerRangeIndicator(m_SelectedTower);
             return;
+        }    
         //如果在地图范围内
         if (m_UISelectedArea.IsOutRange() == false)
         {
@@ -59,6 +64,7 @@ public class ConstructTowerFSM : FSM
                 //如果该塔可以合并
                 if(m_MergeableTower!=null)
                 {
+                    GameObject m_UpdatableTower = m_ConstructUIController.GetTowerGameObject();
                     pos = m_UISelectedArea.RealPosToMapPos(m_MergeableTower.transform.position);
                     posX = (int)pos.x;
                     posY = (int)pos.y;
@@ -66,9 +72,11 @@ public class ConstructTowerFSM : FSM
                     //取得升级元素
                     TowerElem updateElem = m_MergeableTower.GetComponent<Tower>().GetUpdateElem();
                     m_TowerManager.DestroyTower(m_MergeableTower);
-                    m_TowerManager.UpdateTower(m_ConstructUIController.GetTowerGameObject(),updateElem);
+                    m_TowerManager.UpdateTower(m_UpdatableTower, updateElem);
+                    //显示升级后的塔的范围
+                    m_UIRangeIndicator.ShowTowerRangeIndicator(m_UpdatableTower);
                     //再次搜索
-                    m_TowerManager.RetrieveUpdatableTower();
+                    m_TowerManager.RetrieveUpdatableTower();                
                 }
             }
             else
@@ -79,25 +87,39 @@ public class ConstructTowerFSM : FSM
                         {
                             //隐藏UI
                             m_ConstructUIController.Disable();
+                            m_UIRangeIndicator.Disable();
                             break;
                         }
                     case MapType.Basic:
                         {
-                            //如果还有剩余的建造塔数量
-                            if(UIRemainTowerCount.remainTowerCount>0)
+                            //隐藏范围指示器
+                            m_UIRangeIndicator.Disable();
+                            //如果还有剩余的建造塔数量，显示建造UI
+                            if (UIRemainTowerCount.remainTowerCount>0)
                             {
                                 UpdateConstructUIConstroller("Tower");
+                            }
+                            else
+                            {
+                                m_ConstructUIController.Disable();
                             }
                             break;
                         }
                     case MapType.Tower:
                         {
+                            //显示范围指示器
+                            m_UIRangeIndicator.ShowTowerRangeIndicator(m_SelectedTower);
+
                             GameObject m_Tower = m_UISelectedArea.GetUpdateTower();
                             //如果该塔可以升级
                             if (m_Tower != null)
                             {
                                 UpdateConstructUIConstroller("Update");
                                 m_ConstructUIController.SetTowerGameObject(m_Tower);
+                            }
+                            else
+                            {
+                                m_ConstructUIController.Disable();
                             }
                             break;
                         }

@@ -100,6 +100,23 @@ public class UISelectedArea : MonoBehaviour
          return m_MapPosTemp;
     }
 
+    //返回当前Ray穿过的塔,检测的是Tower的Body
+    public GameObject GetSelectedTower()
+    {
+        RaycastHit m_Hit;
+        //以ray的方向和原点，发射一条射线，检测射线是否碰撞到LayerMask为Tower的Collider
+        if (Physics.Raycast(ray.origin, ray.direction, out m_Hit, Mathf.Infinity, 1 << 10))
+        {
+            //return m_Hit.transform.parent.gameObject;
+            //被搜索出来的是Body所在的gameobject 所以要加parent.parent，取得Tower所在的gameobject
+            //不能搜索BasicTower，因为BasicTower的gameobject上面有塔的范围，范围大的塔会把其他塔覆盖，不精确
+            //为什么只要加一个parent，应该要加两个的才对
+            return m_Hit.transform.parent.gameObject;
+        }
+        else
+            return null;
+    }
+
     //返回当前Ray穿过的可升级或可合并的塔
     public GameObject GetUpdateTower()
     {
