@@ -22,6 +22,8 @@ public class BasicTower : MonoBehaviour                                         
     [SerializeField]
     protected float fireStunTime;//眩晕时间 单位秒
     [SerializeField]
+    protected float fireStunProbability;//眩晕几率 1-1
+    [SerializeField]
     protected float fireSlowdownDegree;//减速幅度 百分比减速
     [SerializeField]
     protected float fireSlowdownTime;//减速时间
@@ -91,6 +93,7 @@ public class BasicTower : MonoBehaviour                                         
 
         fireStrikeArmor = TowerElemInfo.strikeArmor[towerElemCount[(int)TowerElem.Strike]];
         fireStunTime = TowerElemInfo.stunTime[towerElemCount[(int)TowerElem.Stun]];
+        fireStunProbability= TowerElemInfo.stunProbability[towerElemCount[(int)TowerElem.Stun]];
         fireSlowdownDegree = TowerElemInfo.slowdownDegree[towerElemCount[(int)TowerElem.Slowdown]];
         fireSlowdownTime = TowerElemInfo.slowdownTime[towerElemCount[(int)TowerElem.Slowdown]];
 
@@ -233,7 +236,12 @@ public class BasicTower : MonoBehaviour                                         
 
     private void Fire(BasicEnemy m_FireTarget)
     {
-        m_FireTarget.TakeDamage(fireDamage, fireStrikeArmor, fireStunTime, towerElemCount[(int)TowerElem.Slowdown]);
+        //有一定几率触发眩晕
+        int random = Random.Range(1, 101);
+        if(random<=fireStunProbability)
+            m_FireTarget.TakeDamage(fireDamage, fireStrikeArmor, fireStunTime, towerElemCount[(int)TowerElem.Slowdown]);
+        else
+            m_FireTarget.TakeDamage(fireDamage, fireStrikeArmor, 0, towerElemCount[(int)TowerElem.Slowdown]);
     }
 
     //敌人出现在塔的攻击范围内，加入到敌人列表中

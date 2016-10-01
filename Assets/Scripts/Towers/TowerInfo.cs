@@ -52,7 +52,7 @@ public class TowerElemInfo
 
     public static float[] strikeArmor;//破甲 破甲值为具体数值
     public static float[] stunTime;//眩晕时间 单位秒
-    public static float[] stunProbability;//眩晕几率 0~100
+    public static float[] stunProbability;//眩晕几率 1~100
     public static float[] extraFireRate;//攻击频率
 
     public static float[] slowdownDegree;//减速幅度 百分比减速
@@ -117,9 +117,9 @@ public class TowerElemInfo
 
         #region stunProbability
         stunProbability[0] = 0;
-        stunProbability[1] = 3;
-        stunProbability[2] = 0.4f;
-        stunProbability[3] = 0.5f;
+        stunProbability[1] = 30;
+        stunProbability[2] = 50;
+        stunProbability[3] = 70;
         #endregion
 
         #region fireRate
