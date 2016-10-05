@@ -104,7 +104,7 @@ public class MapManager : MonoBehaviour
         filePath = Application.persistentDataPath + "//map.txt";
         fileInfo = new FileInfo(filePath);
         LoadMapFile();
-        ChooseMapFile(0);
+        //ChooseMapFile(0);
     }
 
     public void InitMap()

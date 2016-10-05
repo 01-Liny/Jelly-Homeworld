@@ -101,6 +101,22 @@ public class TowerManager : MonoBehaviour
         m_TeleportList.Clear();
     }
 
+    public void ClearTowerList()
+    {
+        for (int i = 0; i < m_TowerList.Count; i++)
+        {
+            Destroy(m_TowerList[i]);
+        }
+        m_TowerList.Clear();
+    }
+
+    public void ClearAll()
+    {
+        ClearStoneList();
+        ClearTeleportList();
+        ClearTowerList();
+    }
+
     public void RetrieveUpdatableTower()
     {
         DisableHightlight();

@@ -296,4 +296,9 @@ public class BasicTower : MonoBehaviour                                         
     {
         return fireRange;
     }
+
+    private void OnDestroy()
+    {
+        GameManager.EnemyDied -= RemoveEnemy;//停止订阅
+    }
 }

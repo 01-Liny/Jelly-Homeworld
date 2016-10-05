@@ -5,6 +5,7 @@ using System.Linq;
 public class ChooseMapFSM : FSM
 {
     public FSM m_FSM;
+    public MapManager m_MapManager;
     private Canvas m_Canvas;
 
     protected void Awake()
@@ -17,6 +18,8 @@ public class ChooseMapFSM : FSM
     public override void OnEnter(string prevState = "")
     {
         m_Canvas.enabled = true;
+        m_MapManager.ChooseMap(0);
+        m_MapManager.ReGenerateStoneByMap();
     }
 
     public override void OnExit(string nextState = "")

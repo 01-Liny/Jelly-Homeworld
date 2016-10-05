@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MonsterManager : MonoBehaviour
 {
@@ -26,6 +27,12 @@ public class MonsterManager : MonoBehaviour
 
     private int InstantiateMonster;//初始化怪物类型
 
+    //用于退出关卡时，一次性删除所有怪物
+    [SerializeField]
+    private List<BasicEnemy> m_EnemyList = new List<BasicEnemy>();
+    //用于清除所有怪物时，防止怪物继续生成,进入关卡时要设置为true，已交给FSM完成
+    public bool isClearMode = false;
+
     //----------------可能要删掉-------------
     //public void setCreatMonster(Vector3 m_Position, int MonsterNum,int interval)
     //{
@@ -38,8 +45,11 @@ public class MonsterManager : MonoBehaviour
     IEnumerator InstantiateAfterDelay(GameObject prefabs, int InstantiateMonster, float delay, int gameLevel)
     {
         yield return new WaitForSeconds(delay);
+        if (isClearMode)
+            yield break;
         m_Instance = Instantiate(prefabs, m_Position, Quaternion.identity) as GameObject;
         m_InstanceBasicEnemy = m_Instance.GetComponent<BasicEnemy>();
+        m_EnemyList.Add(m_InstanceBasicEnemy);
         m_InstanceBasicEnemy.Init(MonsterInfo.EnemyProperty[(int)(gameLevel / 5.0) + 1, InstantiateMonster, 0],
             MonsterInfo.EnemyProperty[(int)(gameLevel / 5.0) + 1, InstantiateMonster, 1],
             MonsterInfo.EnemyProperty[(int)(gameLevel / 5.0) + 1, InstantiateMonster, 2],
@@ -100,7 +110,9 @@ public class MonsterManager : MonoBehaviour
         if (MonsterNum == 0 && isSendMessage == false)
         {
             isSendMessage = true;
-            m_ConstructTowerFSM.ChangeState("Construct");
+            //防止出现在怪物被销毁后，NextLevelUI还跳出来的情况
+            if(isClearMode==false)
+                m_ConstructTowerFSM.ChangeState("Construct");
         }
     }
 
@@ -108,5 +120,18 @@ public class MonsterManager : MonoBehaviour
     {
         //怪物数量扣1
         MonsterNum--;
+    }
+
+
+    //删除所有怪物,并停止怪物生成
+    public void ClearAll()
+    {
+        isClearMode = true;
+        MonsterNum = 0;
+        for (int i = 0; i < m_EnemyList.Count; i++)
+        {
+            Destroy(m_EnemyList[i]);
+        }
+        m_EnemyList.Clear();
     }
 }

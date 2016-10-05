@@ -160,8 +160,10 @@ public class BasicEnemy : MonoBehaviour
         return health;
     }
 
+    //在销毁BasicEnemy脚本的同时，也会销毁整个gameObject,还会通知所有订阅者，也就是所有的塔
     protected void OnDestroy()
     {
         GameManager.OnEnemyDied(new GameManager.EnemyDiedEventsArgs(m_Collider));
+        Destroy(this.gameObject);
     }
 }

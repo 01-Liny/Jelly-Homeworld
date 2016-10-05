@@ -10,6 +10,7 @@ public class ConstructTowerFSM : FSM
     public TowerManager m_TowerManager;
     public ConstructUIController m_ConstructUIController;
     public UIRangeIndicator m_UIRangeIndicator;
+    public MonsterManager m_MonsterManager;
     public bool isOnPlayMode = false;
     public Canvas m_StartLevelCanvas;
     private Canvas m_Canvas;
@@ -23,20 +24,25 @@ public class ConstructTowerFSM : FSM
 
     public override void OnEnter(string prevState = "")
     {
+        ChangeState("Construct");
         m_Canvas.enabled = true;
         m_StartLevelCanvas.enabled = true;
         UIRemainTowerCount.ResetTowerCount();
         UIGameLevel.ResetLevel();
+        //防止无法生成怪物的情况
+        m_MonsterManager.isClearMode = false;
     }
 
     public override void OnExit(string nextState = "")
-    {
-        for (int i = 0; i < m_States.Count; i++)
-        {
-            m_States.Values.ElementAt(i).OnExit();
-        }
+    {  
+        //for (int i = 0; i < m_States.Count; i++)
+        //{
+        //    m_States.Values.ElementAt(i).OnExit();
+        //}
         m_StartLevelCanvas.enabled = false;
         m_Canvas.enabled = false;
+        m_TowerManager.ClearAll();
+        m_MonsterManager.ClearAll();
     }
 
     public override void OnClick()

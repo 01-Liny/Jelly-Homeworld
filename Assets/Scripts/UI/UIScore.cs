@@ -30,9 +30,17 @@ public class UIScore : MonoBehaviour
         UpdateUI();
     }
 
+    static public int GetScore()
+    {
+        return (int)(score * offset);
+    }
+
+
     static private void UpdateUI()
     {
         //更新得分UI，乘以固定数值防止内存修改
         m_Text.text = ((int)(score * offset)).ToString();
     }
+
+    
 }

@@ -84,6 +84,7 @@ $RECYCLE.BIN/
 
 
 ### Visual Studio ###
+/.vs
 /Assets/UnityVs/
 UnityVS.meta
 

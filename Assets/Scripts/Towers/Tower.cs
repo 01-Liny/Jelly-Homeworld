@@ -96,4 +96,10 @@ public class Tower : MonoBehaviour
         Debug.LogError("GetUpdateElem() Error invalid invoke");
         return TowerElem.NULL;
     }
+
+    //在销毁Tower脚本的同时，也会销毁整个gameObject
+    private void OnDestroy()
+    {
+        Destroy(this.gameObject);
+    }
 }
