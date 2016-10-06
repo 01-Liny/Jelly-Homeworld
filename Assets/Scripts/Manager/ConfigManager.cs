@@ -69,6 +69,16 @@ public class ConfigManager : MonoBehaviour
     {
         m_JsonManager.SaveConfig();
     }
+
+    public string GetUserRecordWithString()
+    {
+        string temp="";
+        for(int i=0;i<m_UserRecord.Count;i++)
+        {
+            temp += m_UserRecord[i].name + "\t" + m_UserRecord[i].score + "\n";
+        }
+        return temp;
+    }
 }
 
 public class UserRecord
