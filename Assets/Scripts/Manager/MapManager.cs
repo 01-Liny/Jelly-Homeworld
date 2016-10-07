@@ -398,7 +398,15 @@ public class MapManager : MonoBehaviour
     //根据参数地图位置信息，返回该位置的建筑类型
     public MapType GetMap(int posX, int posY)
     {
-        return map[posX, posY];
+        try
+        {
+            return map[posX, posY];
+        }
+        catch(Exception ex)
+        {
+            Debug.LogError("Out of map range");
+            return MapType.Empty;
+        }
     }
 
     //返回所有地图信息

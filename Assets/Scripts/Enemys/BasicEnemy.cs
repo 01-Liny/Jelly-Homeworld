@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class BasicEnemy : MonoBehaviour 
 {
     public bool GoDie = false;
+    public bool isFocused = false;//用来判断是否被标记为攻击目标
     private float isStun = 0;
     [SerializeField]
     protected float maxHealth = 100;//最初的血量
@@ -39,7 +40,6 @@ public class BasicEnemy : MonoBehaviour
     private float damageTemp;
     private Collider m_Collider;
     private MonsterWalk m_MonsterWalk;
-    private bool isSigned = false;//用来判断是否被标记为攻击目标
 
     // Use this for initialization
     void Start()

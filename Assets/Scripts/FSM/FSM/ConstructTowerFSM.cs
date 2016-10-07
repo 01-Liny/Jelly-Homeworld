@@ -47,135 +47,122 @@ public class ConstructTowerFSM : FSM
 
     public override void OnClick()
     {
-        //---------------------------------------------------------------------该代码结构需要重构
         int posX, posY;
         //将游戏地图上的坐标转换为地图数组的下标
         Vector2 pos = m_UISelectedArea.GetClickMapPos();
         posX = (int)pos.x;
         posY = (int)pos.y;
-        MapType mapType = m_MapManager.GetMap(posX, posY);
         GameObject m_SelectedTower = m_UISelectedArea.GetSelectedTower();
-        //如果在生成怪物状态，不能建造塔，只能显示UI和升级塔
-        if (currentStateName == "Play")
-        {
-            m_UIRangeIndicator.ShowTowerRangeIndicator(m_SelectedTower);
-            //如果处于升级模式，则不能建造塔，也不能显示UI
-            if (TowerManager.isOnUpdate)
-            {
-                GameObject m_MergeableTower = m_UISelectedArea.GetUpdateTower();
-                //如果该塔可以合并
-                if (m_MergeableTower != null)
-                {
-                    GameObject m_UpdatableTower = m_ConstructUIController.GetTowerGameObject();
-                    pos = m_UISelectedArea.RealPosToMapPos(m_MergeableTower.transform.position);
-                    posX = (int)pos.x;
-                    posY = (int)pos.y;
-                    m_MapManager.DeleteTower(posX, posY);
-                    //取得升级元素
-                    TowerElem updateElem = m_MergeableTower.GetComponent<Tower>().GetUpdateElem();
-                    m_TowerManager.DestroyTower(m_MergeableTower);
-                    m_TowerManager.UpdateTower(m_UpdatableTower, updateElem);
-                    //显示升级后的塔的范围
-                    m_UIRangeIndicator.ShowTowerRangeIndicator(m_UpdatableTower);
-                    //再次搜索
-                    m_TowerManager.RetrieveUpdatableTower();
-                }
-            }
-            else if (mapType==MapType.Tower)
-            {
-                GameObject m_Tower = m_UISelectedArea.GetUpdateTower();
-                //如果该塔可以升级
-                if (m_Tower != null)
-                {
-                    UpdateConstructUIConstroller("Update");
-                    m_ConstructUIController.SetTowerGameObject(m_Tower);
-                }
-                else
-                {
-                    m_ConstructUIController.Disable();
-                }
-            }
-            else
-            {
-                m_ConstructUIController.Disable();
-                //隐藏范围指示器
-                m_UIRangeIndicator.Disable();
-            }
-            return;
-        }    
+        GameObject m_SelectedEnemy = m_UISelectedArea.GetEnemy();
+
         //如果在地图范围内
         if (m_UISelectedArea.IsOutRange() == false)
         {
-
-            //如果处于升级模式，则不能建造塔，也不能显示UI
-            if (TowerManager.isOnUpdate)
+            MapType mapType = m_MapManager.GetMap(posX, posY);
+            //如果点击到怪物
+            if (m_SelectedEnemy != null)
             {
-                GameObject m_MergeableTower = m_UISelectedArea.GetUpdateTower();
-                //如果该塔可以合并
-                if(m_MergeableTower!=null)
+                //隐藏UI
+                m_ConstructUIController.Disable();
+                m_UIRangeIndicator.Disable();
+
+                BasicEnemy m_BasicEnemy = m_SelectedEnemy.GetComponent<BasicEnemy>();
+                if(m_MonsterManager.m_FocusedEnemy==null)
                 {
-                    GameObject m_UpdatableTower = m_ConstructUIController.GetTowerGameObject();
-                    pos = m_UISelectedArea.RealPosToMapPos(m_MergeableTower.transform.position);
-                    posX = (int)pos.x;
-                    posY = (int)pos.y;
-                    m_MapManager.DeleteTower(posX, posY);
-                    //取得升级元素
-                    TowerElem updateElem = m_MergeableTower.GetComponent<Tower>().GetUpdateElem();
-                    m_TowerManager.DestroyTower(m_MergeableTower);
-                    m_TowerManager.UpdateTower(m_UpdatableTower, updateElem);
-                    //显示升级后的塔的范围
-                    m_UIRangeIndicator.ShowTowerRangeIndicator(m_UpdatableTower);
-                    //再次搜索
-                    m_TowerManager.RetrieveUpdatableTower();                
+                    m_BasicEnemy.isFocused = true;
+                    m_MonsterManager.m_FocusedEnemy = m_BasicEnemy;
+                }
+                else if(m_MonsterManager.m_FocusedEnemy== m_BasicEnemy)
+                {
+                    //如果已经被标记，则取消标记
+                    m_BasicEnemy.isFocused = false;
+                    m_MonsterManager.m_FocusedEnemy = null;
+                }
+                else
+                {
+                    //取消之前的标记，标记新的怪物
+                    m_MonsterManager.m_FocusedEnemy.isFocused = false;
+                    m_BasicEnemy.isFocused = true;
+                    m_MonsterManager.m_FocusedEnemy = m_BasicEnemy;
                 }
             }
             else
             {
-                switch (mapType)
+                //如果处于升级模式，则不能建造塔，也不能显示UI
+                if (TowerManager.isOnUpdate)
                 {
-                    case MapType.Empty:
-                        {
-                            //隐藏UI
-                            m_ConstructUIController.Disable();
-                            m_UIRangeIndicator.Disable();
-                            break;
-                        }
-                    case MapType.Basic:
-                        {
-                            //隐藏范围指示器
-                            m_UIRangeIndicator.Disable();
-                            //如果还有剩余的建造塔数量，显示建造UI
-                            if (UIRemainTowerCount.remainTowerCount>0)
+                    GameObject m_MergeableTower = m_UISelectedArea.GetUpdateTower();
+                    //如果该塔可以合并
+                    if (m_MergeableTower != null)
+                    {
+                        GameObject m_UpdatableTower = m_ConstructUIController.GetTowerGameObject();
+                        pos = m_UISelectedArea.RealPosToMapPos(m_MergeableTower.transform.position);
+                        posX = (int)pos.x;
+                        posY = (int)pos.y;
+                        m_MapManager.DeleteTower(posX, posY);
+                        //取得升级元素
+                        TowerElem updateElem = m_MergeableTower.GetComponent<Tower>().GetUpdateElem();
+                        m_TowerManager.DestroyTower(m_MergeableTower);
+                        m_TowerManager.UpdateTower(m_UpdatableTower, updateElem);
+                        //显示升级后的塔的范围
+                        m_UIRangeIndicator.ShowTowerRangeIndicator(m_UpdatableTower);
+                        //再次搜索
+                        m_TowerManager.RetrieveUpdatableTower();
+                    }
+                }
+                else
+                {
+                    switch (mapType)
+                    {
+                        case MapType.Empty:
                             {
-                                UpdateConstructUIConstroller("Tower");
-                            }
-                            else
-                            {
+                                //隐藏UI
                                 m_ConstructUIController.Disable();
+                                m_UIRangeIndicator.Disable();
+                                break;
                             }
-                            break;
-                        }
-                    case MapType.Tower:
-                        {
-                            //显示范围指示器
-                            m_UIRangeIndicator.ShowTowerRangeIndicator(m_SelectedTower);
+                        case MapType.Basic:
+                            {
+                                //隐藏范围指示器
+                                m_UIRangeIndicator.Disable();
+                                //如果还有剩余的建造塔数量，显示建造UI                        
+                                if (currentStateName=="Construct"&& UIRemainTowerCount.remainTowerCount > 0)
+                                {
+                                    UpdateConstructUIConstroller("Tower");
+                                }
+                                else
+                                    m_ConstructUIController.Disable();
+                                break;
+                            }
+                        case MapType.Tower:
+                            {
+                                //显示范围指示器
+                                m_UIRangeIndicator.ShowTowerRangeIndicator(m_SelectedTower);
 
-                            GameObject m_Tower = m_UISelectedArea.GetUpdateTower();
-                            //如果该塔可以升级
-                            if (m_Tower != null)
-                            {
-                                UpdateConstructUIConstroller("Update");
-                                m_ConstructUIController.SetTowerGameObject(m_Tower);
+                                GameObject m_Tower = m_UISelectedArea.GetUpdateTower();
+                                //如果该塔可以升级
+                                if (m_Tower != null)
+                                {
+                                    UpdateConstructUIConstroller("Update");
+                                    m_ConstructUIController.SetTowerGameObject(m_Tower);
+                                }
+                                else
+                                {
+                                    m_ConstructUIController.Disable();
+                                }
+                                break;
                             }
-                            else
-                            {
-                                m_ConstructUIController.Disable();
-                            }
-                            break;
-                        }
+                    }
                 }
             }
         }
+        else
+        {
+            //在地图外，隐藏所有UI
+            m_ConstructUIController.Disable();
+            m_UIRangeIndicator.Disable();
+        }
+
     }
 
     public void UpdateConstructUIConstroller(string temp)

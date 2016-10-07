@@ -32,6 +32,7 @@ public class MonsterManager : MonoBehaviour
     private List<BasicEnemy> m_EnemyList = new List<BasicEnemy>();
     //用于清除所有怪物时，防止怪物继续生成,进入关卡时要设置为true，已交给FSM完成
     public bool isClearMode = false;
+    public BasicEnemy m_FocusedEnemy = null;
 
     //----------------可能要删掉-------------
     //public void setCreatMonster(Vector3 m_Position, int MonsterNum,int interval)

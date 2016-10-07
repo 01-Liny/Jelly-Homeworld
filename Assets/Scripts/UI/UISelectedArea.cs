@@ -122,12 +122,25 @@ public class UISelectedArea : MonoBehaviour
     {
         RaycastHit m_Hit;
         //以ray的方向和原点，发射一条射线，检测射线是否碰撞到LayerMask为Update的Collider
-        //为什么不用加parent
         if (Physics.Raycast(ray.origin, ray.direction, out m_Hit, Mathf.Infinity, 1 << 11))
         {
             //return m_Hit.transform.parent.gameObject;
             //被搜索出来的是basicTower所在的gameobject 所以要加parent，取得Tower所在的gameobject
             return m_Hit.transform.parent.gameObject;
+        }
+        else
+            return null;
+    }
+
+    public GameObject GetEnemy()
+    {
+        RaycastHit m_Hit;
+        //以ray的方向和原点，发射一条射线，检测射线是否碰撞到LayerMask为Enemy的Collider
+        if (Physics.Raycast(ray.origin, ray.direction, out m_Hit, Mathf.Infinity, 1 << 13))
+        {
+            //return m_Hit.transform.parent.gameObject;
+            //被搜索出来的是basicTower所在的gameobject 所以要加parent，取得Tower所在的gameobject
+            return m_Hit.transform.gameObject;
         }
         else
             return null;

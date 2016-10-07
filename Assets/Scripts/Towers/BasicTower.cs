@@ -185,15 +185,21 @@ public class BasicTower : MonoBehaviour                                         
     //攻击
     private void TryFire()
     {
-        //当前时间超过下次攻击时间或者没有攻击目标时，开始搜索攻击目标
+        //当前时间超过下次攻击时间，开始搜索攻击目标
         //当变成范围塔时，m_RigidbodyEnemy失效
-        if (m_RigidbodyEnemy == null && isFireRange == false)
+        if (isFireRange == false)
         {
             ResetMinEnemyHealth();
             //找到最小血量的敌人
             for (int i = 0; i < m_EnemyTriggerList.Count; i++)
             {
                 m_BasicEnemyTemp = m_EnemyTriggerList[i].GetComponent<BasicEnemy>();
+                //发现被要求集火的敌人
+                if(m_BasicEnemyTemp.isFocused==true)
+                {
+                    m_BasicEnemyMinHealth = m_BasicEnemyTemp;
+                    break;
+                }
                 if (minEnemyHealth > m_BasicEnemyTemp.GetHealth())
                 {
                     minEnemyHealth = m_BasicEnemyTemp.GetHealth();
