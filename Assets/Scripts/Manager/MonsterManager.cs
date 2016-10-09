@@ -44,7 +44,8 @@ public class MonsterManager : MonoBehaviour
             MonsterInfo.EnemyProperty[(int)(gameLevel / 5.0) + 1, InstantiateMonster, 1],
             MonsterInfo.EnemyProperty[(int)(gameLevel / 5.0) + 1, InstantiateMonster, 2],
             MonsterInfo.EnemyProperty[(int)(gameLevel / 5.0) + 1, InstantiateMonster, 3],
-            MonsterInfo.EnemyProperty[(int)(gameLevel / 5.0) + 1, InstantiateMonster, 4]);
+            MonsterInfo.EnemyProperty[(int)(gameLevel / 5.0) + 1, InstantiateMonster, 4],
+            MonsterInfo.EnemyProperty[(int)(gameLevel / 5.0) + 1, InstantiateMonster, 5]);
     }
 
 

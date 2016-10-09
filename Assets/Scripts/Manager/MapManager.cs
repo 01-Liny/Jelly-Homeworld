@@ -90,10 +90,10 @@ public class MapManager : MonoBehaviour
         mapFileCache = new MapType[5, mapRegionX, mapRegionY];//最多5份地图
         mapTemp = new int[mapRegionX, mapRegionY];
 
-        start = new Point(1, 1);
-        end = new Point(15, 11);
-        pointA = new Point[2] { new Point(1, 6), new Point(8, 1) };
-        pointB = new Point[2] { new Point(8, 11), new Point(15, 6) };
+        start = new Point(1, 11);
+        end = new Point(15, 1);
+        pointA = new Point[2] { new Point(1, 6), new Point(15, 6) };
+        pointB = new Point[2] { new Point(8, 1), new Point(8, 11) };
         InitMap();
         m_Maze = new AStar.Maze(map, mapRegionY, mapRegionX, start, end, pointA, pointB);
         //m_Maze.FindFinalPath();

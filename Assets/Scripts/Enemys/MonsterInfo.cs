@@ -10,12 +10,14 @@ public class MonsterInfo
     public static void Init()
     {
         PrefabsPositon = new int[21, 3];
-        EnemyProperty = new float[5, 7, 5];//[怪物关卡等级，怪物种类，怪物5种属性值]
+        EnemyProperty = new float[5, 7, 6];//[怪物关卡等级，怪物种类，怪物6种属性值]
 
         //restore
         //maxArmor
         //speed
         //isStun
+        //isSlowdown
+        //LimitAttackTimes
         //之后优化各属性加强
         #region EnemyProperty
         //回血快
@@ -24,24 +26,28 @@ public class MonsterInfo
         EnemyProperty[1, 1, 2] = 2;
         EnemyProperty[1, 1, 3] = 1;
         EnemyProperty[1, 1, 4] = 1;
+        EnemyProperty[1, 1, 5] = 100;
 
         EnemyProperty[2, 1, 0] = 12;
         EnemyProperty[2, 1, 1] = 20;
         EnemyProperty[2, 1, 2] = 2;
         EnemyProperty[2, 1, 3] = 1;
-        EnemyProperty[2, 1, 4] = 1;
+        EnemyProperty[2, 1, 4] = 1; 
+        EnemyProperty[2, 1, 5] = 100;
 
         EnemyProperty[3, 1, 0] = 14;
         EnemyProperty[3, 1, 1] = 20;
         EnemyProperty[3, 1, 2] = 2;
         EnemyProperty[3, 1, 3] = 1;
         EnemyProperty[3, 1, 4] = 1;
+        EnemyProperty[3, 1, 5] = 100;
 
         EnemyProperty[4, 1, 0] = 16;
         EnemyProperty[4, 1, 1] = 20;
         EnemyProperty[4, 1, 2] = 2;
         EnemyProperty[4, 1, 3] = 1;
         EnemyProperty[4, 1, 4] = 1;
+        EnemyProperty[4, 1, 5] = 100;
 
         //高护甲
         EnemyProperty[1, 2, 0] = 5;
@@ -49,24 +55,28 @@ public class MonsterInfo
         EnemyProperty[1, 2, 2] = 2;
         EnemyProperty[1, 2, 3] = 1;
         EnemyProperty[1, 2, 4] = 1;
+        EnemyProperty[1, 2, 5] = 100;
 
         EnemyProperty[2, 2, 0] = 5;
         EnemyProperty[2, 2, 1] = 35;
         EnemyProperty[2, 2, 2] = 2;
         EnemyProperty[2, 2, 3] = 1;
         EnemyProperty[2, 2, 4] = 1;
+        EnemyProperty[2, 2, 5] = 100;
 
         EnemyProperty[3, 2, 0] = 5;
         EnemyProperty[3, 2, 1] = 40;
         EnemyProperty[3, 2, 2] = 2;
         EnemyProperty[3, 2, 3] = 1;
         EnemyProperty[3, 2, 4] = 1;
+        EnemyProperty[3, 2, 5] = 100;
 
         EnemyProperty[4, 2, 0] = 5;
         EnemyProperty[4, 2, 1] = 45;
         EnemyProperty[4, 2, 2] = 2;
         EnemyProperty[4, 2, 3] = 1;
         EnemyProperty[4, 2, 4] = 1;
+        EnemyProperty[4, 2, 5] = 100;
 
         //免疫减速
         EnemyProperty[1, 3, 0] = 5;
@@ -74,49 +84,57 @@ public class MonsterInfo
         EnemyProperty[1, 3, 2] = 2;
         EnemyProperty[1, 3, 3] = 1;
         EnemyProperty[1, 3, 4] = 0;
+        EnemyProperty[1, 3, 5] = 100;
 
         EnemyProperty[2, 3, 0] = 5;
         EnemyProperty[2, 3, 1] = 20;
         EnemyProperty[2, 3, 2] = 2;
         EnemyProperty[2, 3, 3] = 1;
         EnemyProperty[2, 3, 4] = 0;
+        EnemyProperty[2, 3, 5] = 100;
 
         EnemyProperty[3, 3, 0] = 5;
         EnemyProperty[3, 3, 1] = 20;
         EnemyProperty[3, 3, 2] = 2;
         EnemyProperty[3, 3, 3] = 1;
         EnemyProperty[3, 3, 4] = 0;
+        EnemyProperty[3, 3, 5] = 100;
 
         EnemyProperty[4, 3, 0] = 5;
         EnemyProperty[4, 3, 1] = 20;
         EnemyProperty[4, 3, 2] = 2;
         EnemyProperty[4, 3, 3] = 1;
         EnemyProperty[4, 3, 4] = 0;
+        EnemyProperty[4, 3, 5] = 100;
 
-        //限制受到攻击次数---------还未完成
+        //限制受到攻击次数
         EnemyProperty[1, 4, 0] = 5;
         EnemyProperty[1, 4, 1] = 20;
         EnemyProperty[1, 4, 2] = 2;
         EnemyProperty[1, 4, 3] = 1;
         EnemyProperty[1, 4, 4] = 1;
+        EnemyProperty[1, 4, 5] = 1;
 
         EnemyProperty[2, 4, 0] = 5;
         EnemyProperty[2, 4, 1] = 20;
         EnemyProperty[2, 4, 2] = 2;
         EnemyProperty[2, 4, 3] = 1;
         EnemyProperty[2, 4, 4] = 1;
+        EnemyProperty[2, 4, 5] = 2;
 
         EnemyProperty[3, 4, 0] = 5;
         EnemyProperty[3, 4, 1] = 20;
         EnemyProperty[3, 4, 2] = 2;
         EnemyProperty[3, 4, 3] = 1;
         EnemyProperty[3, 4, 4] = 1;
+        EnemyProperty[3, 4, 5] = 1;
 
         EnemyProperty[4, 4, 0] = 5;
         EnemyProperty[4, 4, 1] = 20;
         EnemyProperty[4, 4, 2] = 2;
         EnemyProperty[4, 4, 3] = 1;
         EnemyProperty[4, 4, 4] = 1;
+        EnemyProperty[4, 4, 5] = 1;
 
         //移速快
         EnemyProperty[1, 5, 0] = 5;
@@ -124,24 +142,28 @@ public class MonsterInfo
         EnemyProperty[1, 5, 2] = 3;
         EnemyProperty[1, 5, 3] = 1;
         EnemyProperty[1, 5, 4] = 1;
+        EnemyProperty[1, 5, 5] = 100;
 
         EnemyProperty[2, 5, 0] = 5;
         EnemyProperty[2, 5, 1] = 20;
         EnemyProperty[2, 5, 2] = 4;
         EnemyProperty[2, 5, 3] = 1;
         EnemyProperty[2, 5, 4] = 1;
+        EnemyProperty[2, 5, 5] = 100;
 
         EnemyProperty[3, 5, 0] = 5;
         EnemyProperty[3, 5, 1] = 20;
         EnemyProperty[3, 5, 2] = 5;
         EnemyProperty[3, 5, 3] = 1;
         EnemyProperty[3, 5, 4] = 1;
+        EnemyProperty[3, 5, 5] = 100;
 
         EnemyProperty[4, 5, 0] = 5;
         EnemyProperty[4, 5, 1] = 20;
         EnemyProperty[4, 5, 2] = 6;
         EnemyProperty[4, 5, 3] = 1;
         EnemyProperty[4, 5, 4] = 1;
+        EnemyProperty[4, 5, 5] = 100;
 
         //免疫眩晕
         EnemyProperty[1, 6, 0] = 5;
@@ -149,30 +171,34 @@ public class MonsterInfo
         EnemyProperty[1, 6, 2] = 2;
         EnemyProperty[1, 6, 3] = 1;
         EnemyProperty[1, 6, 4] = 1;
+        EnemyProperty[1, 6, 5] = 100;
 
         EnemyProperty[2, 6, 0] = 5;
         EnemyProperty[2, 6, 1] = 20;
         EnemyProperty[2, 6, 2] = 2;
         EnemyProperty[2, 6, 3] = 1;
         EnemyProperty[2, 6, 4] = 1;
+        EnemyProperty[2, 6, 5] = 100;
 
         EnemyProperty[3, 6, 0] = 5;
         EnemyProperty[3, 6, 1] = 20;
         EnemyProperty[3, 6, 2] = 2;
         EnemyProperty[3, 6, 3] = 1;
         EnemyProperty[3, 6, 4] = 1;
+        EnemyProperty[3, 6, 5] = 100;
 
         EnemyProperty[4, 6, 0] = 5;
         EnemyProperty[4, 6, 1] = 20;
         EnemyProperty[4, 6, 2] = 2;
         EnemyProperty[4, 6, 3] = 1;
         EnemyProperty[4, 6, 4] = 1;
+        EnemyProperty[4, 6, 5] = 100;
 
         #endregion
 
         #region PrefabsPositon
         PrefabsPositon[1,0] = 1;
-        PrefabsPositon[1,1] = 5;
+        PrefabsPositon[1,1] = 4;
         PrefabsPositon[1,2] = 0;
 
         PrefabsPositon[2,0] = 2;
