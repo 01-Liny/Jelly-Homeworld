@@ -94,6 +94,7 @@ public class MapManager : MonoBehaviour
         end = new Point(15, 1);
         pointA = new Point[2] { new Point(1, 8), new Point(15, 8)};
         pointB = new Point[2] { new Point(8, 1), new Point(8, 15)};
+
         InitMap();
         m_Maze = new AStar.Maze(map, mapRegionY, mapRegionX, start, end, pointA, pointB);
         //m_Maze.FindFinalPath();

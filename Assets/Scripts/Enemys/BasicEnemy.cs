@@ -32,9 +32,17 @@ public class BasicEnemy : MonoBehaviour
     protected float slowdownRate = 0.0f;//减速百分比
     [SerializeField]
     private float slowdownTime;//减速失效时间
-    [SerializeField]
 
+
+    [SerializeField]
+    private float LimitAttackTimes = 0;//限制别被攻击的次数
+    private float CountAttackTimes = 0;//记录这段时间内被攻击的次数
+    private float intervalAttack = 1;//1秒内受到一定次数的攻击
+
+    [SerializeField]
     private Slider slider;
+
+    private float startTime;//记录时间来判断一秒内攻击的次数
 
     private bool isDied = false;
     private float damageTemp;
@@ -42,15 +50,16 @@ public class BasicEnemy : MonoBehaviour
     private MonsterWalk m_MonsterWalk;
 
     // Use this for initialization
-    void Start()
+    void Start() 
     {
         m_Collider = GetComponent<Collider>();
         m_MonsterWalk = GetComponent<MonsterWalk>();
-        isSlowdown = new bool[(int)TowerLevel.MaxLevel];
-        for (int i = 0; i < (int)TowerLevel.MaxLevel; i++)
-        {
-            isSlowdown[i] = false;
-        }
+        //isSlowdown = new bool[(int)TowerLevel.MaxLevel];
+        //for (int i = 0; i < (int)TowerLevel.MaxLevel; i++)
+        //{
+        //    isSlowdown[i] = false;
+        //}
+        startTime = Time.time;
         //slowdownTime = new float[(int)TowerLevel.MaxLevel];
     }
 
@@ -68,12 +77,10 @@ public class BasicEnemy : MonoBehaviour
             Died();
         }
 
-
     }
 
-    public void Init(float restore, float maxArmor, float speed, float isStun,float isSlownDown)
+    public void Init(float restore, float maxArmor, float speed, float isStun,float isSlownDown,float LimitAttackTimes)
     {
-        //免疫减速还没写
         //限制受到攻击次数还没写
         m_MonsterWalk = GetComponent<MonsterWalk>();
         this.restore = restore;
@@ -81,10 +88,18 @@ public class BasicEnemy : MonoBehaviour
         m_MonsterWalk.changeSpeed(speed);
         m_MonsterWalk.setIsSlownDown(isSlownDown);
         this.isStun = isStun;
+        this.LimitAttackTimes = LimitAttackTimes;
     }
 
     void FixedUpdate()
     {
+
+        if (Time.time - startTime >= intervalAttack)
+        {
+            CountAttackTimes = 0;
+            intervalAttack += 1;
+        }
+
         //怪物回血
         if (health < maxHealth)
         {
@@ -113,13 +128,18 @@ public class BasicEnemy : MonoBehaviour
         stunTime = isStun == 1 ? fireStunTime : 0;
         slowdownRate = TowerElemInfo.slowdownDegree[slowDownLevel];
         slowdownTime = TowerElemInfo.slowdownTime[slowDownLevel];
-        //?????减速多次如何操作，可如果减速程度大于以前，可以去掉原来的减速，直接加上新的减速
-        //?????如果减速程度小于以前，就走完程度大的减速时间，计算多出来的程度小的减速时间，然后换成程度小的减速，考虑list
-
         //传眩晕时间，减速时间给MonsterWalk
         m_MonsterWalk.setFireStatus(fireStunTime, slowDownLevel);
         armor = maxArmor - fireStrikeArmor;
-        TakeHealth(fireDamage);
+        if (CountAttackTimes < LimitAttackTimes)
+        {
+            TakeHealth(fireDamage);
+            CountAttackTimes++;
+        }
+        else
+        {
+            return;
+        }
     }
     
     //public void TakeSlowdown(TowerLevel slowdownLevel)
