@@ -4,6 +4,7 @@ using System;
 
 public class GameManager : MonoBehaviour 
 {
+    public bool isSpeedUp=false;
     //声明委托
     public delegate void EnemyDiedEventHandler(object sender, EnemyDiedEventsArgs e);
     public static event EnemyDiedEventHandler EnemyDied;
@@ -55,5 +56,17 @@ public class GameManager : MonoBehaviour
         //maze.FindFinalPath();
         //Debug.Log("Print path:");
         //monsterPathFinding.monsterPathFinding(map, 5, 3, 5, 5);
+    }
+
+    void Update()
+    {
+        if(isSpeedUp)
+        {
+            Time.timeScale=2;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
     }
 }

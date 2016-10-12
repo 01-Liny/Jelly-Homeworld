@@ -46,7 +46,7 @@ public class ConstructStoneFSM : FSM
             {
                 case MapType.Empty:
                     {
-                        if(currentStateName=="Stone")
+                        //if(currentStateName=="Stone")
                         {
                             //直接建造 不经过UI确认
                             //如果可以添加到地图
@@ -59,7 +59,7 @@ public class ConstructStoneFSM : FSM
                     }
                 case MapType.Basic:
                     {
-                        if(currentStateName=="DeleteStone")
+                        //if(currentStateName=="DeleteStone")
                         {
                             //直接删除 不经过UI确认
                             if (m_MapManager.GetMap(posX, posY) == MapType.Basic)

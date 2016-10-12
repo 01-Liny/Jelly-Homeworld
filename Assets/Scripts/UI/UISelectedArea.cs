@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 
 public class UISelectedArea : MonoBehaviour 
@@ -67,6 +68,7 @@ public class UISelectedArea : MonoBehaviour
         
     }
 
+
     public bool IsOutRange()
     {
         return isOutRange;
@@ -130,6 +132,14 @@ public class UISelectedArea : MonoBehaviour
         }
         else
             return null;
+    }
+
+    public bool isClickUI()
+    {
+        RaycastHit m_Hit;
+        
+        //以ray的方向和原点，发射一条射线，检测射线是否碰撞到LayerMask为Update的Collider
+        return Physics.Raycast(ray.origin, ray.direction, out m_Hit, Mathf.Infinity, 1 << 5);
     }
 
     public GameObject GetEnemy()
