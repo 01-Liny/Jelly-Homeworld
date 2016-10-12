@@ -16,8 +16,8 @@ public class MapManager : MonoBehaviour
 {
     public TowerManager m_TowerManager;
     public static int mapSize = 3;
-    public static int mapRegionX = 17;//实际要减2，外围有围墙
-    public static int mapRegionY = 17;//实际要减2，外围有围墙
+    public static int mapRegionX = 15;//实际要减2，外围有围墙
+    public static int mapRegionY = 11;//实际要减2，外围有围墙
     public int currentMapIndex = 0;//现在读取的地图下标，默认为0
 
     //临时代码                                                     &&&&&&&&&
@@ -90,10 +90,10 @@ public class MapManager : MonoBehaviour
         mapFileCache = new MapType[5, mapRegionX, mapRegionY];//最多5份地图
         mapTemp = new int[mapRegionX, mapRegionY];
 
-        start = new Point(1, 15);
-        end = new Point(15, 1);
-        pointA = new Point[2] { new Point(1, 8), new Point(15, 8)};
-        pointB = new Point[2] { new Point(8, 1), new Point(8, 15)};
+        start = new Point(1, 9);
+        end = new Point(9, 1);
+        pointA = new Point[2] { new Point(1, 5), new Point(13, 5)};
+        pointB = new Point[2] { new Point(7, 1), new Point(7 ,9)};
 
         InitMap();
         m_Maze = new AStar.Maze(map, mapRegionY, mapRegionX, start, end, pointA, pointB);
