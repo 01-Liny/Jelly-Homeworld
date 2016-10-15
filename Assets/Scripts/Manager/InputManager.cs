@@ -59,8 +59,18 @@ namespace TouchScript.Examples.InputManager
         {
             //限制摄像头视角范围
             float viewSize = m_Camera.orthographicSize;
+
+#if UNITY_ANDROID
+            //手机处理方式不同
+            minX = m_RangeA.x + screenRatio*3f * viewSize;
+            maxX = m_RangeB.x - screenRatio*3f * viewSize;
+#endif
+
+#if UNITY_EDITOR
             minX = m_RangeA.x + screenRatio * viewSize;
             maxX = m_RangeB.x - screenRatio * viewSize;
+#endif
+
             minY = m_RangeB.z + viewSize*1.4f- cameraY;
             maxY = m_RangeA.z - viewSize*1.4f- cameraY;
 
@@ -95,9 +105,9 @@ namespace TouchScript.Examples.InputManager
                 isTouchedUI = true;
 #endif
 
-#if UNITY_ANDROID 
-            //if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-            //    isTouchedUI = true;
+#if UNITY_ANDROID && !UNITY_EDITOR
+            if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                isTouchedUI = true;
 #endif
         }
 
@@ -109,6 +119,8 @@ namespace TouchScript.Examples.InputManager
                 isMoved = false;
                 return;
             }
+
+            //一般不会触发这一段代码
 #if UNITY_EDITOR
             if (EventSystem.current.IsPointerOverGameObject())
             {
@@ -116,11 +128,11 @@ namespace TouchScript.Examples.InputManager
             }
 #endif
 
-#if UNITY_ANDROID
-            //if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-            //    return;
+#if UNITY_ANDROID && !UNITY_EDITOR
+            if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                return;
 #endif
-            
+
             m_FSM.OnClick();
         }
 
@@ -135,6 +147,9 @@ namespace TouchScript.Examples.InputManager
 
         private void TwoFingerTransformHandler(object sender, System.EventArgs e)
         {
+            float temp = (TwoFingerScaleGesture.DeltaScale - 1f) * ZoomSpeed;
+            if(temp<0&& m_Camera.orthographicSize == maxOrthographicSize)
+                return;
             m_Camera.orthographicSize -= (TwoFingerScaleGesture.DeltaScale - 1f) * ZoomSpeed;
         }
     }
