@@ -195,14 +195,14 @@ public class MonsterWalk : MonoBehaviour
         //}
         //startPosition.Set(m_ListPath[currentWayPoint].X, 1, m_ListPath[currentWayPoint].Y);
 
-        //碰到x，y为-1，-1的点时，把list下标往后移两个单位
-        if (m_ListPath[currentWayPoint + 1].X == -1)
-        {
-            currentWayPoint += 2;
-            Vector3 temp = transform.position;
-            temp.Set(m_ListPath[currentWayPoint].X, 1, m_ListPath[currentWayPoint].Y);
-            transform.position = temp;
-        }
+        ////碰到x，y为-1，-1的点时，把list下标往后移两个单位
+        //if (m_ListPath[currentWayPoint + 1].X == -1)
+        //{
+        //    currentWayPoint += 2;
+        //    Vector3 temp = transform.position;
+        //    temp.Set(m_ListPath[currentWayPoint].X, 1, m_ListPath[currentWayPoint].Y);
+        //    transform.position = temp;
+        //}
         endPosition.Set(m_ListPath[currentWayPoint + 1].X, 1, m_ListPath[currentWayPoint + 1].Y);
         newDirection = (endPosition - transform.position);
 
