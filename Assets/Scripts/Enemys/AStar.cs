@@ -63,7 +63,19 @@ public class AStar
             else
             { 
                 Addm_ListPath();
-                m_ListPath.Add(new Point(-1, -1));
+                //m_ListPath.Add(new Point(-1, -1));
+            }
+
+            OpenList.Clear();
+            CloseList.Clear();
+
+            FindOncePath(pointA[0], pointA[1], false);
+            if (parent == null)
+                return false;
+            else
+            {
+                Addm_ListPath();
+                //m_ListPath.Add(new Point(-1, -1));
             }
 
             OpenList.Clear();
@@ -75,7 +87,19 @@ public class AStar
             else
             { 
                 Addm_ListPath();
-                m_ListPath.Add(new Point(-1, -1));
+                //m_ListPath.Add(new Point(-1, -1));
+            }
+
+            OpenList.Clear();
+            CloseList.Clear();
+
+            FindOncePath(pointB[0], pointB[1], false);
+            if (parent == null)
+                return false;
+            else
+            {
+                Addm_ListPath();
+                //m_ListPath.Add(new Point(-1, -1));
             }
 
             OpenList.Clear();

@@ -91,9 +91,10 @@ public class MapManager : MonoBehaviour
         mapTemp = new int[mapRegionX, mapRegionY];
 
         start = new Point(1, 9);
-        end = new Point(9, 1);
-        pointA = new Point[2] { new Point(1, 5), new Point(13, 5)};
-        pointB = new Point[2] { new Point(7, 1), new Point(7 ,9)};
+        end = new Point(13, 1);
+        pointA = new Point[2] { new Point(1, 5), new Point(7, 9)};
+        pointB = new Point[2] { new Point(7, 1), new Point(13, 5)};
+
 
         InitMap();
         m_Maze = new AStar.Maze(map, mapRegionY, mapRegionX, start, end, pointA, pointB);
