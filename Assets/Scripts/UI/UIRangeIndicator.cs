@@ -117,13 +117,14 @@ public class UIRangeIndicator : MonoBehaviour
     #region Motion
     private BasicTower m_BasicTower;
     private float targetRange;
-
+    [SerializeField]
     private Vector3 targetPosition;
 
     //开始时调用
     private void MotionStart()
     {
         targetPosition = new Vector3();
+        targetPosition.y = 0.02f;
         _line.enabled = false;
     }
 

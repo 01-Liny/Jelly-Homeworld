@@ -7,6 +7,7 @@ public class UIConstructState : MonoBehaviour ,IState
     public FSM FSMConstruct;
 
     private Canvas m_Canvas;
+    public ConstructUIController m_ConstructUIController;
 
     private void Start()
     {
@@ -24,6 +25,7 @@ public class UIConstructState : MonoBehaviour ,IState
     public void OnExit(string nextState)
     {
         m_Canvas.enabled = false;
+        m_ConstructUIController.Disable();
     }
     public void OnUpdate()
     {

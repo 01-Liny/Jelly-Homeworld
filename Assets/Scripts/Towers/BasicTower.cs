@@ -8,6 +8,8 @@ public class BasicTower : MonoBehaviour                                         
     public GameObject m_ForDetect;
     protected Material m_Material;
     public GameObject m_Body;
+    public GameObject m_SelectedParticles;
+    public Transform m_FirePointTransform;
 
     [SerializeField]
     protected float fireRange;//攻击范围
@@ -45,6 +47,8 @@ public class BasicTower : MonoBehaviour                                         
     private int[] towerElemCount=new int[(int)TowerElem.MaxCount];
     //元素总共的个数
     private int elemCount;
+
+
 
     public void Init()
     {
@@ -99,6 +103,8 @@ public class BasicTower : MonoBehaviour                                         
 
         //重新调整塔的攻击范围
         m_AttackRangeCollider.radius = fireRange;
+        if (isFireRange)
+            m_SelectedParticles.GetComponent<ParticleSystem>().startSpeed = fireRange;
 
         //含有范围攻击的塔属性会被削弱
         float offset = TowerElemInfo.extraFireRangeOffset[towerElemCount[(int)TowerElem.Range]];
@@ -226,6 +232,8 @@ public class BasicTower : MonoBehaviour                                         
                     m_BasicEnemyTemp = m_EnemyTriggerList[i].GetComponent<BasicEnemy>();
                     Fire(m_BasicEnemyTemp);
                 }
+                m_SelectedParticles.GetComponent<ParticleSystem>().Stop();
+                m_SelectedParticles.GetComponent<ParticleSystem>().Play();
             }
             else
             {
@@ -242,12 +250,32 @@ public class BasicTower : MonoBehaviour                                         
 
     private void Fire(BasicEnemy m_FireTarget)
     {
+        GameObject temp;
         //有一定几率触发眩晕
         int random = Random.Range(1, 101);
-        if(random<=fireStunProbability)
-            m_FireTarget.TakeDamage(fireDamage, fireStrikeArmor, fireStunTime, towerElemCount[(int)TowerElem.Slowdown]);
+        if(!isFireRange)
+        {
+            temp = Instantiate(m_SelectedParticles, m_FirePointTransform.position, transform.rotation) as GameObject;
+            if (random <= fireStunProbability)
+            {
+                temp.GetComponent<Bullet>().Init(fireDamage, fireStrikeArmor, fireStunTime, towerElemCount[(int)TowerElem.Slowdown], transform.position, m_FireTarget);
+            }
+            else
+            {
+                temp.GetComponent<Bullet>().Init(fireDamage, fireStrikeArmor, 0, towerElemCount[(int)TowerElem.Slowdown], transform.position, m_FireTarget);
+            }
+        }
         else
-            m_FireTarget.TakeDamage(fireDamage, fireStrikeArmor, 0, towerElemCount[(int)TowerElem.Slowdown]);
+        {
+            if (random <= fireStunProbability)
+            {
+                m_FireTarget.TakeDamage(fireDamage, fireStrikeArmor, fireStunTime, towerElemCount[(int)TowerElem.Slowdown], Vector3.zero, transform.position);
+            }
+            else
+            {
+                m_FireTarget.TakeDamage(fireDamage, fireStrikeArmor, 0, towerElemCount[(int)TowerElem.Slowdown], Vector3.zero, transform.position);
+            }   
+        }
     }
 
     //敌人出现在塔的攻击范围内，加入到敌人列表中

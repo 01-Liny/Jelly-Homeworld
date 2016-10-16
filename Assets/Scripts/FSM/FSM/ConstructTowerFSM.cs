@@ -41,6 +41,7 @@ public class ConstructTowerFSM : FSM
         //}
         m_StartLevelCanvas.enabled = false;
         m_Canvas.enabled = false;
+        m_ConstructUIController.Disable();
         m_TowerManager.ClearAll();
         m_MonsterManager.ClearAll();
     }

@@ -7,6 +7,9 @@ public class BasicEnemy : MonoBehaviour
 {
     public bool GoDie = false;
     public bool isFocused = false;//用来判断是否被标记为攻击目标
+    public GameObject m_HitParticlesObject;
+    private ParticleSystem m_HitParticles;
+
     private float isStun = 0;
     [SerializeField]
     protected float maxHealth = 100;//最初的血量
@@ -54,13 +57,14 @@ public class BasicEnemy : MonoBehaviour
     {
         m_Collider = GetComponent<Collider>();
         m_MonsterWalk = GetComponent<MonsterWalk>();
+        m_HitParticles=m_HitParticlesObject.GetComponent<ParticleSystem>();
         //isSlowdown = new bool[(int)TowerLevel.MaxLevel];
         //for (int i = 0; i < (int)TowerLevel.MaxLevel; i++)
         //{
         //    isSlowdown[i] = false;
         //}
         startTime = Time.time;
-        //slowdownTime = new float[(int)TowerLevel.MaxLevel];
+
     }
 
     // Update is called once per frame
@@ -123,8 +127,18 @@ public class BasicEnemy : MonoBehaviour
     }
 
     //受到伤害的时候调用，fireStrikeArmor表示破甲数值
-    public void TakeDamage(float fireDamage, float fireStrikeArmor, float fireStunTime, int slowDownLevel)
+    public void TakeDamage(float fireDamage, float fireStrikeArmor, float fireStunTime, int slowDownLevel,Vector3 m_HitPoint,Vector3 m_AttackerPotision)
     {
+        if(m_HitPoint!= Vector3.zero && m_AttackerPotision!= Vector3.zero)
+        {
+            Vector3 relativePos = m_AttackerPotision- m_HitPoint ;
+            Quaternion rotation = Quaternion.LookRotation(relativePos);
+            m_HitParticlesObject.transform.position = m_HitPoint;
+            m_HitParticlesObject.transform.rotation = rotation;
+            m_HitParticles.Stop();
+            m_HitParticles.Play();
+        }
+
         stunTime = isStun == 1 ? fireStunTime : 0;
         slowdownRate = TowerElemInfo.slowdownDegree[slowDownLevel];
         slowdownTime = TowerElemInfo.slowdownTime[slowDownLevel];
