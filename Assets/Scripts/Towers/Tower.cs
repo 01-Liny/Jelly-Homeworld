@@ -64,11 +64,6 @@ public class Tower : MonoBehaviour
         m_CurrentModule.transform.parent = transform;
 
         m_BasicTower = m_CurrentModule.GetComponent<BasicTower>();
-        int currentParticlesID;
-        if ((int)currentModuleID == 0 || (int)currentModuleID == 3)
-            currentParticlesID = 0;
-        else
-            currentParticlesID = 1;
 
         m_BasicTower.Init();
         for (int i = 0; i < (int)TowerElem.MaxCount; i++)

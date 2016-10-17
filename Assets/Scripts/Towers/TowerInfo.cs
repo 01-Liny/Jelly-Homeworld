@@ -62,6 +62,7 @@ public class TowerElemInfo
     public static float[] extraFireRangeOffset;//攻击范围元素造成的各属性削弱
 
     public static float[,] towerSize;//塔的尺寸
+    public static float[] atomHeight;//元素球的高度
 
     //初始化防御塔数据
     public static void Init()
@@ -79,6 +80,14 @@ public class TowerElemInfo
         extraFireRange = new float[temp];
         extraFireRangeOffset = new float[temp];
         towerSize = new float[temp, 4];//4表示Scale:x,y,z  Position:y
+        atomHeight = new float[temp];
+
+        #region atomHeight
+        atomHeight[0] = 0;
+        atomHeight[1] = 0.84f;
+        atomHeight[2] = 1.57f;
+        atomHeight[3] = 2.51f;
+        #endregion
 
         #region basicFireRange
         basicFireRange[0] = 0;

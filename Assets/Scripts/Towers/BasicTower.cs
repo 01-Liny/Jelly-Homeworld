@@ -48,7 +48,7 @@ public class BasicTower : MonoBehaviour                                         
     //元素总共的个数
     private int elemCount;
 
-
+    private Atom m_Atom;
 
     public void Init()
     {
@@ -71,12 +71,15 @@ public class BasicTower : MonoBehaviour                                         
         elemCount = 0;
         //默认不是范围攻击
         isFireRange = false;
+
+        m_Atom= transform.FindChild("Atoms").GetComponent<Atom>();
     }
 
     public void AddElem(TowerElem towerElem)
     {
         towerElemCount[(int)towerElem]++;
         elemCount++;
+        m_Atom.AddElem(towerElem);
         //如果加入的是范围元素
         if (towerElem == TowerElem.Range)
         {
@@ -125,6 +128,9 @@ public class BasicTower : MonoBehaviour                                         
         temp = m_Body.transform.localPosition;
         temp.y = TowerElemInfo.towerSize[elemCount, 3];
         m_Body.transform.localPosition = temp;
+
+        //计算元素球高度
+        m_Atom.SetHeight(TowerElemInfo.atomHeight[elemCount]);
     }
 
     public void NoticeEnableUpdate()
@@ -174,7 +180,7 @@ public class BasicTower : MonoBehaviour                                         
             Vector3 relativePos = m_RigidbodyEnemy.position - transform.position;
             relativePos.y = 0;
             Quaternion rotation = Quaternion.LookRotation(relativePos);
-            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, 0.25f);
+            m_Body.transform.rotation = Quaternion.Lerp(m_Body.transform.rotation, rotation, 0.25f);
         }
 
         //范围塔只会自旋转
@@ -182,7 +188,7 @@ public class BasicTower : MonoBehaviour                                         
         {
             //自旋转
             Quaternion autoRotation = Quaternion.AngleAxis(Time.deltaTime * 10f, Vector3.up);
-            transform.rotation = autoRotation * transform.rotation;
+            m_Body.transform.rotation = autoRotation * m_Body.transform.rotation;
         }
 
         m_Hightlight.transform.rotation = Quaternion.identity;
