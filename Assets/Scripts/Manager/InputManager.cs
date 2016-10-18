@@ -38,9 +38,14 @@ namespace TouchScript.Examples.InputManager
         private float screenOffsetWidth;
         private float screenOffsetHeight;
 
+        private Vector3 m_OriginCameraPos;
+        private float originCameraOrthographicSize;
+
 
         private void Start()
         {
+            m_OriginCameraPos = m_Camera.transform.position;
+            originCameraOrthographicSize = m_Camera.orthographicSize;
             //pc上的摄像头视角大小不一样，注释值为pc上的数值
             screenOffsetWidth = Screen.width / 1.87f;//3.55
             screenOffsetHeight = Screen.height / 2.9f;//2
@@ -53,6 +58,12 @@ namespace TouchScript.Examples.InputManager
 
             Vector3 temp = m_Camera.transform.localPosition;
             float viewSize = m_Camera.orthographicSize;
+        }
+
+        public void ResetCameraInfo()
+        {
+            m_Camera.transform.position= m_OriginCameraPos;
+            m_Camera.orthographicSize=originCameraOrthographicSize;
         }
 
         private void Update()
