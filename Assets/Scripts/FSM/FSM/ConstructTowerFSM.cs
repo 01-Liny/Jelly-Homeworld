@@ -27,6 +27,7 @@ public class ConstructTowerFSM : FSM
         ChangeState("Construct");
         m_Canvas.enabled = true;
         m_StartLevelCanvas.enabled = true;
+        m_ConstructUIController.Enable();
         m_UIRangeIndicator.Visible();
         UIRemainTowerCount.ResetTowerCount();
         UIGameLevel.ResetLevel();
@@ -66,7 +67,7 @@ public class ConstructTowerFSM : FSM
             if (m_SelectedEnemy != null)
             {
                 //隐藏UI
-                m_ConstructUIController.Disable();
+                m_ConstructUIController.Hide();
                 m_UIRangeIndicator.Disable();
 
                 BasicEnemy m_BasicEnemy = m_SelectedEnemy.GetComponent<BasicEnemy>();
@@ -120,7 +121,7 @@ public class ConstructTowerFSM : FSM
                         case MapType.Empty:
                             {
                                 //隐藏UI
-                                m_ConstructUIController.Disable();
+                                m_ConstructUIController.Hide();
                                 m_UIRangeIndicator.Disable();
                                 break;
                             }
@@ -134,7 +135,7 @@ public class ConstructTowerFSM : FSM
                                     UpdateConstructUIConstroller("Tower");
                                 }
                                 else
-                                    m_ConstructUIController.Disable();
+                                    m_ConstructUIController.Hide();
                                 break;
                             }
                         case MapType.Tower:
@@ -151,7 +152,7 @@ public class ConstructTowerFSM : FSM
                                 }
                                 else
                                 {
-                                    m_ConstructUIController.Disable();
+                                    m_ConstructUIController.Hide();
                                 }
                                 break;
                             }
@@ -162,7 +163,7 @@ public class ConstructTowerFSM : FSM
         else
         {
             //在地图外，隐藏所有UI
-            m_ConstructUIController.Disable();
+            m_ConstructUIController.Hide();
             m_UIRangeIndicator.Disable();
         }
 
@@ -175,6 +176,6 @@ public class ConstructTowerFSM : FSM
         m_ConstructUIController.UpdateCameraRay(m_UISelectedArea.GetCameraRay());
         m_ConstructUIController.ChangeButtonText(temp);
         m_ConstructUIController.ChangeState(temp);
-        m_ConstructUIController.Enable();
+        m_ConstructUIController.Show();
     }
 }

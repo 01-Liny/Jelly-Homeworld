@@ -13,9 +13,12 @@ public class ConstructUIController : MonoBehaviour
     private Vector3 m_Scale;
 
     private Canvas m_Canvas;
+    private Animator m_Animator;
     private Vector3 m_Pos;
     private GameObject m_Tower;
     private string state;
+
+    private bool isClick = false;
 
     [HideInInspector]public Vector2 m_MapPos;
     [HideInInspector]public Ray m_Ray;
@@ -23,6 +26,7 @@ public class ConstructUIController : MonoBehaviour
     {
         m_Scale = transform.localScale;
         m_Canvas=GetComponent<Canvas>();
+        m_Animator = GetComponent<Animator>();
         m_Pos=new Vector3();
         m_MapPos=new Vector2();
         m_Ray=new Ray();
@@ -89,6 +93,18 @@ public class ConstructUIController : MonoBehaviour
     {
         //Debug.Log("Invoke ConstructUIController OnDisable");
         m_Canvas.enabled=false;
+        Hide();
+    }
+
+    public void Show()
+    {
+        m_Animator.SetInteger("State",1);
+        isClick = false;
+    }
+
+    public void Hide()
+    {
+        m_Animator.SetInteger("State", 2);
     }
 
     public void SetTowerGameObject(GameObject m_Tower)
@@ -104,7 +120,12 @@ public class ConstructUIController : MonoBehaviour
     public void OnClick()
     {
         //点击后，UI消失
-        Disable();
+        Hide();
+        if(isClick)
+        {
+            return;
+        }
+        isClick = true;
         switch (state)
         {
             case "Tower":
