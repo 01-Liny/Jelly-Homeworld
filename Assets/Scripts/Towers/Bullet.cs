@@ -17,6 +17,9 @@ public class Bullet : MonoBehaviour
     private Vector3 m_TargetPos;
     private Vector3 m_Direction;
 
+    //是否开始追踪目标
+    private bool isBeginTrace = false;
+
     public void Start()
     {
         m_HitParticles = GetComponent<ParticleSystem>();
@@ -36,9 +39,16 @@ public class Bullet : MonoBehaviour
     {
         if (m_BasicEnemy!=null)
         {
+            isBeginTrace = true;
             m_Direction = m_TargetPos - transform.position;
             m_TargetPos = m_BasicEnemy.transform.position;
             transform.position = Vector3.MoveTowards(transform.position, m_TargetPos, speed * Time.deltaTime);
+        }
+        else if(isBeginTrace==true)
+        {
+            //如果m_BasicEnemy为空且曾经开始追踪 说明被追踪的敌人已被消灭
+            //防止子弹在丢失目标后原地停止，进行自我销毁
+            Destroy(gameObject);
         }
     }
 

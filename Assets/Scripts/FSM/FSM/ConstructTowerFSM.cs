@@ -27,6 +27,7 @@ public class ConstructTowerFSM : FSM
         ChangeState("Construct");
         m_Canvas.enabled = true;
         m_StartLevelCanvas.enabled = true;
+        m_UIRangeIndicator.Visible();
         UIRemainTowerCount.ResetTowerCount();
         UIGameLevel.ResetLevel();
         //防止无法生成怪物的情况
@@ -42,8 +43,9 @@ public class ConstructTowerFSM : FSM
         m_StartLevelCanvas.enabled = false;
         m_Canvas.enabled = false;
         m_ConstructUIController.Disable();
+        m_UIRangeIndicator.Invisible();
         m_TowerManager.ClearAll();
-        m_MonsterManager.ClearAll();
+        m_MonsterManager.ClearAll();        
     }
 
     public override void OnClick()

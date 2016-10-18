@@ -9,6 +9,7 @@ public class BasicTower : MonoBehaviour                                         
     protected Material m_Material;
     public GameObject m_Body;
     public GameObject m_SelectedParticles;
+    public GameObject m_RangeParticles;//每个塔都有可能变成范围塔
     public Transform m_FirePointTransform;
 
     [SerializeField]
@@ -107,7 +108,7 @@ public class BasicTower : MonoBehaviour                                         
         //重新调整塔的攻击范围
         m_AttackRangeCollider.radius = fireRange;
         if (isFireRange)
-            m_SelectedParticles.GetComponent<ParticleSystem>().startSpeed = fireRange;
+            m_RangeParticles.GetComponent<ParticleSystem>().startSpeed = fireRange;
 
         //含有范围攻击的塔属性会被削弱
         float offset = TowerElemInfo.extraFireRangeOffset[towerElemCount[(int)TowerElem.Range]];
@@ -238,8 +239,8 @@ public class BasicTower : MonoBehaviour                                         
                     m_BasicEnemyTemp = m_EnemyTriggerList[i].GetComponent<BasicEnemy>();
                     Fire(m_BasicEnemyTemp);
                 }
-                m_SelectedParticles.GetComponent<ParticleSystem>().Stop();
-                m_SelectedParticles.GetComponent<ParticleSystem>().Play();
+                m_RangeParticles.GetComponent<ParticleSystem>().Stop();
+                m_RangeParticles.GetComponent<ParticleSystem>().Play();
             }
             else
             {
