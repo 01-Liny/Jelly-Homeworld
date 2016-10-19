@@ -90,18 +90,21 @@ public class BasicTower : MonoBehaviour                                         
 
     public void RecalcInfo()
     {
+        //含有范围攻击的塔属性会被削弱
+        float offset = TowerElemInfo.extraFireRangeOffset[towerElemCount[(int)TowerElem.Range]];
+
         //根据现有元素数量决定当前塔的基础属性
         fireRange = TowerElemInfo.basicFireRange[elemCount];
-        fireDamage = TowerElemInfo.basicFireDamage[elemCount];
+        fireDamage = TowerElemInfo.basicFireDamage[elemCount]* offset;
         fireRate = TowerElemInfo.basicFireRate[elemCount];
 
-        fireRate += TowerElemInfo.extraFireRate[towerElemCount[(int)TowerElem.Rate]];
+        fireRate += TowerElemInfo.extraFireRate[towerElemCount[(int)TowerElem.Rate]]* offset;
         fireRange += TowerElemInfo.extraFireRange[towerElemCount[(int)TowerElem.Range]];
 
-        fireStrikeArmor = TowerElemInfo.strikeArmor[towerElemCount[(int)TowerElem.Strike]];
-        fireStunTime = TowerElemInfo.stunTime[towerElemCount[(int)TowerElem.Stun]];
+        fireStrikeArmor = TowerElemInfo.strikeArmor[towerElemCount[(int)TowerElem.Strike]]* offset;
+        fireStunTime = TowerElemInfo.stunTime[towerElemCount[(int)TowerElem.Stun]]* offset;
         fireStunProbability= TowerElemInfo.stunProbability[towerElemCount[(int)TowerElem.Stun]];
-        fireSlowdownDegree = TowerElemInfo.slowdownDegree[towerElemCount[(int)TowerElem.Slowdown]];
+        fireSlowdownDegree = TowerElemInfo.slowdownDegree[towerElemCount[(int)TowerElem.Slowdown]]* offset;
         fireSlowdownTime = TowerElemInfo.slowdownTime[towerElemCount[(int)TowerElem.Slowdown]];
 
         //重新调整塔的攻击范围
@@ -109,14 +112,6 @@ public class BasicTower : MonoBehaviour                                         
         if (isFireRange)
             m_SelectedParticles.GetComponent<ParticleSystem>().startSpeed = fireRange;
 
-        //含有范围攻击的塔属性会被削弱
-        float offset = TowerElemInfo.extraFireRangeOffset[towerElemCount[(int)TowerElem.Range]];
-        fireDamage *= offset;
-        fireRate *= offset;
-        fireStrikeArmor *= offset;
-        fireStunTime *= offset;
-        fireSlowdownDegree *= offset;
-        fireSlowdownTime *= offset;
 
         //攻击一次需要多少秒
         fireRateSpendSec = 1 / fireRate;

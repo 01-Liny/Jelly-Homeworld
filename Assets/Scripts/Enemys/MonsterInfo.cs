@@ -5,13 +5,18 @@ public class MonsterInfo
 {
     public static int[,] PrefabsPositon;
     public static float[,,] EnemyProperty;
-   // public static int[] 
+    public static float[] EnemyHealth;//每关怪物血量
+    private static float[] restoreArray;
+    private static float[] armorArray;
+    // public static int[] 
 
     public static void Init()
     {
         PrefabsPositon = new int[21, 3];
         EnemyProperty = new float[5, 7, 6];//[怪物关卡等级，怪物种类，怪物6种属性值]
-
+        EnemyHealth = new float[21];//每关怪物血量
+        restoreArray = new float[4] { 2, 2.5f, 3, 3.5f };
+        armorArray = new float[4] { 10, 12, 18, 22 };
         //restore
         //maxArmor
         //speed
@@ -20,182 +25,206 @@ public class MonsterInfo
         //LimitAttackTimes
         //之后优化各属性加强
         #region EnemyProperty
+        EnemyHealth[1] = 10;
+        EnemyHealth[2] = 20;
+        EnemyHealth[3] = 40;
+        EnemyHealth[4] = 60;
+        EnemyHealth[5] = 80;
+        EnemyHealth[6] = 100;
+        EnemyHealth[7] = 200;
+        EnemyHealth[8] = 300;
+        EnemyHealth[9] = 400;
+        EnemyHealth[10] = 500;
+        EnemyHealth[11] = 600;
+        EnemyHealth[12] = 700;
+        EnemyHealth[13] = 800;
+        EnemyHealth[14] = 900;
+        EnemyHealth[15] = 1000;
+        EnemyHealth[16] = 1100;
+        EnemyHealth[17] = 1200;
+        EnemyHealth[18] = 1300;
+        EnemyHealth[19] = 1400;
+        EnemyHealth[20] = 100000;
+        #endregion
+
+        #region EnemyProperty
         //回血快
-        EnemyProperty[1, 1, 0] = 10;
-        EnemyProperty[1, 1, 1] = 20;
+        EnemyProperty[1, 1, 0] = 4;
+        EnemyProperty[1, 1, 1] = armorArray[0];
         EnemyProperty[1, 1, 2] = 2;
         EnemyProperty[1, 1, 3] = 1;
         EnemyProperty[1, 1, 4] = 1;
         EnemyProperty[1, 1, 5] = 100;
 
-        EnemyProperty[2, 1, 0] = 12;
-        EnemyProperty[2, 1, 1] = 20;
+        EnemyProperty[2, 1, 0] = 5;
+        EnemyProperty[2, 1, 1] = armorArray[1];
         EnemyProperty[2, 1, 2] = 2;
         EnemyProperty[2, 1, 3] = 1;
         EnemyProperty[2, 1, 4] = 1; 
         EnemyProperty[2, 1, 5] = 100;
 
-        EnemyProperty[3, 1, 0] = 14;
-        EnemyProperty[3, 1, 1] = 20;
+        EnemyProperty[3, 1, 0] = 6;
+        EnemyProperty[3, 1, 1] = armorArray[2];
         EnemyProperty[3, 1, 2] = 2;
         EnemyProperty[3, 1, 3] = 1;
         EnemyProperty[3, 1, 4] = 1;
         EnemyProperty[3, 1, 5] = 100;
 
-        EnemyProperty[4, 1, 0] = 16;
-        EnemyProperty[4, 1, 1] = 20;
+        EnemyProperty[4, 1, 0] = 7;
+        EnemyProperty[4, 1, 1] = armorArray[3];
         EnemyProperty[4, 1, 2] = 2;
         EnemyProperty[4, 1, 3] = 1;
         EnemyProperty[4, 1, 4] = 1;
         EnemyProperty[4, 1, 5] = 100;
 
         //高护甲
-        EnemyProperty[1, 2, 0] = 5;
-        EnemyProperty[1, 2, 1] = 30;
+        EnemyProperty[1, 2, 0] = restoreArray[0];
+        EnemyProperty[1, 2, 1] = armorArray[0] + 3;
         EnemyProperty[1, 2, 2] = 2;
         EnemyProperty[1, 2, 3] = 1;
         EnemyProperty[1, 2, 4] = 1;
         EnemyProperty[1, 2, 5] = 100;
 
-        EnemyProperty[2, 2, 0] = 5;
-        EnemyProperty[2, 2, 1] = 35;
+        EnemyProperty[2, 2, 0] = restoreArray[1];
+        EnemyProperty[2, 2, 1] = armorArray[1] + 3;
         EnemyProperty[2, 2, 2] = 2;
         EnemyProperty[2, 2, 3] = 1;
         EnemyProperty[2, 2, 4] = 1;
         EnemyProperty[2, 2, 5] = 100;
 
-        EnemyProperty[3, 2, 0] = 5;
-        EnemyProperty[3, 2, 1] = 40;
+        EnemyProperty[3, 2, 0] = restoreArray[2];
+        EnemyProperty[3, 2, 1] = armorArray[2] + 3;
         EnemyProperty[3, 2, 2] = 2;
         EnemyProperty[3, 2, 3] = 1;
         EnemyProperty[3, 2, 4] = 1;
         EnemyProperty[3, 2, 5] = 100;
 
-        EnemyProperty[4, 2, 0] = 5;
-        EnemyProperty[4, 2, 1] = 45;
+        EnemyProperty[4, 2, 0] = restoreArray[3];
+        EnemyProperty[4, 2, 1] = armorArray[3] + 3;
         EnemyProperty[4, 2, 2] = 2;
         EnemyProperty[4, 2, 3] = 1;
         EnemyProperty[4, 2, 4] = 1;
         EnemyProperty[4, 2, 5] = 100;
 
         //免疫减速
-        EnemyProperty[1, 3, 0] = 5;
-        EnemyProperty[1, 3, 1] = 20;
+        EnemyProperty[1, 3, 0] = restoreArray[0];
+        EnemyProperty[1, 3, 1] = armorArray[0];
         EnemyProperty[1, 3, 2] = 2;
         EnemyProperty[1, 3, 3] = 1;
         EnemyProperty[1, 3, 4] = 0;
         EnemyProperty[1, 3, 5] = 100;
 
-        EnemyProperty[2, 3, 0] = 5;
-        EnemyProperty[2, 3, 1] = 20;
+        EnemyProperty[2, 3, 0] = restoreArray[1];
+        EnemyProperty[2, 3, 1] = armorArray[1];
         EnemyProperty[2, 3, 2] = 2;
         EnemyProperty[2, 3, 3] = 1;
         EnemyProperty[2, 3, 4] = 0;
         EnemyProperty[2, 3, 5] = 100;
 
-        EnemyProperty[3, 3, 0] = 5;
-        EnemyProperty[3, 3, 1] = 20;
+        EnemyProperty[3, 3, 0] = restoreArray[2];
+        EnemyProperty[3, 3, 1] = armorArray[2];
         EnemyProperty[3, 3, 2] = 2;
         EnemyProperty[3, 3, 3] = 1;
         EnemyProperty[3, 3, 4] = 0;
         EnemyProperty[3, 3, 5] = 100;
 
-        EnemyProperty[4, 3, 0] = 5;
-        EnemyProperty[4, 3, 1] = 20;
+        EnemyProperty[4, 3, 0] = restoreArray[3];
+        EnemyProperty[4, 3, 1] = armorArray[3];
         EnemyProperty[4, 3, 2] = 2;
         EnemyProperty[4, 3, 3] = 1;
         EnemyProperty[4, 3, 4] = 0;
         EnemyProperty[4, 3, 5] = 100;
 
         //限制受到攻击次数
-        EnemyProperty[1, 4, 0] = 5;
-        EnemyProperty[1, 4, 1] = 20;
+        EnemyProperty[1, 4, 0] = restoreArray[0];
+        EnemyProperty[1, 4, 1] = armorArray[0];
         EnemyProperty[1, 4, 2] = 2;
         EnemyProperty[1, 4, 3] = 1;
         EnemyProperty[1, 4, 4] = 1;
-        EnemyProperty[1, 4, 5] = 1;
+        EnemyProperty[1, 4, 5] = 4;
 
-        EnemyProperty[2, 4, 0] = 5;
-        EnemyProperty[2, 4, 1] = 20;
+        EnemyProperty[2, 4, 0] = restoreArray[1];
+        EnemyProperty[2, 4, 1] = armorArray[1];
         EnemyProperty[2, 4, 2] = 2;
         EnemyProperty[2, 4, 3] = 1;
         EnemyProperty[2, 4, 4] = 1;
-        EnemyProperty[2, 4, 5] = 2;
+        EnemyProperty[2, 4, 5] = 3;
 
-        EnemyProperty[3, 4, 0] = 5;
-        EnemyProperty[3, 4, 1] = 20;
+        EnemyProperty[3, 4, 0] = restoreArray[2];
+        EnemyProperty[3, 4, 1] = armorArray[2];
         EnemyProperty[3, 4, 2] = 2;
         EnemyProperty[3, 4, 3] = 1;
         EnemyProperty[3, 4, 4] = 1;
-        EnemyProperty[3, 4, 5] = 1;
+        EnemyProperty[3, 4, 5] = 2;
 
-        EnemyProperty[4, 4, 0] = 5;
-        EnemyProperty[4, 4, 1] = 20;
+        EnemyProperty[4, 4, 0] = restoreArray[3];
+        EnemyProperty[4, 4, 1] = armorArray[3];
         EnemyProperty[4, 4, 2] = 2;
         EnemyProperty[4, 4, 3] = 1;
         EnemyProperty[4, 4, 4] = 1;
         EnemyProperty[4, 4, 5] = 1;
 
         //移速快
-        EnemyProperty[1, 5, 0] = 5;
-        EnemyProperty[1, 5, 1] = 20;
+        EnemyProperty[1, 5, 0] = restoreArray[0];
+        EnemyProperty[1, 5, 1] = armorArray[0];
         EnemyProperty[1, 5, 2] = 3;
         EnemyProperty[1, 5, 3] = 1;
         EnemyProperty[1, 5, 4] = 1;
         EnemyProperty[1, 5, 5] = 100;
 
-        EnemyProperty[2, 5, 0] = 5;
-        EnemyProperty[2, 5, 1] = 20;
+        EnemyProperty[2, 5, 0] = restoreArray[1];
+        EnemyProperty[2, 5, 1] = armorArray[1];
         EnemyProperty[2, 5, 2] = 4;
         EnemyProperty[2, 5, 3] = 1;
         EnemyProperty[2, 5, 4] = 1;
         EnemyProperty[2, 5, 5] = 100;
 
-        EnemyProperty[3, 5, 0] = 5;
-        EnemyProperty[3, 5, 1] = 20;
+        EnemyProperty[3, 5, 0] = restoreArray[2];
+        EnemyProperty[3, 5, 1] = armorArray[2];
         EnemyProperty[3, 5, 2] = 5;
         EnemyProperty[3, 5, 3] = 1;
         EnemyProperty[3, 5, 4] = 1;
         EnemyProperty[3, 5, 5] = 100;
 
-        EnemyProperty[4, 5, 0] = 5;
-        EnemyProperty[4, 5, 1] = 20;
+        EnemyProperty[4, 5, 0] = restoreArray[3];
+        EnemyProperty[4, 5, 1] = armorArray[3];
         EnemyProperty[4, 5, 2] = 6;
         EnemyProperty[4, 5, 3] = 1;
         EnemyProperty[4, 5, 4] = 1;
         EnemyProperty[4, 5, 5] = 100;
 
         //免疫眩晕
-        EnemyProperty[1, 6, 0] = 5;
-        EnemyProperty[1, 6, 1] = 20;
+        EnemyProperty[1, 6, 0] = restoreArray[0];
+        EnemyProperty[1, 6, 1] = armorArray[0];
         EnemyProperty[1, 6, 2] = 2;
         EnemyProperty[1, 6, 3] = 1;
         EnemyProperty[1, 6, 4] = 1;
         EnemyProperty[1, 6, 5] = 100;
 
-        EnemyProperty[2, 6, 0] = 5;
-        EnemyProperty[2, 6, 1] = 20;
+        EnemyProperty[2, 6, 0] = restoreArray[1];
+        EnemyProperty[2, 6, 1] = armorArray[1];
         EnemyProperty[2, 6, 2] = 2;
         EnemyProperty[2, 6, 3] = 1;
         EnemyProperty[2, 6, 4] = 1;
         EnemyProperty[2, 6, 5] = 100;
 
-        EnemyProperty[3, 6, 0] = 5;
-        EnemyProperty[3, 6, 1] = 20;
+        EnemyProperty[3, 6, 0] = restoreArray[2];
+        EnemyProperty[3, 6, 1] = armorArray[2];
         EnemyProperty[3, 6, 2] = 2;
         EnemyProperty[3, 6, 3] = 1;
         EnemyProperty[3, 6, 4] = 1;
         EnemyProperty[3, 6, 5] = 100;
 
-        EnemyProperty[4, 6, 0] = 5;
-        EnemyProperty[4, 6, 1] = 20;
+        EnemyProperty[4, 6, 0] = restoreArray[3];
+        EnemyProperty[4, 6, 1] = armorArray[3];
         EnemyProperty[4, 6, 2] = 2;
         EnemyProperty[4, 6, 3] = 1;
         EnemyProperty[4, 6, 4] = 1;
         EnemyProperty[4, 6, 5] = 100;
-
         #endregion
 
+        //1回血快，2免疫减甲，3免疫减速
+        //4限制次数攻击，5跑得快，6免疫眩晕
         #region PrefabsPositon
         PrefabsPositon[1,0] = 1;
         PrefabsPositon[1,1] = 4;

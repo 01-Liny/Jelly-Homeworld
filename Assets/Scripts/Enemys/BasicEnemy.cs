@@ -64,7 +64,7 @@ public class BasicEnemy : MonoBehaviour
         //    isSlowdown[i] = false;
         //}
         startTime = Time.time;
-
+        health = maxHealth;
     }
 
     // Update is called once per frame
@@ -83,9 +83,8 @@ public class BasicEnemy : MonoBehaviour
 
     }
 
-    public void Init(float restore, float maxArmor, float speed, float isStun,float isSlownDown,float LimitAttackTimes)
-    {
-        //限制受到攻击次数还没写
+    public void Init(float restore, float maxArmor, float speed, float isStun,float isSlownDown,float LimitAttackTimes,float EnemyHealth)
+    {       
         m_MonsterWalk = GetComponent<MonsterWalk>();
         this.restore = restore;
         this.maxArmor = maxArmor;
@@ -93,6 +92,7 @@ public class BasicEnemy : MonoBehaviour
         m_MonsterWalk.setIsSlownDown(isSlownDown);
         this.isStun = isStun;
         this.LimitAttackTimes = LimitAttackTimes;
+        maxHealth = EnemyHealth;
     }
 
     void FixedUpdate()
@@ -138,13 +138,21 @@ public class BasicEnemy : MonoBehaviour
             m_HitParticles.Stop();
             m_HitParticles.Play();
         }
-
         stunTime = isStun == 1 ? fireStunTime : 0;
         slowdownRate = TowerElemInfo.slowdownDegree[slowDownLevel];
         slowdownTime = TowerElemInfo.slowdownTime[slowDownLevel];
         //传眩晕时间，减速时间给MonsterWalk
         m_MonsterWalk.setFireStatus(fireStunTime, slowDownLevel);
-        armor = maxArmor - fireStrikeArmor;
+        //判断是否免疫破甲
+        if (armor % 2 == 1)
+        {
+            armor -= 1;
+        }
+        else
+        {
+            armor = maxArmor - fireStrikeArmor;
+        }
+        
         if (CountAttackTimes < LimitAttackTimes)
         {
             TakeHealth(fireDamage);

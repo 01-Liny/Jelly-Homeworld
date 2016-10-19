@@ -193,12 +193,28 @@ public class AStar
         {
             List<Point> surroundPoints = new List<Point>(9);
 
-            for (int x = point.X - 1; x <= point.X + 1; x++)
+            //允许斜着走
+            //for (int x = point.X - 1; x <= point.X + 1; x++)
+            //    for (int y = point.Y - 1; y <= point.Y + 1; y++)
+            //    {
+            //        if (CanReach(point, x, y, IsIgnoreCorner))
+            //            ListHelp.Add(surroundPoints, x, y);
+            //    }
+
+            //不允许斜着走
+            {
                 for (int y = point.Y - 1; y <= point.Y + 1; y++)
                 {
-                    if (CanReach(point, x, y, IsIgnoreCorner))
-                        ListHelp.Add(surroundPoints, x, y);
+                    if (CanReach(point, point.X, y, IsIgnoreCorner))
+                        ListHelp.Add(surroundPoints, point.X, y);
                 }
+                for (int x = point.X - 1; x <= point.X + 1; x += 2)
+                {
+                    if (CanReach(point, x, point.Y, IsIgnoreCorner))
+                        ListHelp.Add(surroundPoints, x, point.Y);
+                }
+            }
+
             return surroundPoints;
         }
 

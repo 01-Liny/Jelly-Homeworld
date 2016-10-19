@@ -158,7 +158,7 @@ public class MonsterWalk : MonoBehaviour
                 {
                     if (isSlowDown == 1)
                     {
-                        changetempSpeed(speed * (1 - TowerElemInfo.slowdownDegree[slowDownLevel]));
+                        changetempSpeed(speed * (1 - TowerElemInfo.slowdownDegree[i]));
                     }
                 }
                 break;

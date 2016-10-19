@@ -112,23 +112,23 @@ public class TowerElemInfo
 
         #region strikeArmor
         strikeArmor[0] = 0;
-        strikeArmor[1] = 10;
-        strikeArmor[2] = 20;
-        strikeArmor[3] = 40;
+        strikeArmor[1] = 6;
+        strikeArmor[2] = 10;
+        strikeArmor[3] = 18;
         #endregion
 
         #region stunTime
         stunTime[0] = 0;
-        stunTime[1] = 0.5f;
-        stunTime[2] = 0.5f;
-        stunTime[3] = 0.5f;
+        stunTime[1] = 1f;
+        stunTime[2] = 1f;
+        stunTime[3] = 1f;
         #endregion
 
         #region stunProbability
         stunProbability[0] = 0;
-        stunProbability[1] = 30;
-        stunProbability[2] = 50;
-        stunProbability[3] = 70;
+        stunProbability[1] = 20;
+        stunProbability[2] = 30;
+        stunProbability[3] = 50;
         #endregion
 
         #region fireRate
@@ -147,9 +147,9 @@ public class TowerElemInfo
 
         #region slowdownTime
         slowdownTime[0] = 0;
-        slowdownTime[1] = 0.3f;
-        slowdownTime[2] = 0.6f;
-        slowdownTime[3] = 1;
+        slowdownTime[1] = 1f;
+        slowdownTime[2] = 1.5f;
+        slowdownTime[3] = 2;
         #endregion
 
         #region fireRange
@@ -161,9 +161,9 @@ public class TowerElemInfo
 
         #region fireRangeOffset
         extraFireRangeOffset[0] = 1;
-        extraFireRangeOffset[1] = 0.5f;
-        extraFireRangeOffset[2] = 0.5f;
-        extraFireRangeOffset[3] = 0.5f;
+        extraFireRangeOffset[1] = 0.75f;
+        extraFireRangeOffset[2] = 0.8f;
+        extraFireRangeOffset[3] = 0.9f;
         #endregion
 
         #region towerSize
