@@ -208,10 +208,23 @@ public class TowerManager : MonoBehaviour
         return false;
     }
 
-    public void UpdateTower(GameObject m_UpdateTower, TowerElem updateElem)
+    public void UpdateTower(GameObject m_UpdateTower, GameObject m_MergeableTower, bool isEnableReward)
     {
+        Tower m_Mergeable = m_MergeableTower.GetComponent<Tower>();
         Tower m_Temp = m_UpdateTower.GetComponent<Tower>();
-        m_Temp.AddElem(updateElem);
+
+        //在可奖励模式下，两个一样的新塔进行升级 会奖励一座新塔
+        if (isEnableReward == true &&
+            m_Mergeable.levelSign == UIGameLevel.level &&
+            m_Mergeable.levelSign == m_Temp.levelSign &&
+            m_Mergeable.GetElemCount() == m_Temp.GetElemCount() &&
+            m_Mergeable.GetUpdateElem() == m_Temp.GetUpdateElem())
+        {
+            UIRemainTowerCount.AddTowerCount();
+        }
+
+        //得到升级元素并进行升级
+        m_Temp.AddElem(m_Mergeable.GetUpdateElem());
         //退出升级模式
         isOnUpdate = false;
     }

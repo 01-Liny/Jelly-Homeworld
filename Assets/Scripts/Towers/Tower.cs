@@ -17,6 +17,8 @@ public class Tower : MonoBehaviour
     private TowerElem singleElem = TowerElem.NULL;//用于升级别的塔时用的元素
     private TowerElem multipleElem = TowerElem.NULL;//用于升级别的塔时用的元素
 
+    public int levelSign;//建造塔的时候，获取关卡等级 用于检测是否为新塔，判断升级时是否奖励塔
+
     public void Init(TowerElem towerElem, GameObject[] m_TowerModules)
     {
         this.m_TowerModules = m_TowerModules;
@@ -25,6 +27,10 @@ public class Tower : MonoBehaviour
         {
             towerElemCount[i] = 0;
         }
+
+        //记录建造时的关卡等级
+        levelSign = UIGameLevel.level;
+
         //初始加入一个元素
         singleElem = towerElem;
         currentModuleID = towerElem;
@@ -94,7 +100,7 @@ public class Tower : MonoBehaviour
         {
             return multipleElem;
         }
-        Debug.LogError("GetUpdateElem() Error invalid invoke");
+        Debug.LogError("GetUpdateElem() Error invalid invoke Or Reward Tower Deny");
         return TowerElem.NULL;
     }
 
