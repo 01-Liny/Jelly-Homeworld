@@ -20,6 +20,7 @@ public class ChooseMapFSM : FSM
         m_Canvas.enabled = true;
         m_MapManager.ChooseMap(0);
         m_MapManager.ReGenerateStoneByMap();
+        m_MapManager.SetRouteLineActive(true);
     }
 
     public override void OnExit(string nextState = "")
@@ -29,6 +30,7 @@ public class ChooseMapFSM : FSM
             m_States.Values.ElementAt(i).OnExit();
         }
         m_Canvas.enabled = false;
+        m_MapManager.SetRouteLineActive(false);
     }
 
     public override void OnClick()

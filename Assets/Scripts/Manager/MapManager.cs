@@ -20,6 +20,10 @@ public class MapManager : MonoBehaviour
     public static int mapRegionY = 11;//实际要减2，外围有围墙
     public int currentMapIndex = 0;//现在读取的地图下标，默认为0
 
+    public LineRenderer m_LineRenderer;//地图路线
+    private Vector3 temp;
+    private bool isRouteLineActive = false;
+
     //临时代码                                                     &&&&&&&&&
     public MonsterManager m_MonsterManager;
 
@@ -68,6 +72,8 @@ public class MapManager : MonoBehaviour
         }
 
         m_ListPath = AStar.m_ListPath;
+        if(isRouteLineActive)
+            m_LineRenderer.SetVertexCount(AStar.m_ListPath.Count-1);
 
         for (int i = 0; i < AStar.m_ListPath.Count - 1; i++)
         {
@@ -80,12 +86,24 @@ public class MapManager : MonoBehaviour
             temp2.Set(m_ListPath[i + 1].X, 1, m_ListPath[i + 1].Y);
             Debug.DrawRay(temp1, Vector3.up, Color.red);
             Debug.DrawLine(temp1, temp2, Color.blue);
+            if(isRouteLineActive)
+            {
+                temp.Set(m_ListPath[i].X, 0.1f, m_ListPath[i].Y);
+                m_LineRenderer.SetPosition(i, temp);
+            }
         }
+    }
+
+    public void SetRouteLineActive(bool isRouteLineActive)
+    {    
+        m_LineRenderer.enabled = this.isRouteLineActive = isRouteLineActive; ;
     }
 
     //初始化地图信息，默认值为0（Empty），地图边缘有一圈围墙，建筑类型为石头（Basic）
     private void Awake()
     {
+        temp = new Vector3();
+
         map = new MapType[mapRegionX, mapRegionY];
         mapFileCache = new MapType[5, mapRegionX, mapRegionY];//最多5份地图
         mapTemp = new int[mapRegionX, mapRegionY];
@@ -420,6 +438,6 @@ public class MapManager : MonoBehaviour
     //临时代码                             &&&&&&&&&&
     public void CreateMonster()
     {
-        m_MonsterManager.CreatMonster(UIGameLevel.level,5,1);
+        m_MonsterManager.CreatMonster(UIGameLevel.level,10,1);
     }
 }

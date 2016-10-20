@@ -9,6 +9,7 @@ public class BasicTower : MonoBehaviour                                         
     protected Material m_Material;
     public GameObject m_Body;
     public GameObject m_SelectedParticles;
+    public GameObject m_RangeParticles;//每个塔都有可能变成范围塔
     public Transform m_FirePointTransform;
 
     [SerializeField]
@@ -95,22 +96,28 @@ public class BasicTower : MonoBehaviour                                         
 
         //根据现有元素数量决定当前塔的基础属性
         fireRange = TowerElemInfo.basicFireRange[elemCount];
-        fireDamage = TowerElemInfo.basicFireDamage[elemCount]* offset;
+
+        fireDamage = 0;
+        for(int i=0;i<(int)TowerElem.MaxCount; i++)
+        {
+            fireDamage += TowerElemInfo.basicFireDamage[i] * towerElemCount[i];
+        }
+        
         fireRate = TowerElemInfo.basicFireRate[elemCount];
 
         fireRate += TowerElemInfo.extraFireRate[towerElemCount[(int)TowerElem.Rate]]* offset;
         fireRange += TowerElemInfo.extraFireRange[towerElemCount[(int)TowerElem.Range]];
 
         fireStrikeArmor = TowerElemInfo.strikeArmor[towerElemCount[(int)TowerElem.Strike]]* offset;
-        fireStunTime = TowerElemInfo.stunTime[towerElemCount[(int)TowerElem.Stun]]* offset;
-        fireStunProbability= TowerElemInfo.stunProbability[towerElemCount[(int)TowerElem.Stun]];
+        fireStunTime = TowerElemInfo.stunTime[towerElemCount[(int)TowerElem.Stun]];
+        fireStunProbability= TowerElemInfo.stunProbability[towerElemCount[(int)TowerElem.Stun]] * offset;
         fireSlowdownDegree = TowerElemInfo.slowdownDegree[towerElemCount[(int)TowerElem.Slowdown]]* offset;
         fireSlowdownTime = TowerElemInfo.slowdownTime[towerElemCount[(int)TowerElem.Slowdown]];
 
         //重新调整塔的攻击范围
         m_AttackRangeCollider.radius = fireRange;
         if (isFireRange)
-            m_SelectedParticles.GetComponent<ParticleSystem>().startSpeed = fireRange;
+            m_RangeParticles.GetComponent<ParticleSystem>().startSpeed = fireRange;
 
 
         //攻击一次需要多少秒
@@ -233,8 +240,8 @@ public class BasicTower : MonoBehaviour                                         
                     m_BasicEnemyTemp = m_EnemyTriggerList[i].GetComponent<BasicEnemy>();
                     Fire(m_BasicEnemyTemp);
                 }
-                m_SelectedParticles.GetComponent<ParticleSystem>().Stop();
-                m_SelectedParticles.GetComponent<ParticleSystem>().Play();
+                m_RangeParticles.GetComponent<ParticleSystem>().Stop();
+                m_RangeParticles.GetComponent<ParticleSystem>().Play();
             }
             else
             {

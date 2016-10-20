@@ -25,7 +25,7 @@ public class UIConstructState : MonoBehaviour ,IState
     public void OnExit(string nextState)
     {
         m_Canvas.enabled = false;
-        m_ConstructUIController.Disable();
+        m_ConstructUIController.Hide();
     }
     public void OnUpdate()
     {

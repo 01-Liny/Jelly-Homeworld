@@ -182,6 +182,12 @@ public class UIRangeIndicator : MonoBehaviour
     public void Invisible()
     {
         _line.enabled = false;
+        Disable();
+    }
+
+    public void Visible()
+    {
+        _line.enabled = true;
     }
     #endregion
 }

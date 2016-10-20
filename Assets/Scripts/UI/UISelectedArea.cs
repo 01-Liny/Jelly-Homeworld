@@ -191,7 +191,7 @@ public class UISelectedArea : MonoBehaviour
                     }
                     else
                     {
-                        m_ConstructUIController.Disable();
+                        m_ConstructUIController.Hide();
                     }
                     break;
                 }
@@ -204,11 +204,11 @@ public class UISelectedArea : MonoBehaviour
                         m_ConstructUIController.UpdateMapPos(RealPosToMapPos(m_VecTemp));
                         m_ConstructUIController.UpdateCameraRay(ray);
                         m_ConstructUIController.ChangeButtonText("Tower");
-                        m_ConstructUIController.Enable();
+                        m_ConstructUIController.Show();
                     }
                     else
                     {
-                        m_ConstructUIController.Disable();
+                        m_ConstructUIController.Hide();
                         if(fsm.GetCurrentState()=="DeleteStone")
                         {
                             //直接删除 不经过UI确认
@@ -225,7 +225,7 @@ public class UISelectedArea : MonoBehaviour
                 }
                 default:
                 {
-                    m_ConstructUIController.Disable();
+                    m_ConstructUIController.Hide();
                     break;
                 }
             }

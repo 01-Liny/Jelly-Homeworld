@@ -20,6 +20,7 @@ public class ConstructStoneFSM : FSM
     public override void OnEnter(string prevState = "")
     {
         m_Canvas.enabled = true;
+        m_MapManager.SetRouteLineActive(true);
     }
 
     public override void OnExit(string nextState = "")
@@ -29,6 +30,7 @@ public class ConstructStoneFSM : FSM
             m_States.Values.ElementAt(i).OnExit();
         }
         m_Canvas.enabled = false;
+        m_MapManager.SetRouteLineActive(false);
     }
 
     public override void OnClick()

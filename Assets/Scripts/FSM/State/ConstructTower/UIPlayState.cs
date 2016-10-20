@@ -18,6 +18,9 @@ public class UIPlayState : MonoBehaviour, IState
     public void OnEnter(string prevState)
     {
         m_Canvas.enabled = false;
+        //重置剩余可用塔
+        UIRemainTowerCount.ResetTowerCount();
+
         UIGameLevel.AddLevel();
     }
     public void OnExit(string nextState)

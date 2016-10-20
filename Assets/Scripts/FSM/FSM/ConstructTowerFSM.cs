@@ -27,6 +27,8 @@ public class ConstructTowerFSM : FSM
         ChangeState("Construct");
         m_Canvas.enabled = true;
         m_StartLevelCanvas.enabled = true;
+        m_ConstructUIController.Enable();
+        m_UIRangeIndicator.Visible();
         UIRemainTowerCount.ResetTowerCount();
         UIGameLevel.ResetLevel();
         //防止无法生成怪物的情况
@@ -42,8 +44,9 @@ public class ConstructTowerFSM : FSM
         m_StartLevelCanvas.enabled = false;
         m_Canvas.enabled = false;
         m_ConstructUIController.Disable();
+        m_UIRangeIndicator.Invisible();
         m_TowerManager.ClearAll();
-        m_MonsterManager.ClearAll();
+        m_MonsterManager.ClearAll();        
     }
 
     public override void OnClick()
@@ -64,7 +67,7 @@ public class ConstructTowerFSM : FSM
             if (m_SelectedEnemy != null)
             {
                 //隐藏UI
-                m_ConstructUIController.Disable();
+                m_ConstructUIController.Hide();
                 m_UIRangeIndicator.Disable();
 
                 BasicEnemy m_BasicEnemy = m_SelectedEnemy.GetComponent<BasicEnemy>();
@@ -101,10 +104,15 @@ public class ConstructTowerFSM : FSM
                         posX = (int)pos.x;
                         posY = (int)pos.y;
                         m_MapManager.DeleteTower(posX, posY);
-                        //取得升级元素
-                        TowerElem updateElem = m_MergeableTower.GetComponent<Tower>().GetUpdateElem();
+
+                        //只有在建造塔的状态时 奖励塔的机制才会启动
+                        if(currentStateName == "Construct")
+                            m_TowerManager.UpdateTower(m_UpdatableTower, m_MergeableTower, true);
+                        else
+                            m_TowerManager.UpdateTower(m_UpdatableTower, m_MergeableTower, false);
+                        //升级后销毁被升级的塔
                         m_TowerManager.DestroyTower(m_MergeableTower);
-                        m_TowerManager.UpdateTower(m_UpdatableTower, updateElem);
+
                         //显示升级后的塔的范围
                         m_UIRangeIndicator.ShowTowerRangeIndicator(m_UpdatableTower);
                         //再次搜索
@@ -118,7 +126,7 @@ public class ConstructTowerFSM : FSM
                         case MapType.Empty:
                             {
                                 //隐藏UI
-                                m_ConstructUIController.Disable();
+                                m_ConstructUIController.Hide();
                                 m_UIRangeIndicator.Disable();
                                 break;
                             }
@@ -132,7 +140,7 @@ public class ConstructTowerFSM : FSM
                                     UpdateConstructUIConstroller("Tower");
                                 }
                                 else
-                                    m_ConstructUIController.Disable();
+                                    m_ConstructUIController.Hide();
                                 break;
                             }
                         case MapType.Tower:
@@ -149,7 +157,7 @@ public class ConstructTowerFSM : FSM
                                 }
                                 else
                                 {
-                                    m_ConstructUIController.Disable();
+                                    m_ConstructUIController.Hide();
                                 }
                                 break;
                             }
@@ -160,7 +168,7 @@ public class ConstructTowerFSM : FSM
         else
         {
             //在地图外，隐藏所有UI
-            m_ConstructUIController.Disable();
+            m_ConstructUIController.Hide();
             m_UIRangeIndicator.Disable();
         }
 
@@ -173,6 +181,6 @@ public class ConstructTowerFSM : FSM
         m_ConstructUIController.UpdateCameraRay(m_UISelectedArea.GetCameraRay());
         m_ConstructUIController.ChangeButtonText(temp);
         m_ConstructUIController.ChangeState(temp);
-        m_ConstructUIController.Enable();
+        m_ConstructUIController.Show();
     }
 }
