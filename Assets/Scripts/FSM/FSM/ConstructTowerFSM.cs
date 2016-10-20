@@ -104,10 +104,15 @@ public class ConstructTowerFSM : FSM
                         posX = (int)pos.x;
                         posY = (int)pos.y;
                         m_MapManager.DeleteTower(posX, posY);
-                        //取得升级元素
-                        TowerElem updateElem = m_MergeableTower.GetComponent<Tower>().GetUpdateElem();
+
+                        //只有在建造塔的状态时 奖励塔的机制才会启动
+                        if(currentStateName == "Construct")
+                            m_TowerManager.UpdateTower(m_UpdatableTower, m_MergeableTower, true);
+                        else
+                            m_TowerManager.UpdateTower(m_UpdatableTower, m_MergeableTower, false);
+                        //升级后销毁被升级的塔
                         m_TowerManager.DestroyTower(m_MergeableTower);
-                        m_TowerManager.UpdateTower(m_UpdatableTower, updateElem);
+
                         //显示升级后的塔的范围
                         m_UIRangeIndicator.ShowTowerRangeIndicator(m_UpdatableTower);
                         //再次搜索

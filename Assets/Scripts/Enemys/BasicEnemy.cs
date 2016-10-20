@@ -44,6 +44,7 @@ public class BasicEnemy : MonoBehaviour
 
     [SerializeField]
     private Slider slider;
+    private Image m_Image;
 
     private float startTime;//记录时间来判断一秒内攻击的次数
 
@@ -65,6 +66,7 @@ public class BasicEnemy : MonoBehaviour
         //}
         startTime = Time.time;
 
+        m_Image = slider.transform.FindChild("Fill Area/Fill").GetComponent<Image>();
     }
 
     // Update is called once per frame
@@ -111,6 +113,11 @@ public class BasicEnemy : MonoBehaviour
             health = health > maxHealth ? maxHealth : health;
         }
         slider.value = health / maxHealth;
+
+        Color m_Color = m_Image.color;
+        m_Color.r = (1- health / maxHealth);
+        m_Color.g = health / maxHealth;
+        m_Image.color = m_Color;
     }
 
 
