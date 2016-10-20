@@ -93,7 +93,13 @@ public class BasicTower : MonoBehaviour                                         
     {
         //根据现有元素数量决定当前塔的基础属性
         fireRange = TowerElemInfo.basicFireRange[elemCount];
-        fireDamage = TowerElemInfo.basicFireDamage[elemCount];
+
+        fireDamage = 0;
+        for(int i=0;i<(int)TowerElem.MaxCount; i++)
+        {
+            fireDamage += TowerElemInfo.basicFireDamage[i] * towerElemCount[i];
+        }
+        
         fireRate = TowerElemInfo.basicFireRate[elemCount];
 
         fireRate += TowerElemInfo.extraFireRate[towerElemCount[(int)TowerElem.Rate]];

@@ -69,7 +69,7 @@ public class TowerElemInfo
     {
         int temp = MAX_ELEM + 1;//从1开始算，初始的塔自带一个元素，值为1
         basicFireRange = new float[temp];
-        basicFireDamage = new float[temp];
+        basicFireDamage = new float[(int)TowerElem.MaxCount];
         basicFireRate = new float[temp];
         strikeArmor = new float[temp];
         stunTime = new float[temp];
@@ -97,10 +97,11 @@ public class TowerElemInfo
         #endregion
 
         #region basicFireDamage
-        basicFireDamage[0] = 0;
-        basicFireDamage[1] = 20;
-        basicFireDamage[2] = 40;
-        basicFireDamage[3] = 80;
+        basicFireDamage[(int)TowerElem.Strike] = 10;
+        basicFireDamage[(int)TowerElem.Stun] = 20;
+        basicFireDamage[(int)TowerElem.Slowdown] = 40;
+        basicFireDamage[(int)TowerElem.Rate] = 80;
+        basicFireDamage[(int)TowerElem.Range] = 80;
         #endregion
 
         #region basicFireRate
