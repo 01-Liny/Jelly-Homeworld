@@ -16,7 +16,7 @@ public class MonsterInfo
         EnemyProperty = new float[5, 7, 6];//[怪物关卡等级，怪物种类，怪物6种属性值]
         EnemyHealth = new float[21];//每关怪物血量
         restoreArray = new float[4] { 2, 2.5f, 3, 3.5f };
-        armorArray = new float[4] { 10, 12, 18, 22 };
+        armorArray = new float[4] { 10, 14, 18, 22 };
         //restore
         //maxArmor
         //speed
@@ -25,7 +25,7 @@ public class MonsterInfo
         //LimitAttackTimes
         //之后优化各属性加强
         #region EnemyProperty
-        EnemyHealth[1] = 10;
+        EnemyHealth[1] = 1000;
         EnemyHealth[2] = 20;
         EnemyHealth[3] = 40;
         EnemyHealth[4] = 60;
@@ -197,28 +197,28 @@ public class MonsterInfo
         EnemyProperty[1, 6, 0] = restoreArray[0];
         EnemyProperty[1, 6, 1] = armorArray[0];
         EnemyProperty[1, 6, 2] = 2;
-        EnemyProperty[1, 6, 3] = 1;
+        EnemyProperty[1, 6, 3] = 0;
         EnemyProperty[1, 6, 4] = 1;
         EnemyProperty[1, 6, 5] = 100;
 
         EnemyProperty[2, 6, 0] = restoreArray[1];
         EnemyProperty[2, 6, 1] = armorArray[1];
         EnemyProperty[2, 6, 2] = 2;
-        EnemyProperty[2, 6, 3] = 1;
+        EnemyProperty[2, 6, 3] = 0;
         EnemyProperty[2, 6, 4] = 1;
         EnemyProperty[2, 6, 5] = 100;
 
         EnemyProperty[3, 6, 0] = restoreArray[2];
         EnemyProperty[3, 6, 1] = armorArray[2];
         EnemyProperty[3, 6, 2] = 2;
-        EnemyProperty[3, 6, 3] = 1;
+        EnemyProperty[3, 6, 3] = 0;
         EnemyProperty[3, 6, 4] = 1;
         EnemyProperty[3, 6, 5] = 100;
 
         EnemyProperty[4, 6, 0] = restoreArray[3];
         EnemyProperty[4, 6, 1] = armorArray[3];
         EnemyProperty[4, 6, 2] = 2;
-        EnemyProperty[4, 6, 3] = 1;
+        EnemyProperty[4, 6, 3] = 0;
         EnemyProperty[4, 6, 4] = 1;
         EnemyProperty[4, 6, 5] = 100;
         #endregion
@@ -226,8 +226,8 @@ public class MonsterInfo
         //1回血快，2免疫减甲，3免疫减速
         //4限制次数攻击，5跑得快，6免疫眩晕
         #region PrefabsPositon
-        PrefabsPositon[1,0] = 1;
-        PrefabsPositon[1,1] = 4;
+        PrefabsPositon[1,0] = 3;
+        PrefabsPositon[1,1] = 0;
         PrefabsPositon[1,2] = 0;
 
         PrefabsPositon[2,0] = 2;

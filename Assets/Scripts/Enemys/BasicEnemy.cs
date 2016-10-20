@@ -10,7 +10,8 @@ public class BasicEnemy : MonoBehaviour
     public GameObject m_HitParticlesObject;
     private ParticleSystem m_HitParticles;
 
-    private float isStun = 0;
+    [SerializeField]
+    protected float isStun = 0;
     [SerializeField]
     protected float maxHealth = 100;//最初的血量
     [SerializeField]
@@ -138,11 +139,11 @@ public class BasicEnemy : MonoBehaviour
             m_HitParticles.Stop();
             m_HitParticles.Play();
         }
-        stunTime = isStun == 1 ? fireStunTime : 0;
+        stunTime = (isStun == 1 ? fireStunTime : 0);
         slowdownRate = TowerElemInfo.slowdownDegree[slowDownLevel];
         slowdownTime = TowerElemInfo.slowdownTime[slowDownLevel];
         //传眩晕时间，减速时间给MonsterWalk
-        m_MonsterWalk.setFireStatus(fireStunTime, slowDownLevel);
+        m_MonsterWalk.setFireStatus(stunTime, slowDownLevel);
         //判断是否免疫破甲
         if (armor % 2 == 1)
         {
