@@ -8,6 +8,7 @@ public class ConstructTowerFSM : FSM
     public UISelectedArea m_UISelectedArea;
     public MapManager m_MapManager;
     public TowerManager m_TowerManager;
+    public AudioManager m_AudioManager;
     public ConstructUIController m_ConstructUIController;
     public UIRangeIndicator m_UIRangeIndicator;
     public MonsterManager m_MonsterManager;
@@ -25,6 +26,7 @@ public class ConstructTowerFSM : FSM
     public override void OnEnter(string prevState = "")
     {
         ChangeState("Construct");
+        m_AudioManager.StartPlayMusic();
         m_Canvas.enabled = true;
         m_StartLevelCanvas.enabled = true;
         m_ConstructUIController.Enable();

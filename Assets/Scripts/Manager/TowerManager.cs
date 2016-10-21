@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class TowerManager : MonoBehaviour
 {
+    public AudioManager m_AudioManager;
     public const int MaxTowerCount = 50;//测试代码 临时修改
     static public int remainTowerCount = MaxTowerCount;
     static public bool isOnUpdate = false;
@@ -212,6 +213,7 @@ public class TowerManager : MonoBehaviour
     {
         Tower m_Mergeable = m_MergeableTower.GetComponent<Tower>();
         Tower m_Temp = m_UpdateTower.GetComponent<Tower>();
+        m_AudioManager.PlayUpgrade();
 
         //在可奖励模式下，两个一样的新塔进行升级 会奖励一座新塔
         if (isEnableReward == true &&

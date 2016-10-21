@@ -8,6 +8,7 @@ public class ConstructStoneFSM : FSM
     public UISelectedArea m_UISelectedArea;
     public MapManager m_MapManager;
     public TowerManager m_TowerManager;
+    public AudioManager m_AudioManager;
     private Canvas m_Canvas;
 
     protected void Awake()
@@ -21,6 +22,7 @@ public class ConstructStoneFSM : FSM
     {
         m_Canvas.enabled = true;
         m_MapManager.SetRouteLineActive(true);
+        m_AudioManager.StartThemeMusic();
     }
 
     public override void OnExit(string nextState = "")

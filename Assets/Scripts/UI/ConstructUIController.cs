@@ -9,6 +9,7 @@ public class ConstructUIController : MonoBehaviour
     public MapManager m_MapManager;
     public TowerManager m_TowerManager;
     public Camera m_Camera;
+    public AudioManager m_AudioManager;
 
     private Vector3 m_Scale;
 
@@ -130,6 +131,7 @@ public class ConstructUIController : MonoBehaviour
         {
             case "Tower":
                 {
+                    m_AudioManager.PlayPop();
                     m_MapManager.ModifyMap((int)m_MapPos.x, (int)m_MapPos.y, MapType.Tower);
                     m_TowerManager.RandomInstantiateTower(transform.position);
                     m_TowerManager.RetrieveUpdatableTower();
@@ -138,6 +140,7 @@ public class ConstructUIController : MonoBehaviour
                 }
             case "Update":
                 {
+                    //m_AudioManager.PlayPop();
                     m_TowerManager.RetrieveMergeableTower(m_Tower);
                     break;
                 }

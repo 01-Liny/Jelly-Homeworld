@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class ThemeFSM : FSM
 {
     public FSM m_FSM;
+    public AudioManager m_AudioManager;
     private Canvas m_Canvas;
 
     protected void Awake()
@@ -19,6 +20,8 @@ public class ThemeFSM : FSM
     public override void OnEnter(string prevState = "")
     {
         m_Canvas.enabled = true;
+        m_AudioManager.StartBGM();
+        m_AudioManager.StartThemeMusic();
     }
 
     public override void OnExit(string nextState = "")

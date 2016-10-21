@@ -6,6 +6,7 @@ public class ChooseMapFSM : FSM
 {
     public FSM m_FSM;
     public MapManager m_MapManager;
+    public AudioManager m_AudioManager;
     private Canvas m_Canvas;
 
     protected void Awake()
@@ -21,6 +22,7 @@ public class ChooseMapFSM : FSM
         m_MapManager.ChooseMap(0);
         m_MapManager.ReGenerateStoneByMap();
         m_MapManager.SetRouteLineActive(true);
+        m_AudioManager.StartThemeMusic();
     }
 
     public override void OnExit(string nextState = "")

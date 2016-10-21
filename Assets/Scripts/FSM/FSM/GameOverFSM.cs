@@ -9,6 +9,7 @@ public class GameOverFSM : FSM
     public Text m_Text;
     public InputField m_InputField;
     public ConfigManager m_ConfigManager;
+    public AudioManager m_AudioManager;
 
     private Canvas m_Canvas;
     private int scoreTemp;
@@ -24,6 +25,7 @@ public class GameOverFSM : FSM
     {
         scoreTemp = UIScore.GetScore();
         m_Canvas.enabled = true;
+        m_AudioManager.StartPlayMusic();
 
         //测试代码
         string a="";

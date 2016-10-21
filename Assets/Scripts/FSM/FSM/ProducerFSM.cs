@@ -3,7 +3,8 @@ using System.Collections;
 
 public class ProducerFSM : FSM
 {
-    public FSM m_FSM;   
+    public FSM m_FSM;
+    public AudioManager m_AudioManager;   
     public UIProducerGenerator m_UIProducerGenerator;
     private Canvas m_Canvas;
 
@@ -19,6 +20,7 @@ public class ProducerFSM : FSM
     {
         m_Canvas.enabled = true;
         m_UIProducerGenerator.Enable();
+        m_AudioManager.StartProducerMusic();
     }
 
     public override void OnExit(string nextState = "")
