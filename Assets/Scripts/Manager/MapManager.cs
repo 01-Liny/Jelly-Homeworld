@@ -438,6 +438,6 @@ public class MapManager : MonoBehaviour
     //临时代码                             &&&&&&&&&&
     public void CreateMonster()
     {
-        m_MonsterManager.CreatMonster(UIGameLevel.level,5,1);
+        m_MonsterManager.CreatMonster(UIGameLevel.level,10,1);
     }
 }
