@@ -16,7 +16,8 @@ public class MonsterWalk : MonoBehaviour
 
     [SerializeField]
     private float speed = 2.0f;
-    private float tempSpeed;
+    [SerializeField]
+    private float walkSpeed;
 
 
     //private bool[] isSlowdown;//是否受到减速
@@ -56,26 +57,26 @@ public class MonsterWalk : MonoBehaviour
     //{
     //    pauseStartTime = Time.time;
     //    this.pauseTime = pauseTime;
-    //    tempSpeed = this.speed;
+    //    walkSpeed = this.speed;
     //    changeSpeed(0);
     //}
 
     //改变速度
-    private void changetempSpeed(float tempSpeed)
+    private void changewalkSpeed(float walkSpeed)
     {
-        this.tempSpeed = tempSpeed;
+        this.walkSpeed = walkSpeed;
     }
 
     public void changeSpeed(float speed)
     {
         this.speed = speed;
-        tempSpeed = speed;
+        walkSpeed = speed;
     }
 
     // Use this for initialization
     void Start()
     {
-        tempSpeed = speed;
+        walkSpeed = speed;
         rb = GetComponent<Rigidbody>();
         temp1 = new Vector3();
         temp2 = new Vector3();
@@ -152,20 +153,20 @@ public class MonsterWalk : MonoBehaviour
             {
                 if (i == 4)
                 {
-                    changetempSpeed(0);
+                    changewalkSpeed(0);
                 }
                 else
                 {
                     if (isSlowDown == 1)
                     {
-                        changetempSpeed(speed * (1 - TowerElemInfo.slowdownDegree[i]));
+                        changewalkSpeed(speed * (1 - TowerElemInfo.slowdownDegree[i]));
                     }
                 }
                 break;
             }
             else if (Time.time > statusTime[i])
             {
-                tempSpeed = speed;
+                walkSpeed = speed;
             }
         }
 
@@ -178,7 +179,7 @@ public class MonsterWalk : MonoBehaviour
         ////暂停后恢复原来速度
         //if (Time.time - pauseStartTime >= pauseTime)
         //{
-        //    changeSpeed(tempSpeed);
+        //    changeSpeed(walkSpeed);
         //}
 
         //for (int i = 0; i < AStar.m_ListPath.Count - 1; i++)
@@ -221,7 +222,7 @@ public class MonsterWalk : MonoBehaviour
         //currentTimeOnPath = Time.time - lastWaypointSwitchTime;
         //transform.position = Vector3.Lerp(startPosition, endPosition, currentTimeOnPath / totalTimeForPath);
         //RotateIntoMoveDirection();
-        rb.velocity = transform.forward * tempSpeed;
+        rb.velocity = transform.forward * walkSpeed;
         if (Vector3.Distance(transform.position, endPosition) <= 0.5f)
         {
             if (currentWayPoint < AStar.m_ListPath.Count - 2)
@@ -232,9 +233,9 @@ public class MonsterWalk : MonoBehaviour
             }
             else
             {
-                tempSpeed = Mathf.Lerp(tempSpeed, 0, 0.25f);
+                walkSpeed = Mathf.Lerp(walkSpeed, 0, 0.25f);
                 Destroy(this.gameObject);
-                //tempSpeed = speed;
+                //walkSpeed = speed;
             }
         }
     }

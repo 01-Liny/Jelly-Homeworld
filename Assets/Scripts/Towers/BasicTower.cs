@@ -109,8 +109,8 @@ public class BasicTower : MonoBehaviour                                         
         fireRange += TowerElemInfo.extraFireRange[towerElemCount[(int)TowerElem.Range]];
 
         fireStrikeArmor = TowerElemInfo.strikeArmor[towerElemCount[(int)TowerElem.Strike]]* offset;
-        fireStunTime = TowerElemInfo.stunTime[towerElemCount[(int)TowerElem.Stun]]* offset;
-        fireStunProbability= TowerElemInfo.stunProbability[towerElemCount[(int)TowerElem.Stun]];
+        fireStunTime = TowerElemInfo.stunTime[towerElemCount[(int)TowerElem.Stun]];
+        fireStunProbability= TowerElemInfo.stunProbability[towerElemCount[(int)TowerElem.Stun]] * offset;
         fireSlowdownDegree = TowerElemInfo.slowdownDegree[towerElemCount[(int)TowerElem.Slowdown]]* offset;
         fireSlowdownTime = TowerElemInfo.slowdownTime[towerElemCount[(int)TowerElem.Slowdown]];
 

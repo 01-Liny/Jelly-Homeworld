@@ -16,7 +16,7 @@ public class MonsterInfo
         EnemyProperty = new float[5, 7, 6];//[怪物关卡等级，怪物种类，怪物6种属性值]
         EnemyHealth = new float[21];//每关怪物血量
         restoreArray = new float[4] { 2, 2.5f, 3, 3.5f };
-        armorArray = new float[4] { 10, 12, 18, 22 };
+        armorArray = new float[4] { 10, 14, 22, 32 };
         //restore
         //maxArmor
         //speed
@@ -26,24 +26,24 @@ public class MonsterInfo
         //之后优化各属性加强
         #region EnemyProperty
         EnemyHealth[1] = 10;
-        EnemyHealth[2] = 20;
-        EnemyHealth[3] = 40;
-        EnemyHealth[4] = 60;
-        EnemyHealth[5] = 80;
-        EnemyHealth[6] = 100;
-        EnemyHealth[7] = 200;
-        EnemyHealth[8] = 300;
-        EnemyHealth[9] = 400;
-        EnemyHealth[10] = 500;
-        EnemyHealth[11] = 600;
-        EnemyHealth[12] = 700;
-        EnemyHealth[13] = 800;
-        EnemyHealth[14] = 900;
-        EnemyHealth[15] = 1000;
-        EnemyHealth[16] = 1100;
-        EnemyHealth[17] = 1200;
-        EnemyHealth[18] = 1300;
-        EnemyHealth[19] = 1400;
+        EnemyHealth[2] = 50;
+        EnemyHealth[3] = 100;
+        EnemyHealth[4] = 200;
+        EnemyHealth[5] = 400;
+        EnemyHealth[6] = 600;
+        EnemyHealth[7] = 800;
+        EnemyHealth[8] = 1100;
+        EnemyHealth[9] = 1400;
+        EnemyHealth[10] = 1700;
+        EnemyHealth[11] = 2100;
+        EnemyHealth[12] = 2500;
+        EnemyHealth[13] = 2900;
+        EnemyHealth[14] = 3400;
+        EnemyHealth[15] = 3900;
+        EnemyHealth[16] = 4400;
+        EnemyHealth[17] = 5000;
+        EnemyHealth[18] = 5600;
+        EnemyHealth[19] = 6200;
         EnemyHealth[20] = 100000;
         #endregion
 
@@ -197,28 +197,28 @@ public class MonsterInfo
         EnemyProperty[1, 6, 0] = restoreArray[0];
         EnemyProperty[1, 6, 1] = armorArray[0];
         EnemyProperty[1, 6, 2] = 2;
-        EnemyProperty[1, 6, 3] = 1;
+        EnemyProperty[1, 6, 3] = 0;
         EnemyProperty[1, 6, 4] = 1;
         EnemyProperty[1, 6, 5] = 100;
 
         EnemyProperty[2, 6, 0] = restoreArray[1];
         EnemyProperty[2, 6, 1] = armorArray[1];
         EnemyProperty[2, 6, 2] = 2;
-        EnemyProperty[2, 6, 3] = 1;
+        EnemyProperty[2, 6, 3] = 0;
         EnemyProperty[2, 6, 4] = 1;
         EnemyProperty[2, 6, 5] = 100;
 
         EnemyProperty[3, 6, 0] = restoreArray[2];
         EnemyProperty[3, 6, 1] = armorArray[2];
         EnemyProperty[3, 6, 2] = 2;
-        EnemyProperty[3, 6, 3] = 1;
+        EnemyProperty[3, 6, 3] = 0;
         EnemyProperty[3, 6, 4] = 1;
         EnemyProperty[3, 6, 5] = 100;
 
         EnemyProperty[4, 6, 0] = restoreArray[3];
         EnemyProperty[4, 6, 1] = armorArray[3];
         EnemyProperty[4, 6, 2] = 2;
-        EnemyProperty[4, 6, 3] = 1;
+        EnemyProperty[4, 6, 3] = 0;
         EnemyProperty[4, 6, 4] = 1;
         EnemyProperty[4, 6, 5] = 100;
         #endregion
@@ -227,7 +227,7 @@ public class MonsterInfo
         //4限制次数攻击，5跑得快，6免疫眩晕
         #region PrefabsPositon
         PrefabsPositon[1,0] = 1;
-        PrefabsPositon[1,1] = 4;
+        PrefabsPositon[1,1] = 0;
         PrefabsPositon[1,2] = 0;
 
         PrefabsPositon[2,0] = 2;
@@ -254,48 +254,48 @@ public class MonsterInfo
         PrefabsPositon[7,1] = 0;
         PrefabsPositon[7,2] = 0;
 
-        PrefabsPositon[8,0] = 6;
-        PrefabsPositon[8,1] = 0;
+        PrefabsPositon[8,0] = 1;
+        PrefabsPositon[8,1] = 2;
         PrefabsPositon[8,2] = 0;
 
-        PrefabsPositon[9,0] = 6;
-        PrefabsPositon[9,1] = 0;
+        PrefabsPositon[9,0] = 1;
+        PrefabsPositon[9,1] = 3;
         PrefabsPositon[9,2] = 0;
 
-        PrefabsPositon[10,0] = 6;
-        PrefabsPositon[10,1] = 0;
+        PrefabsPositon[10,0] = 1;
+        PrefabsPositon[10,1] = 4;
         PrefabsPositon[10,2] = 0;
 
-        PrefabsPositon[11,0] = 6;
-        PrefabsPositon[11,1] = 0;
+        PrefabsPositon[11,0] = 1;
+        PrefabsPositon[11,1] = 5;
         PrefabsPositon[11,2] = 0;
 
         PrefabsPositon[12,0] = 6;
-        PrefabsPositon[12,1] = 0;
+        PrefabsPositon[12,1] = 1;
         PrefabsPositon[12,2] = 0;
 
-        PrefabsPositon[13,0] = 6;
-        PrefabsPositon[13,1] = 0;
+        PrefabsPositon[13,0] = 2;
+        PrefabsPositon[13,1] = 2;
         PrefabsPositon[13,2] = 0;
 
-        PrefabsPositon[14,0] = 6;
-        PrefabsPositon[14,1] = 0;
+        PrefabsPositon[14,0] = 2;
+        PrefabsPositon[14,1] = 3;
         PrefabsPositon[14,2] = 0;
 
-        PrefabsPositon[15,0] = 6;
-        PrefabsPositon[15,1] = 0;
+        PrefabsPositon[15,0] = 2;
+        PrefabsPositon[15,1] = 4;
         PrefabsPositon[15,2] = 0;
 
-        PrefabsPositon[16,0] = 6;
-        PrefabsPositon[16,1] = 0;
+        PrefabsPositon[16,0] = 2;
+        PrefabsPositon[16,1] = 5;
         PrefabsPositon[16,2] = 0;
 
         PrefabsPositon[17,0] = 6;
-        PrefabsPositon[17,1] = 0;
+        PrefabsPositon[17,1] = 2;
         PrefabsPositon[17,2] = 0;
 
-        PrefabsPositon[18,0] = 6;
-        PrefabsPositon[18,1] = 0;
+        PrefabsPositon[18,0] = 3;
+        PrefabsPositon[18,1] = 4;
         PrefabsPositon[18,2] = 0;
 
         PrefabsPositon[19,0] = 6;
