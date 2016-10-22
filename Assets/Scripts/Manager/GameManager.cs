@@ -60,15 +60,25 @@ public class GameManager : MonoBehaviour
         //monsterPathFinding.monsterPathFinding(map, 5, 3, 5, 5);
     }
 
+    static public void SetTimeScale(float timeScale)
+    {
+        Time.timeScale = timeScale;
+    }
+
+    static public float GetTimeScale()
+    {
+        return Time.timeScale;
+    }
+
     void Update()
     {
-        if(isSpeedUp)
-        {
-            Time.timeScale=2;
-        }
-        else
-        {
-            Time.timeScale = 1;
-        }
+        //if(isSpeedUp)
+        //{
+        //    Time.timeScale=0;
+        //}
+        //else
+        //{
+        //    Time.timeScale = 1;
+        //}
     }
 }

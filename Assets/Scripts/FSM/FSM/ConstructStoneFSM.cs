@@ -63,6 +63,10 @@ public class ConstructStoneFSM : FSM
                     }
                 case MapType.Basic:
                     {
+                        //如果是外圈模型 则不做更改
+                        if (posX == 0 || posX == MapManager.mapRegionX - 1 || posY == 0 || posY == MapManager.mapRegionY - 1)
+                            return;
+
                         //if(currentStateName=="DeleteStone")
                         {
                             //直接删除 不经过UI确认

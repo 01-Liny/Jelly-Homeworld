@@ -20,6 +20,8 @@ public class AudioManager : MonoBehaviour
 
     private bool isFadeOut = false;
     private bool isFadeIn = false;
+
+    private bool isMute = false;
     
     private void Awake()
     {
@@ -31,6 +33,10 @@ public class AudioManager : MonoBehaviour
 
     private void Update()
     {
+        //静音
+        if (isMute)
+            return;
+
         if(isFadeOut)
         {
             m_MusicAudioSource.volume -= 2f * Time.deltaTime;
@@ -78,6 +84,34 @@ public class AudioManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void ToggleMute()
+    {
+        if(isMute)
+        {
+            DisableMute();
+        }
+        else
+        {
+            EnableMute();
+        }
+    }
+
+    private void EnableMute()
+    {
+        isMute = true;
+        m_MusicAudioSource.volume = 0;
+        m_ButtonPressSFX.volume = 0;
+        m_UpgradeSFX.volume = 0;
+    }
+
+    private void DisableMute()
+    {
+        isMute = false;
+        m_MusicAudioSource.volume = 1;
+        m_ButtonPressSFX.volume = 1;
+        m_UpgradeSFX.volume = 1;
     }
 
     public void StartBGM()
