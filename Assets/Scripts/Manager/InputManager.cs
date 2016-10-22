@@ -71,16 +71,16 @@ namespace TouchScript.Examples.InputManager
             //限制摄像头视角范围
             float viewSize = m_Camera.orthographicSize;
 
-#if UNITY_ANDROID
-            //手机处理方式不同
-            minX = m_RangeA.x + screenRatio*3f * viewSize;
-            maxX = m_RangeB.x - screenRatio*3f * viewSize;
-#endif
+//#if UNITY_ANDROID
+//            //手机竖屏处理方式不同
+//            minX = m_RangeA.x + screenRatio*3f * viewSize;
+//            maxX = m_RangeB.x - screenRatio*3f * viewSize;
+//#endif
 
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
             minX = m_RangeA.x + screenRatio * viewSize;
             maxX = m_RangeB.x - screenRatio * viewSize;
-#endif
+//#endif
 
             minY = m_RangeB.z + viewSize*1.4f- cameraY;
             maxY = m_RangeA.z - viewSize*1.4f- cameraY;
