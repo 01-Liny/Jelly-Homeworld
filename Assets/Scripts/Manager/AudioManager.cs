@@ -17,6 +17,9 @@ public class AudioManager : MonoBehaviour
     private bool isPlayBGM = false;
     private bool isOnPlayMode = false;
     private int lastMusicIndex = -1;
+
+    private bool isFadeOut = false;
+    private bool isFadeIn = false;
     
     private void Awake()
     {
@@ -28,12 +31,32 @@ public class AudioManager : MonoBehaviour
 
     private void Update()
     {
-        if(isPlayBGM)
+        if(isFadeOut)
+        {
+            m_MusicAudioSource.volume -= 2f * Time.deltaTime;
+            if (m_MusicAudioSource.volume < 0.4)
+            {
+                isFadeOut = false;
+                isFadeIn = true;
+            }               
+        }
+        else if(isFadeIn)
+        {
+            m_MusicAudioSource.volume += 2f * Time.deltaTime;
+            if (m_MusicAudioSource.volume > 0.8f)
+            {
+                m_MusicAudioSource.volume = 1;
+                isFadeIn = false;
+            }
+        }
+
+        if (isPlayBGM)
         {
             if(isOnPlayMode)
             {
                 if (m_MusicAudioSource.isPlaying == false)
                 {
+                    isFadeOut = true;
                     int musicIndex = Random.Range(0, m_PlayAudioClips.Count);
                     //随机到和上一次一样的曲子时，自动下一首 保证音乐不重复
                     if (musicIndex == lastMusicIndex)
@@ -87,6 +110,7 @@ public class AudioManager : MonoBehaviour
         if(m_MusicAudioSource.clip != m_ProducerAudioClip)
         {
             m_MusicAudioSource.clip = m_ProducerAudioClip;
+            isFadeOut = true;
             m_MusicAudioSource.Play();
         }
     }
@@ -97,6 +121,7 @@ public class AudioManager : MonoBehaviour
         if(m_MusicAudioSource.clip != m_ThemeAudioClip)
         {
             m_MusicAudioSource.clip = m_ThemeAudioClip;
+            isFadeOut = true;
             m_MusicAudioSource.Play();
         }
     }

@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
     //整个游戏的初始化
     void Awake()
     {
+        //防止手机熄灭屏幕
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
         TowerInfo.Init();
         TowerElemInfo.Init();
         int[,] map = new int[7, 7]{{1, 1, 1, 1, 1, 1, 1},

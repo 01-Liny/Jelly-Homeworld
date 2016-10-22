@@ -6,6 +6,7 @@ public class RankFSM : FSM
 {
     public FSM m_FSM;
     public ConfigManager m_ConfigManager;
+    public AudioManager m_AudioManager;
     public Text m_Text;
 
     private Canvas m_Canvas;
@@ -30,6 +31,7 @@ public class RankFSM : FSM
         //    m_States.Values.ElementAt(i).OnExit();
         //}
         m_Canvas.enabled = false;
+        m_AudioManager.StopPlayMusic();
     }
 
     public override void OnClick()
