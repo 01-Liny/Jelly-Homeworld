@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class BasicEnemy : MonoBehaviour 
 {
+    public GameObject m_SmogPrefab;
     public bool GoDie = false;
     public bool isFocused = false;//用来判断是否被标记为攻击目标
     public GameObject m_HitParticlesObject;
@@ -128,6 +129,10 @@ public class BasicEnemy : MonoBehaviour
     {
         //防止在敌人死亡的过程中出现在新的塔的范围内
         m_Collider.enabled = false;
+
+        Vector3 temp = transform.position;
+        temp.y = 0;
+        Instantiate(m_SmogPrefab, temp, Quaternion.identity);
 
         //GameManager.OnEnemyDied(new GameManager.EnemyDiedEventsArgs(m_Collider));
         Debug.Log("Died");
