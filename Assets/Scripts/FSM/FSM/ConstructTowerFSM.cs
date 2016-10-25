@@ -130,23 +130,68 @@ public class ConstructTowerFSM : FSM
                                 //隐藏UI
                                 m_ConstructUIController.Hide();
                                 m_UIRangeIndicator.Disable();
+
+                                //如果现在允许建造
+                                if (currentStateName == "Construct")
+                                {
+                                    //如果现在允许建造石头
+                                    if (ConstructState.isStone)
+                                    {
+                                        //直接建造 不经过UI确认
+                                        //如果可以添加到地图
+                                        if (m_MapManager.ModifyMap(posX, posY, MapType.Basic))
+                                        {
+                                            m_TowerManager.RandomInstantiateStone(m_UISelectedArea.GetClickOffsetRealPos());
+                                        }
+                                    }
+                                }
+
                                 break;
                             }
                         case MapType.Basic:
                             {
                                 //隐藏范围指示器
                                 m_UIRangeIndicator.Disable();
-                                //如果还有剩余的建造塔数量，显示建造UI                        
-                                if (currentStateName=="Construct"&& UIRemainTowerCount.remainTowerCount > 0)
+
+                                //如果现在允许建造
+                                if(currentStateName == "Construct")
                                 {
-                                    UpdateConstructUIConstroller("Tower");
+                                    //如果现在允许建造石头
+                                    if (ConstructState.isStone)
+                                    {
+                                        //直接删除 不经过UI确认
+                                        if (m_MapManager.GetMap(posX, posY) == MapType.Basic)
+                                        {
+                                            //先删除石头实体模型，再删除地图上的石头信息，防止石头模型实体未被删除，地图已被删除的情况，石头的Collider未覆盖整个石头建造区域
+                                            //由于边界的石头没有实体模型，所以同时可以防止边界石头的地图信息被删除
+                                            if (m_TowerManager.DestroyStone(m_UISelectedArea.GetCameraRay()))
+                                                m_MapManager.DeleteStone(posX, posY);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //如果还有剩余的建造塔数量，显示建造UI                        
+                                        if (UIRemainTowerCount.remainTowerCount > 0)
+                                        {
+                                            UpdateConstructUIConstroller("Tower");
+                                        }
+                                        else
+                                            m_ConstructUIController.Hide();
+                                    }
                                 }
                                 else
                                     m_ConstructUIController.Hide();
+
                                 break;
                             }
                         case MapType.Tower:
                             {
+                                //如果现在允许建造石头
+                                if (ConstructState.isStone)
+                                {
+                                    return;
+                                }
+
                                 //显示范围指示器
                                 m_UIRangeIndicator.ShowTowerRangeIndicator(m_SelectedTower);
 
