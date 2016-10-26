@@ -88,7 +88,7 @@ public class MapManager : MonoBehaviour
             Debug.DrawLine(temp1, temp2, Color.blue);
             if(isRouteLineActive)
             {
-                temp.Set(m_ListPath[i].X, 0.1f, m_ListPath[i].Y);
+                temp.Set(m_ListPath[i].X, 0.5f, m_ListPath[i].Y);
                 m_LineRenderer.SetPosition(i, temp);
             }
         }
@@ -253,7 +253,7 @@ public class MapManager : MonoBehaviour
                 {
                     //不属于边界的石头才会生成
                     //先注释，方便测试                                            正式程序需要解除注释
-                    //if (!(j == 0 || j == mapRegionX - 1 || k == 0 || k == mapRegionY - 1))
+                    if (!(j == 0 || j == mapRegionX - 1 || k == 0 || k == mapRegionY - 1))
                     {
                         m_TowerManager.RandomInstantiateStone(m_VecTemp);
                     }

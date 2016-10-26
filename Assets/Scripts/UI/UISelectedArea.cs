@@ -203,7 +203,7 @@ public class UISelectedArea : MonoBehaviour
                         //m_ConstructUIController.MoveTo(m_VecTemp.x,m_VecTemp.z);
                         m_ConstructUIController.UpdateMapPos(RealPosToMapPos(m_VecTemp));
                         m_ConstructUIController.UpdateCameraRay(ray);
-                        m_ConstructUIController.ChangeButtonText("Tower");
+                        m_ConstructUIController.ChangeButtonImage("Tower");
                         m_ConstructUIController.Show();
                     }
                     else

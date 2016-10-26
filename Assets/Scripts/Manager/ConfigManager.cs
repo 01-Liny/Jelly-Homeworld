@@ -12,6 +12,8 @@ public class ConfigManager : MonoBehaviour
     private bool isEnableAdd = false;
     private int insertIndex=0;
 
+    private int rankMaxCount = 7;
+
     public void Start()
     {
         if (m_JsonManager.m_Configuration != null)
@@ -36,8 +38,8 @@ public class ConfigManager : MonoBehaviour
         }
 
         //放在后面可以保证排序从大到小
-        //如果排行榜记录数量没有达到最大值10，则直接添加
-        if (m_UserRecord.Count < 10)
+        //如果排行榜记录数量没有达到最大值rankMaxCount，则直接添加
+        if (m_UserRecord.Count < rankMaxCount)
         {
             insertIndex = m_UserRecord.Count;
             isEnableAdd = true;
@@ -57,10 +59,10 @@ public class ConfigManager : MonoBehaviour
         m_Temp.name = name;
         m_Temp.score = score;
         m_UserRecord.Insert(insertIndex, m_Temp);
-        //超过10个的时候，去掉分数最低的
-        if(m_UserRecord.Count>10)
+        //超过rankMaxCount个的时候，去掉分数最低的
+        if (m_UserRecord.Count> rankMaxCount)
         {
-            m_UserRecord.RemoveAt(10);
+            m_UserRecord.RemoveAt(rankMaxCount);
         }
     }
 
@@ -75,7 +77,7 @@ public class ConfigManager : MonoBehaviour
         string temp="";
         for(int i=0;i<m_UserRecord.Count;i++)
         {
-            temp += m_UserRecord[i].name + "\t" + m_UserRecord[i].score + "\n";
+            temp += m_UserRecord[i].name + "\t" + m_UserRecord[i].score + "\n\n";
         }
         return temp;
     }

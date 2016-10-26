@@ -73,6 +73,7 @@ namespace TouchScript.Examples.InputManager
 
 //#if UNITY_ANDROID
 //            //手机竖屏处理方式不同
+//            //其实是unity横屏竖屏的处理方式不同而已，在不限制屏幕转角的情况下，默认使用1080*1920的分辨率。强制只能横屏后，使用1920*1080的分辨率
 //            minX = m_RangeA.x + screenRatio*3f * viewSize;
 //            maxX = m_RangeB.x - screenRatio*3f * viewSize;
 //#endif

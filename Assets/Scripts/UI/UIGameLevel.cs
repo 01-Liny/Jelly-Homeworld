@@ -9,7 +9,7 @@ public class UIGameLevel : MonoBehaviour
 
     private void Start()
     {
-        level = 0;
+        level = 20;
         text = GetComponent<Text>();
         text.text = level.ToString();
     }

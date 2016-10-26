@@ -10,6 +10,9 @@ public class ConstructUIController : MonoBehaviour
     public TowerManager m_TowerManager;
     public Camera m_Camera;
     public AudioManager m_AudioManager;
+    public Image m_Image;
+    public Sprite m_SpriteConstruct;
+    public Sprite m_SpriteUpgrade;
 
     private Vector3 m_Scale;
 
@@ -49,15 +52,39 @@ public class ConstructUIController : MonoBehaviour
     //将UI移动至参数坐标
     public void MoveTo(Vector3 m_PosTemp)
     {
+        //不同的情况 UI高度也不同
+        switch (state)
+        {
+            case "Tower":
+                m_Pos.y=3.5f;
+                break;
+            case "Upgrade":
+                m_Pos.y= UIHeight;
+                break;
+            default:
+                Debug.LogError("ConstructUI Error : No this name sprite");
+                break;
+        }
         m_Pos.x= m_PosTemp.x;
         m_Pos.z= m_PosTemp.z;
         transform.position=m_Pos;
     }
 
     //改变按钮内容
-    public void ChangeButtonText(string content)
+    public void ChangeButtonImage(string content)
     {
-        this.text.text=content;
+        switch(content)
+        {
+            case "Tower":
+                m_Image.sprite = m_SpriteConstruct;
+                break;
+            case "Upgrade":
+                m_Image.sprite = m_SpriteUpgrade;
+                break;
+            default:
+                Debug.LogError("ConstructUI Error : No this name sprite");
+                break;
+        }
     }
 
     public void ChangeState(string state)
@@ -138,7 +165,7 @@ public class ConstructUIController : MonoBehaviour
                     UIRemainTowerCount.SubTowerCount();
                     break;
                 }
-            case "Update":
+            case "Upgrade":
                 {
                     //m_AudioManager.PlayPop();
                     m_TowerManager.RetrieveMergeableTower(m_Tower);

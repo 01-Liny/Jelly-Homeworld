@@ -1,0 +1,297 @@
+fileFormatVersion: 2
+guid: f6206aaeaeed2d64281d63e80275fa91
+timeCreated: 1477465236
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: ConstructTowerUI_0
+    21300002: ConstructTowerUI_1
+    21300004: ConstructTowerUI_2
+    21300006: ConstructTowerUI_3
+    21300008: ConstructTowerUI_4
+    21300010: ConstructTowerUI_5
+    21300012: ConstructTowerUI_6
+    21300014: ConstructTowerUI_7
+    21300016: ConstructTowerUI_8
+    21300018: ConstructTowerUI_9
+    21300020: ConstructTowerUI_10
+    21300022: ConstructTowerUI_11
+    21300024: ConstructTowerUI_12
+    21300026: ConstructTowerUI_13
+    21300028: ConstructTowerUI_14
+    21300030: ConstructTowerUI_15
+    21300032: ConstructTowerUI_16
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ConstructTowerUI_0
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 994
+        width: 1528
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConstructTowerUI_1
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 687
+        width: 164
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConstructTowerUI_2
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 745
+        width: 134
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConstructTowerUI_3
+      rect:
+        serializedVersion: 2
+        x: 1007
+        y: 777
+        width: 112
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConstructTowerUI_4
+      rect:
+        serializedVersion: 2
+        x: 1285
+        y: 681
+        width: 112
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConstructTowerUI_5
+      rect:
+        serializedVersion: 2
+        x: 541
+        y: 550
+        width: 59
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConstructTowerUI_6
+      rect:
+        serializedVersion: 2
+        x: 694
+        y: 564
+        width: 150
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConstructTowerUI_7
+      rect:
+        serializedVersion: 2
+        x: 1085
+        y: 541
+        width: 69
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConstructTowerUI_8
+      rect:
+        serializedVersion: 2
+        x: 1713
+        y: 555
+        width: 67
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConstructTowerUI_9
+      rect:
+        serializedVersion: 2
+        x: 1491
+        y: 333
+        width: 69
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConstructTowerUI_10
+      rect:
+        serializedVersion: 2
+        x: 367
+        y: 116
+        width: 40
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConstructTowerUI_11
+      rect:
+        serializedVersion: 2
+        x: 403
+        y: 116
+        width: 62
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConstructTowerUI_12
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 115
+        width: 20
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConstructTowerUI_13
+      rect:
+        serializedVersion: 2
+        x: 844
+        y: 104
+        width: 110
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConstructTowerUI_14
+      rect:
+        serializedVersion: 2
+        x: 1369
+        y: 105
+        width: 56
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConstructTowerUI_15
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 0
+        width: 1498
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ConstructTowerUI_16
+      rect:
+        serializedVersion: 2
+        x: 361
+        y: 111
+        width: 134
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

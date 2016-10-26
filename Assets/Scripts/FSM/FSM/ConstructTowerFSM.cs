@@ -199,7 +199,7 @@ public class ConstructTowerFSM : FSM
                                 //如果该塔可以升级
                                 if (m_Tower != null)
                                 {
-                                    UpdateConstructUIConstroller("Update");
+                                    UpdateConstructUIConstroller("Upgrade");
                                     m_ConstructUIController.SetTowerGameObject(m_Tower);
                                 }
                                 else
@@ -223,11 +223,13 @@ public class ConstructTowerFSM : FSM
 
     public void UpdateConstructUIConstroller(string temp)
     {
+        m_ConstructUIController.ChangeButtonImage(temp);
+        m_ConstructUIController.ChangeState(temp);
+
         m_ConstructUIController.MoveTo(m_UISelectedArea.GetClickOffsetRealPos());
         m_ConstructUIController.UpdateMapPos(m_UISelectedArea.GetClickMapPos());
         m_ConstructUIController.UpdateCameraRay(m_UISelectedArea.GetCameraRay());
-        m_ConstructUIController.ChangeButtonText(temp);
-        m_ConstructUIController.ChangeState(temp);
+
         m_ConstructUIController.Show();
     }
 }

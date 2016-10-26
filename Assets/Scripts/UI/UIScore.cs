@@ -14,6 +14,7 @@ public class UIScore : MonoBehaviour
     private void Start()
     {
         m_Text = GetComponent<Text>();
+        m_Text.text = score.ToString();
     }
 
     static public void Add(float newScore)
