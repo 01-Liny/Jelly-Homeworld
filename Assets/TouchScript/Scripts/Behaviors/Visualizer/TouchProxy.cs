@@ -149,7 +149,7 @@ namespace TouchScript.Behaviors.Visualizer
             rect = transform as RectTransform;
             if (rect == null)
             {
-                Debug.LogError("TouchProxy must be on an UI element!");
+                //Debug.LogError("TouchProxy must be on an UI element!");
                 enabled = false;
                 return;
             }

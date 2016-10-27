@@ -84,8 +84,8 @@ public class MapManager : MonoBehaviour
             }
             temp1.Set(m_ListPath[i].X, 1, m_ListPath[i].Y);
             temp2.Set(m_ListPath[i + 1].X, 1, m_ListPath[i + 1].Y);
-            Debug.DrawRay(temp1, Vector3.up, Color.red);
-            Debug.DrawLine(temp1, temp2, Color.blue);
+            //Debug.DrawRay(temp1, Vector3.up, Color.red);
+            //Debug.DrawLine(temp1, temp2, Color.blue);
             if(isRouteLineActive)
             {
                 temp.Set(m_ListPath[i].X, 0.5f, m_ListPath[i].Y);
@@ -118,7 +118,7 @@ public class MapManager : MonoBehaviour
         m_Maze = new AStar.Maze(map, mapRegionY, mapRegionX, start, end, pointA, pointB);
         //m_Maze.FindFinalPath();
         //monsterPathFinding.monsterPathFinding(mapTemp, 5, 3, 5, 5);
-        Debug.Log("Path Finding Successed");
+        //Debug.Log("Path Finding Successed");
 
         availableMapCount = 0;
         filePath = Application.persistentDataPath + "//map.txt";
@@ -172,7 +172,7 @@ public class MapManager : MonoBehaviour
         m_TowerManager.ClearTeleportList();
         GenerateStoneByMap();
         //monsterPathFinding.monsterPathFinding(mapTemp, 5, 3, 5, 5);
-        Debug.Log("Path Finding Successed");
+        //Debug.Log("Path Finding Successed");
     }
 
     //是非可以建造制定建筑，如果可以则修改地图信息并返回true，不行则为false
@@ -193,10 +193,10 @@ public class MapManager : MonoBehaviour
                             map[posX, posY] = MapType.Empty;
                             m_Maze.ChangeMazeArray(map);
                             m_Maze.FindFinalPath();
-                            Debug.Log(AStar.m_ListPath.Count);
+                            //Debug.Log(AStar.m_ListPath.Count);
                             return false;
                         }
-                        Debug.Log(AStar.m_ListPath.Count);
+                        //Debug.Log(AStar.m_ListPath.Count);
                         return true;
                     }
                     break;
@@ -212,7 +212,7 @@ public class MapManager : MonoBehaviour
                     break;
                 }
         }
-        Debug.LogError("Map Error");
+        //Debug.LogError("Map Error");
         return false;
     }
 
@@ -224,7 +224,7 @@ public class MapManager : MonoBehaviour
             m_Maze.ChangeMazeArray(map);
             //删除石头不可能造成寻路出错问题，不用判断返回值
             m_Maze.FindFinalPath();
-            Debug.Log(AStar.m_ListPath.Count);
+            //Debug.Log(AStar.m_ListPath.Count);
             return true;
         }
         return false;
@@ -424,7 +424,7 @@ public class MapManager : MonoBehaviour
         }
         catch(Exception ex)
         {
-            Debug.LogError("Out of map range");
+            //Debug.LogError("Out of map range");
             return MapType.Empty;
         }
     }

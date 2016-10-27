@@ -301,7 +301,7 @@ public class BasicTower : MonoBehaviour                                         
             {
                 m_EnemyTriggerList.Add(other);
             }
-            Debug.Log("Enter");
+            //Debug.Log("Enter");
         }
     }
 
@@ -320,7 +320,7 @@ public class BasicTower : MonoBehaviour                                         
             {
                 m_RigidbodyEnemy = null;
             }
-            Debug.Log("Exit");
+            //Debug.Log("Exit");
         }
     }
 
@@ -331,7 +331,7 @@ public class BasicTower : MonoBehaviour                                         
         if (m_EnemyTriggerList.Contains(e.enemyCollider))
         {
             m_EnemyTriggerList.Remove(e.enemyCollider);
-            Debug.Log("Enemy Died And Removed");
+            //Debug.Log("Enemy Died And Removed");
         }
     }
 

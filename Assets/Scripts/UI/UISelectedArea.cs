@@ -44,8 +44,8 @@ public class UISelectedArea : MonoBehaviour
         {
             m_VecTemp = m_Hit.point;
             m_VecTemp.y = 100;
-            Debug.DrawLine(m_Hit.point, m_VecTemp, Color.blue);
-            Debug.DrawRay(ray.origin, ray.direction * 20, Color.yellow);
+            //Debug.DrawLine(m_Hit.point, m_VecTemp, Color.blue);
+            //Debug.DrawRay(ray.origin, ray.direction * 20, Color.yellow);
         }
 
         //给选中框做位置偏移

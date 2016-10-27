@@ -33,6 +33,7 @@ public class ConstructTowerFSM : FSM
         m_UIRangeIndicator.Visible();
         UIRemainTowerCount.ResetTowerCount();
         UIGameLevel.ResetLevel();
+        UIScore.Reset();
         //防止无法生成怪物的情况
         m_MonsterManager.isClearMode = false;
     }
@@ -170,6 +171,12 @@ public class ConstructTowerFSM : FSM
                                     }
                                     else
                                     {
+                                        //如果点击的是地图外围的石头 则不会相应
+                                        //虽然看不到外围石头 但在地图数据上存在，用于方便约束寻路
+                                        if (posX == 0 || posX == MapManager.mapRegionX - 1 || posY == 0 || posY == MapManager.mapRegionY - 1)
+                                        {
+                                            return;
+                                        }
                                         //如果还有剩余的建造塔数量，显示建造UI                        
                                         if (UIRemainTowerCount.remainTowerCount > 0)
                                         {

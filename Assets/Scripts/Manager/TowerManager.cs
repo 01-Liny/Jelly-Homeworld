@@ -73,10 +73,10 @@ public class TowerManager : MonoBehaviour
         //以ray的方向和原点，发射一条射线，检测射线是否碰撞到LayerMask为Stone的Collider
         if (Physics.Raycast(ray.origin, ray.direction, out m_Hit, Mathf.Infinity, 1 << 9))
         {
-            Debug.Log("Casted");
+            //Debug.Log("Casted");
             //将石头从石头列表中移除
             if (m_StoneList.Remove(m_Hit.transform.parent.gameObject))
-                Debug.Log("Removed From Stone List");
+                //Debug.Log("Removed From Stone List");
             //摧毁找到的石头
             Destroy(m_Hit.transform.parent.gameObject);
             return true;

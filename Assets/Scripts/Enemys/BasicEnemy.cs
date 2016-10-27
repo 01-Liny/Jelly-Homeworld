@@ -135,7 +135,7 @@ public class BasicEnemy : MonoBehaviour
         Instantiate(m_SmogPrefab, temp, Quaternion.identity);
 
         //GameManager.OnEnemyDied(new GameManager.EnemyDiedEventsArgs(m_Collider));
-        Debug.Log("Died");
+        //Debug.Log("Died");
         //死亡后自我销毁
         Destroy(this.gameObject);
     }
@@ -202,7 +202,7 @@ public class BasicEnemy : MonoBehaviour
         }
         health -= damageTemp;
         UIScore.Add(damageTemp);
-        Debug.Log("Damage:" + damageTemp + " Health:" + health);
+        //Debug.Log("Damage:" + damageTemp + " Health:" + health);
     }
 
     public void TakeStun(TowerLevel towerLevel)

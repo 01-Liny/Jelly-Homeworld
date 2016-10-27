@@ -22,7 +22,7 @@ public class FSM : MonoBehaviour, IState, IInput
         }
         else
         {
-            Debug.Log("Already have this state");
+            //Debug.Log("Already have this state");
         }
     }
 
@@ -48,8 +48,8 @@ public class FSM : MonoBehaviour, IState, IInput
             m_States[newStateName].OnEnter();
             currentStateName = newStateName;
         }
-        else
-            Debug.LogError("No Exist State :"+newStateName+",Cannot Change State");
+        //else
+        //    Debug.LogError("No Exist State :"+newStateName+",Cannot Change State");
     }
 
     #region IState Members
@@ -72,8 +72,8 @@ public class FSM : MonoBehaviour, IState, IInput
     {
         if (currentStateName != "")
             m_States[currentStateName].OnTrigger();
-        else
-            Debug.LogError("Cannot OnStart.currentStateName not exist");
+        //else
+        //    Debug.LogError("Cannot OnStart.currentStateName not exist");
     }
     #endregion
 

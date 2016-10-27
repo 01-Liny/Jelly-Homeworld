@@ -62,7 +62,7 @@ public class MonsterPathFinding
             {
                 tempX = x + moveArray[i, 0];
                 tempY = y + moveArray[i, 1];
-                Debug.Log("tempX:" + tempX + " tempY:" + tempY);
+                //Debug.Log("tempX:" + tempX + " tempY:" + tempY);
                 if (markMapArray[tempX, tempY] == 0)
                 {
                     return true;

@@ -7,7 +7,7 @@ public class UIPlayerHealth : MonoBehaviour
     static public int health { get; private set; }
     private static Text text;
 
-    private void Start()
+    private void Awake()
     {
         text = GetComponent<Text>();
         ResetHealth();
@@ -22,6 +22,7 @@ public class UIPlayerHealth : MonoBehaviour
     public static void ResetHealth()
     {
         health = 100;
-        text.text = health.ToString();
+        if(text!=null)
+            text.text = health.ToString();
     }
 }
