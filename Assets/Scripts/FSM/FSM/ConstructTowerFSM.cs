@@ -99,7 +99,8 @@ public class ConstructTowerFSM : FSM
                 if (TowerManager.isOnUpdate)
                 {
                     GameObject m_MergeableTower = m_UISelectedArea.GetUpdateTower();
-                    //如果该塔可以合并
+
+                    //如果用户点击的塔可以合并
                     if (m_MergeableTower != null)
                     {
                         GameObject m_UpdatableTower = m_ConstructUIController.GetTowerGameObject();
@@ -120,6 +121,16 @@ public class ConstructTowerFSM : FSM
                         m_UIRangeIndicator.ShowTowerRangeIndicator(m_UpdatableTower);
                         //再次搜索
                         m_TowerManager.RetrieveUpdatableTower();
+                    }
+                    else
+                    {
+                        //取消升级状态
+                        TowerManager.isOnUpdate = false;
+                        m_TowerManager.RetrieveUpdatableTower();
+
+                        //隐藏所有UI
+                        m_ConstructUIController.Hide();
+                        m_UIRangeIndicator.Disable();
                     }
                 }
                 else
