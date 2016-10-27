@@ -92,16 +92,16 @@ public class TowerElemInfo
         #region basicFireRange
         basicFireRange[0] = 0;
         basicFireRange[1] = 4;
-        basicFireRange[2] = 4;
-        basicFireRange[3] = 4;
+        basicFireRange[2] = 5;
+        basicFireRange[3] = 6;
         #endregion
 
         #region basicFireDamage
         basicFireDamage[(int)TowerElem.Strike] = 20;
-        basicFireDamage[(int)TowerElem.Stun] = 35;
-        basicFireDamage[(int)TowerElem.Slowdown] = 35;
-        basicFireDamage[(int)TowerElem.Rate] = 30;
-        basicFireDamage[(int)TowerElem.Range] = 20;
+        basicFireDamage[(int)TowerElem.Stun] = 30;
+        basicFireDamage[(int)TowerElem.Slowdown] = 30;
+        basicFireDamage[(int)TowerElem.Rate] = 25;
+        basicFireDamage[(int)TowerElem.Range] = 15;
         #endregion
 
         #region basicFireRate
@@ -134,9 +134,9 @@ public class TowerElemInfo
 
         #region fireRate
         extraFireRate[0] = 0;
-        extraFireRate[1] = 1;
-        extraFireRate[2] = 1.5f;
-        extraFireRate[3] = 2;
+        extraFireRate[1] = 0.5f;
+        extraFireRate[2] = 1.0f;
+        extraFireRate[3] = 2f;
         #endregion
 
         #region slowdownDegree

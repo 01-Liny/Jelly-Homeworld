@@ -25,12 +25,12 @@ public class MonsterInfo
         //LimitAttackTimes
         //之后优化各属性加强
         #region EnemyProperty
-        EnemyHealth[1] = 10;
-        EnemyHealth[2] = 50;
-        EnemyHealth[3] = 100;
-        EnemyHealth[4] = 200;
-        EnemyHealth[5] = 400;
-        EnemyHealth[6] = 600;
+        EnemyHealth[1] = 6;
+        EnemyHealth[2] = 12;
+        EnemyHealth[3] = 40;
+        EnemyHealth[4] = 20;
+        EnemyHealth[5] = 40;
+        EnemyHealth[6] = 60;
         EnemyHealth[7] = 800;
         EnemyHealth[8] = 1100;
         EnemyHealth[9] = 1400;
@@ -70,7 +70,7 @@ public class MonsterInfo
         EnemyProperty[3, 1, 4] = 1;
         EnemyProperty[3, 1, 5] = 100;
 
-        EnemyProperty[4, 1, 0] = 7;
+        EnemyProperty[4, 1, 0] = 8;
         EnemyProperty[4, 1, 1] = armorArray[3];
         EnemyProperty[4, 1, 2] = 2;
         EnemyProperty[4, 1, 3] = 1;

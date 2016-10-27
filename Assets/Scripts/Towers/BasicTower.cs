@@ -98,11 +98,11 @@ public class BasicTower : MonoBehaviour                                         
         fireRange = TowerElemInfo.basicFireRange[elemCount];
 
         fireDamage = 0;
-        for(int i=0;i<(int)TowerElem.MaxCount; i++)
+        for (int i = 0; i < (int)TowerElem.MaxCount; i++)
         {
             fireDamage += TowerElemInfo.basicFireDamage[i] * towerElemCount[i];
         }
-        
+
         fireRate = TowerElemInfo.basicFireRate[elemCount];
 
         fireRate += TowerElemInfo.extraFireRate[towerElemCount[(int)TowerElem.Rate]]* offset;

@@ -52,11 +52,11 @@ public class MonsterManager : MonoBehaviour
         m_InstanceBasicEnemy = m_Instance.GetComponent<BasicEnemy>();
         m_EnemyList.Add(m_InstanceBasicEnemy);
         m_InstanceBasicEnemy.Init(MonsterInfo.EnemyProperty[(int)(gameLevel / 5.0) + 1, InstantiateMonster, 0],
-            MonsterInfo.EnemyProperty[(int)(gameLevel / 5.0) + 1, InstantiateMonster, 1],
-            MonsterInfo.EnemyProperty[(int)(gameLevel / 5.0) + 1, InstantiateMonster, 2],
-            MonsterInfo.EnemyProperty[(int)(gameLevel / 5.0) + 1, InstantiateMonster, 3],
-            MonsterInfo.EnemyProperty[(int)(gameLevel / 5.0) + 1, InstantiateMonster, 4],
-            MonsterInfo.EnemyProperty[(int)(gameLevel / 5.0) + 1, InstantiateMonster, 5], 
+            MonsterInfo.EnemyProperty[(int)(gameLevel / 6.0) + 1, InstantiateMonster, 1],
+            MonsterInfo.EnemyProperty[(int)(gameLevel / 6.0) + 1, InstantiateMonster, 2],
+            MonsterInfo.EnemyProperty[(int)(gameLevel / 6.0) + 1, InstantiateMonster, 3],
+            MonsterInfo.EnemyProperty[(int)(gameLevel / 6.0) + 1, InstantiateMonster, 4],
+            MonsterInfo.EnemyProperty[(int)(gameLevel / 6.0) + 1, InstantiateMonster, 5], 
             MonsterInfo.EnemyHealth[gameLevel]);
     }
 
