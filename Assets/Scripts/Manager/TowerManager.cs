@@ -41,7 +41,7 @@ public class TowerManager : MonoBehaviour
         m_Instance = Instantiate(m_Tower, m_Position, Quaternion.identity) as GameObject;
         m_InstanceTower = m_Instance.GetComponent<Tower>();
         m_InstanceTower.Init((TowerElem)Random.Range(0, (int)TowerElem.MaxCount), m_TowerModules);//随机添加一个元素
-        //m_InstanceTower.Init(TowerElem.Slowdown, m_TowerModules);
+        //m_InstanceTower.Init(TowerElem.Stun, m_TowerModules);
         m_TowerList.Add(m_InstanceTower);
     }
 

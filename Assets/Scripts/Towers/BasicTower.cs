@@ -50,6 +50,7 @@ public class BasicTower : MonoBehaviour                                         
     private int elemCount;
 
     private Atom m_Atom;
+    private Animator m_Animator;
 
     public void Init()
     {
@@ -74,6 +75,9 @@ public class BasicTower : MonoBehaviour                                         
         isFireRange = false;
 
         m_Atom= transform.FindChild("Atoms").GetComponent<Atom>();
+
+        //if(transform.FindChild("Body/TowerPre/Tower").GetComponent<Animator>()!=null)
+        m_Animator= transform.FindChild("Body/TowerPre/Tower").GetComponent<Animator>();
     }
 
     public void AddElem(TowerElem towerElem)
@@ -242,6 +246,7 @@ public class BasicTower : MonoBehaviour                                         
                 }
                 m_RangeParticles.GetComponent<ParticleSystem>().Stop();
                 m_RangeParticles.GetComponent<ParticleSystem>().Play();
+                m_Animator.SetTrigger("Attack");
             }
             else
             {
@@ -264,6 +269,7 @@ public class BasicTower : MonoBehaviour                                         
         if(!isFireRange)
         {
             temp = Instantiate(m_SelectedParticles, m_FirePointTransform.position, transform.rotation) as GameObject;
+            m_Animator.SetTrigger("Attack");
             if (random <= fireStunProbability)
             {
                 temp.GetComponent<Bullet>().Init(fireDamage, fireStrikeArmor, fireStunTime, towerElemCount[(int)TowerElem.Slowdown], transform.position, m_FireTarget);

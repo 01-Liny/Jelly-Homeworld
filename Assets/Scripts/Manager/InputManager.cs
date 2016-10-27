@@ -91,7 +91,7 @@ namespace TouchScript.Examples.InputManager
             temp.z= Mathf.Clamp(temp.z, minY, maxY);
             m_Camera.transform.localPosition = temp;
 
-            m_Camera.orthographicSize= Mathf.Clamp(m_Camera.orthographicSize, 2, maxOrthographicSize);
+            m_Camera.orthographicSize= Mathf.Clamp(m_Camera.orthographicSize, 7, maxOrthographicSize);
         }
 
         private void OnEnable()
