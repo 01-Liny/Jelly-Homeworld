@@ -52,6 +52,8 @@ public class MapManager : MonoBehaviour
     private Vector3 temp1 = new Vector3();
     private Vector3 temp2 = new Vector3();
 
+    public GameObject m_Heart;
+
     public void FixedUpdate()
     {
         if (isGenerateStone)
@@ -68,7 +70,7 @@ public class MapManager : MonoBehaviour
         if (isResetStone)
         {
             isResetStone = false;
-            ResetStone();
+            ResetStoneAndFindPath();
         }
 
         m_ListPath = AStar.m_ListPath;
@@ -158,12 +160,23 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public void ResetStone()
+    public void ClearStone()
+    {
+        m_TowerManager.ClearStoneList();
+        m_TowerManager.ClearTeleportList();
+        //隐藏果冻之心  随便塞进来的临时代码 好孩子不要学
+        m_Heart.SetActive(false);
+    }
+
+    public void ResetStoneAndFindPath()
     {
         InitMap();
         m_TowerManager.ClearStoneList();
         m_TowerManager.ClearTeleportList();
         GenerateStoneByMap();
+        m_Maze.ChangeMazeArray(map);
+        m_Maze.FindFinalPath();
+
     }
 
     public void ReGenerateStoneByMap()
@@ -171,6 +184,8 @@ public class MapManager : MonoBehaviour
         m_TowerManager.ClearStoneList();
         m_TowerManager.ClearTeleportList();
         GenerateStoneByMap();
+        //显示果冻之心  随便塞进来的临时代码 好孩子不要学
+        m_Heart.SetActive(true);
         //monsterPathFinding.monsterPathFinding(mapTemp, 5, 3, 5, 5);
         //Debug.Log("Path Finding Successed");
     }

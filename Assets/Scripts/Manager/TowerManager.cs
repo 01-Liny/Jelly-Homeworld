@@ -11,8 +11,8 @@ public class TowerManager : MonoBehaviour
     public GameObject m_Tower;
 
     public GameObject[] m_StonePrefabs;
-    public GameObject m_TeleportAPrefab;
-    public GameObject m_TeleportBPrefab;
+    public GameObject[] m_TeleportAPrefabs;
+    public GameObject[] m_TeleportBPrefabs;
     private GameObject m_SelectedPrefab;
     private GameObject m_Instance;
     private Tower m_InstanceTower;
@@ -25,6 +25,10 @@ public class TowerManager : MonoBehaviour
 
     private RaycastHit m_Hit;
     private int[,] towerLevelRandomMap;
+
+    private int time = 0;
+
+    public GameObject m_Heart;
 
     private void Start()
     {
@@ -58,11 +62,37 @@ public class TowerManager : MonoBehaviour
 
     public void RandomInstantiateTeleport(MapType mapType, Vector3 m_Position)
     {
+        //以下为很蠢的临时写法 好孩子不要学
         if (mapType == MapType.TeleportA)
-            m_SelectedPrefab = m_TeleportAPrefab;
+        {
+            if(time==0)
+            {
+                m_SelectedPrefab = m_TeleportAPrefabs[0];
+                time=1;
+            }
+            else
+            {
+                m_SelectedPrefab = m_TeleportBPrefabs[1];
+                time = 0;
+            }
+        }    
         else
-            m_SelectedPrefab = m_TeleportBPrefab;
-        m_Position.y = 1f;
+        {
+            if (time == 0)
+            {
+                m_SelectedPrefab = m_TeleportAPrefabs[1];
+                time = 1;
+            }
+            else
+            {
+                m_SelectedPrefab = m_TeleportBPrefabs[0];
+                time = 0;
+            }
+        }
+        //以上为很蠢的临时写法 好孩子不要学  
+
+
+        m_Position.y = 0.01f;
         m_Instance = Instantiate(m_SelectedPrefab, m_Position, Quaternion.identity) as GameObject;
         m_TeleportList.Add(m_Instance);
     }
@@ -116,6 +146,8 @@ public class TowerManager : MonoBehaviour
         ClearStoneList();
         ClearTeleportList();
         ClearTowerList();
+        //隐藏果冻之心  随便塞进来的临时代码 好孩子不要学
+        m_Heart.SetActive(false);
     }
 
     public void RetrieveUpdatableTower()

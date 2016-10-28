@@ -53,6 +53,8 @@ public class ConfigManager : MonoBehaviour
     //必须经过isEnableAdd才能调用该函数
     public void Add(string name,int score)
     {
+        if (name == "")
+            name = "Player";
         if (isEnableAdd == false)
             return;
         UserRecord m_Temp = new UserRecord();

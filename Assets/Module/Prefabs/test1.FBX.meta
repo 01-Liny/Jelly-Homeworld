@@ -1,54 +1,15 @@
 fileFormatVersion: 2
-guid: 6d78ec933de70384e86ad23eb3bc3332
-timeCreated: 1477113816
+guid: 88866f1c55c8c804580aee3749b78945
+timeCreated: 1477671831
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Cylinder001
-    100002: Cylinder002
-    100004: Cylinder003
-    100006: Cylinder004
-    100008: Cylinder005
-    100010: Cylinder006
-    100012: Sphere001
-    100014: Star001
-    100016: //RootNode
-    400000: Cylinder001
-    400002: Cylinder002
-    400004: Cylinder003
-    400006: Cylinder004
-    400008: Cylinder005
-    400010: Cylinder006
-    400012: Sphere001
-    400014: Star001
-    400016: //RootNode
-    2300000: Cylinder001
-    2300002: Cylinder002
-    2300004: Cylinder003
-    2300006: Cylinder004
-    2300008: Cylinder005
-    2300010: Cylinder006
-    2300012: Sphere001
-    2300014: Star001
-    3300000: Cylinder001
-    3300002: Cylinder002
-    3300004: Cylinder003
-    3300006: Cylinder004
-    3300008: Cylinder005
-    3300010: Cylinder006
-    3300012: Sphere001
-    3300014: Star001
-    4300000: Sphere001
-    4300002: Cylinder001
-    4300004: Cylinder002
-    4300006: Cylinder003
-    4300008: Cylinder004
-    4300010: Cylinder005
-    4300012: Cylinder006
-    4300014: Star001
-    7400000: Take 001
-    9500000: //RootNode
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Line001
   materials:
     importMaterials: 1
     materialName: 0
@@ -107,7 +68,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

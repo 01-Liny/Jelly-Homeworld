@@ -235,6 +235,8 @@ public class MonsterWalk : MonoBehaviour
             {
                 walkSpeed = Mathf.Lerp(walkSpeed, 0, 0.25f);
                 Destroy(this.gameObject);
+                UIPlayerHealth.TakeHealth(UIGameLevel.level * 2);
+                
                 //walkSpeed = speed;
             }
         }

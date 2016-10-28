@@ -88,8 +88,8 @@ public class UIProducerGenerator : MonoBehaviour, IEndDragHandler,IBeginDragHand
         m_ProducerList.Add(new ProducerElemInfo("Creative Designer", "创意设计", "林毅\n谢邦晟", 2));
         m_ProducerList.Add(new ProducerElemInfo("Character Designer", "人物设计", "许力丹", 1));
         m_ProducerList.Add(new ProducerElemInfo("Model Designer", "模型设计", "陈璐", 1));
+        m_ProducerList.Add(new ProducerElemInfo("Motion Designer", "动作设计", "谢邦晟", 1));
         m_ProducerList.Add(new ProducerElemInfo("UI Designer", "界面设计", "曾文泽", 1));
-        m_ProducerList.Add(new ProducerElemInfo("Map Designer", "地图设计", "待定", 1));
         m_ProducerList.Add(new ProducerElemInfo("Balance Tester", "平衡测试", "林毅", 1));
         m_ProducerList.Add(new ProducerElemInfo("Effects Designer", "特效设计", "谢邦晟", 1));
         m_ProducerList.Add(new ProducerElemInfo("Sound Designer", "音效设计", "谢邦晟", 1));

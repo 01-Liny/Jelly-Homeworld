@@ -8,6 +8,7 @@ public class RankFSM : FSM
     public ConfigManager m_ConfigManager;
     public AudioManager m_AudioManager;
     public Text m_Text;
+    public GameObject m_Background;
 
     private Canvas m_Canvas;
 
@@ -22,6 +23,7 @@ public class RankFSM : FSM
     {
         m_Canvas.enabled = true;
         m_Text.text = m_ConfigManager.GetUserRecordWithString();
+        m_Background.SetActive(false);
     }
 
     public override void OnExit(string nextState = "")
@@ -32,6 +34,7 @@ public class RankFSM : FSM
         //}
         m_Canvas.enabled = false;
         m_AudioManager.StopPlayMusic();
+        m_Background.SetActive(true);
     }
 
     public override void OnClick()

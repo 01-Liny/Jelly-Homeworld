@@ -8,6 +8,7 @@ public class ThemeFSM : FSM
 {
     public FSM m_FSM;
     public AudioManager m_AudioManager;
+    public MapManager m_MapManager;
     private Canvas m_Canvas;
 
     protected void Awake()
@@ -22,6 +23,7 @@ public class ThemeFSM : FSM
         m_Canvas.enabled = true;
         m_AudioManager.StartBGM();
         m_AudioManager.StartThemeMusic();
+        m_MapManager.ClearStone();
     }
 
     public override void OnExit(string nextState = "")

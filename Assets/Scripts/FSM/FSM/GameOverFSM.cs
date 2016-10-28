@@ -10,6 +10,7 @@ public class GameOverFSM : FSM
     public InputField m_InputField;
     public ConfigManager m_ConfigManager;
     public AudioManager m_AudioManager;
+    public GameObject m_TypeName;
 
     private Canvas m_Canvas;
     private int scoreTemp;
@@ -27,11 +28,19 @@ public class GameOverFSM : FSM
         m_Canvas.enabled = true;
         m_AudioManager.StartPlayMusic();
 
+        m_Text.text = scoreTemp.ToString();
+
         //测试代码
         string a="";
         if (m_ConfigManager.IsEnableAdd(scoreTemp)==false)
-            a = "Disable";
-        m_Text.text = scoreTemp.ToString()+a;
+        {
+            //a = "Disable";
+            m_TypeName.SetActive(false);
+        }
+        else
+        {
+            m_TypeName.SetActive(true);
+        }    
 
     }
 
