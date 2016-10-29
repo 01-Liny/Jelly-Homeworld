@@ -25,7 +25,7 @@ public class MonsterInfo
         //LimitAttackTimes
         //之后优化各属性加强
         #region EnemyProperty
-        EnemyHealth[1] = 50;
+        EnemyHealth[1] = 20;
         EnemyHealth[2] = 100;
         EnemyHealth[3] = 200;
         EnemyHealth[4] = 400;
@@ -227,20 +227,20 @@ public class MonsterInfo
         //4限制次数攻击，5跑得快，6免疫眩晕
         #region PrefabsPositon
         PrefabsPositon[1,0] = 1;
-        PrefabsPositon[1,1] = 0;
-        PrefabsPositon[1,2] = 0;
+        PrefabsPositon[1,1] = 2;
+        PrefabsPositon[1,2] = 3;
 
-        PrefabsPositon[2,0] = 2;
-        PrefabsPositon[2,1] = 0;
-        PrefabsPositon[2,2] = 0;
+        PrefabsPositon[2,0] = 4;
+        PrefabsPositon[2,1] = 5;
+        PrefabsPositon[2,2] = 6;
 
         PrefabsPositon[3,0] = 3;
-        PrefabsPositon[3,1] = 0;
-        PrefabsPositon[3,2] = 0;
+        PrefabsPositon[3,1] = 4;
+        PrefabsPositon[3,2] = 5;
 
         PrefabsPositon[4,0] = 4;
-        PrefabsPositon[4,1] = 0;
-        PrefabsPositon[4,2] = 0;
+        PrefabsPositon[4,1] = 1;
+        PrefabsPositon[4,2] = 2;
 
         PrefabsPositon[5,0] = 5;
         PrefabsPositon[5,1] = 0;
