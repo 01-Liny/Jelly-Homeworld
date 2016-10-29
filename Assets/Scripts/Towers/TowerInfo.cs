@@ -85,8 +85,8 @@ public class TowerElemInfo
         #region atomHeight
         atomHeight[0] = 0;
         atomHeight[1] = 0.84f;
-        atomHeight[2] = 1.57f;
-        atomHeight[3] = 2.51f;
+        atomHeight[2] = 1.36f;
+        atomHeight[3] = 2f;
         #endregion
 
         #region basicFireRange
@@ -175,15 +175,15 @@ public class TowerElemInfo
         towerSize[1, 3] = 0;
 
         //两个元素
-        towerSize[2, 0] = 2f;
-        towerSize[2, 1] = 1.5f;
-        towerSize[2, 2] = 2f;
+        towerSize[2, 0] = 1.25f;
+        towerSize[2, 1] = 1.25f;
+        towerSize[2, 2] = 1.25f;
         towerSize[2, 3] = 0;
 
         //三个元素
-        towerSize[3, 0] = 2f;
-        towerSize[3, 1] = 2f;
-        towerSize[3, 2] = 2f;
+        towerSize[3, 0] = 1.5f;
+        towerSize[3, 1] = 1.5f;
+        towerSize[3, 2] = 1.5f;
         towerSize[3, 3] = 0.5f;
         #endregion
     }

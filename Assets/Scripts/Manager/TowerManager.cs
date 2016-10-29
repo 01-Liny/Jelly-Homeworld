@@ -26,7 +26,8 @@ public class TowerManager : MonoBehaviour
     private RaycastHit m_Hit;
     private int[,] towerLevelRandomMap;
 
-    private int time = 0;
+    private int time1 = 0;
+    private int time2 = 0;
 
     public GameObject m_Heart;
 
@@ -63,32 +64,25 @@ public class TowerManager : MonoBehaviour
     public void RandomInstantiateTeleport(MapType mapType, Vector3 m_Position)
     {
         //以下为很蠢的临时写法 好孩子不要学
-        if (mapType == MapType.TeleportA)
+        int temp1 = (int)m_Position.x;
+        int temp2 = (int)m_Position.z;
+        if(temp1==3&&temp2==15)
         {
-            if(time==0)
-            {
-                m_SelectedPrefab = m_TeleportAPrefabs[0];
-                time=1;
-            }
-            else
-            {
-                m_SelectedPrefab = m_TeleportBPrefabs[1];
-                time = 0;
-            }
-        }    
-        else
-        {
-            if (time == 0)
-            {
-                m_SelectedPrefab = m_TeleportAPrefabs[1];
-                time = 1;
-            }
-            else
-            {
-                m_SelectedPrefab = m_TeleportBPrefabs[0];
-                time = 0;
-            }
+            m_SelectedPrefab = m_TeleportAPrefabs[0];
         }
+        else if(temp1 == 21 && temp2 == 3)
+        {
+            m_SelectedPrefab = m_TeleportBPrefabs[0];
+        }
+        else if (temp1 == 21 && temp2 == 27)
+        {
+            m_SelectedPrefab = m_TeleportAPrefabs[1];
+        }
+        else if (temp1 == 39 && temp2 == 15)
+        {
+            m_SelectedPrefab = m_TeleportBPrefabs[1];
+        }
+
         //以上为很蠢的临时写法 好孩子不要学  
 
 
