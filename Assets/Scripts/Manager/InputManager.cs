@@ -53,7 +53,7 @@ namespace TouchScript.Examples.InputManager
 
             m_RangeA = m_RangeTransformA.position;
             m_RangeB = m_RangeTransformB.position;
-            maxOrthographicSize = m_Camera.orthographicSize;
+            maxOrthographicSize = 16.2f;
             cameraY = m_Camera.transform.localPosition.y;
 
             Vector3 temp = m_Camera.transform.localPosition;

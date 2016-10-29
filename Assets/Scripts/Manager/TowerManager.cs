@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class TowerManager : MonoBehaviour
 {
     public AudioManager m_AudioManager;
-    public const int MaxTowerCount = 50;//测试代码 临时修改
+    public const int MaxTowerCount = 3;//测试代码 临时修改
     static public int remainTowerCount = MaxTowerCount;
     static public bool isOnUpdate = false;
     public GameObject[] m_TowerModules;
