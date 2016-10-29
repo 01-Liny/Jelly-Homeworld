@@ -66,7 +66,7 @@ public class MonsterManager : MonoBehaviour
     {
         isSendMessage = false;
         this.interval = 0;
-
+        MonsterNum = 0;
         int MonsterTypeNum = 0;//计算此关有几种怪物
 
         for (int i = 0; i < 3; i++)
