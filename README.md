@@ -1,4 +1,4 @@
-![Image text](https://github.com/ly0x0001/Jelly-Homeworld/blob/master/For-README/kind_of_tower.png)
+![banner](https://github.com/ly0x0001/Jelly-Homeworld/blob/master/For-README/kind_of_tower.png)
 
 [![Build Status](https://img.shields.io/wercker/ci/wercker/docs.svg?maxAge=2592000)]()
 [![Unity3D](https://img.shields.io/badge/Powered_by-Unity-green.svg?style=flat)](https://unity3d.com/)
