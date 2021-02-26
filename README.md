@@ -23,18 +23,18 @@ The defense tower also can be customize
 
 The largest number of elements will affect the appearance of the tower
 
-![kind_of_tower](https://raw.githubusercontent.com/XSAM/Jelly-Homeworld/master/For-README/kind_of_tower.png)
+![kind_of_tower](https://github.com/ly0x0001/Jelly-Homeworld/blob/master/For-README/kind_of_tower.png)
 
 # Screenshots
 
-![a](https://raw.githubusercontent.com/XSAM/Jelly-Homeworld/master/For-README/a.png)
+![a](https://github.com/ly0x0001/Jelly-Homeworld/blob/master/For-README/a.png)
 
-![b](https://raw.githubusercontent.com/XSAM/Jelly-Homeworld/master/For-README/b.png)
+![b](https://github.com/ly0x0001/Jelly-Homeworld/blob/master/For-README/b.png)
 
 ![c](https://raw.githubusercontent.com/XSAM/Jelly-Homeworld/master/For-README/c.png)
 
-![d](https://raw.githubusercontent.com/XSAM/Jelly-Homeworld/master/For-README/d.png)
+![d](https://github.com/ly0x0001/Jelly-Homeworld/blob/master/For-README/d.png)
 
-![e](https://raw.githubusercontent.com/XSAM/Jelly-Homeworld/master/For-README/e.png)
+![e](https://github.com/ly0x0001/Jelly-Homeworld/blob/master/For-README/e.png)
 
-![f](https://raw.githubusercontent.com/XSAM/Jelly-Homeworld/master/For-README/f.png)
+![f](https://github.com/ly0x0001/Jelly-Homeworld/blob/master/For-README/f.png)
